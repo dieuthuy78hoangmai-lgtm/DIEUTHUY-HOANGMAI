@@ -64,7 +64,7 @@ header h1{font:800 clamp(20px,2.4vw,28px)/1.1 var(--f-hien);margin:0;text-wrap:b
 .lcd{background:#1B2238;border-radius:1.2cqw;border:.5cqw solid #3A4566;color:#7CF2B2;font:800 4.6cqw/1 "Consolas","Courier New",monospace;letter-spacing:.2cqw;display:grid;place-items:center;text-shadow:0 0 1cqw rgba(124,242,178,.6);padding:1.2cqw 2cqw;align-self:flex-start;font-variant-numeric:tabular-nums}
 .bong{background:var(--a1);color:#fff;border-radius:99px;padding:.5cqw 1.6cqw;font:800 2.8cqw/1.2 var(--f-hien);box-shadow:0 .4cqw 0 var(--a1d);font-variant-numeric:tabular-nums}
 .chip{display:inline-block;font-size:calc(2cqw*var(--co,1));border-radius:99px;padding:.4cqw 1.4cqw;font:800 2cqw/1.3 var(--f-hien);background:var(--the);color:var(--chu);white-space:nowrap}
-.may{font:800 1.5cqw/1.2 var(--f-chu);letter-spacing:.14em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:color-mix(in srgb,var(--chu-nen) 80%,transparent)}
+.may{font:800 1.15cqw/1.2 var(--f-chu);letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:color-mix(in srgb,var(--chu-nen) 80%,transparent)}
 .tde{font:800 6.2cqw/1 var(--f-hien);color:var(--chu-nen);margin:0;text-wrap:balance}
 .tde2{font:700 3cqw/1.15 var(--f-hien);color:var(--a1)}
 .hoi{font:800 2.9cqw/1.2 var(--f-hien);color:var(--chu-nen);text-wrap:balance}
@@ -1843,7 +1843,7 @@ function manMo(){
   const c0 = CANH[0] && CANH[0].loai === "mo-dau" ? CANH[0] : {};
   VeNen(c0.nen || "cam", 3, {sac: c0.sac, chuyen_dong: c0.chuyen_dong}, true); stage.classList.toggle("toi", !!rt.toi); NguoiDan(rt, 1210, 450, 470);
   O("may", 110, 140, 860, esc([BAI.mon, BAI.lop && "Lớp " + BAI.lop, BAI.bo_sach, BAI.bai].filter(Boolean).join(" · ")));
-  const td = O("", 110, 190, 900, `<h2 class="tde" style="font-size:${(BAI.tieu_de || "").length > 18 ? 5.2 : 7}cqw">${esc(BAI.tieu_de)}</h2>`);
+  const td = O("", 110, 190, 900, `<h2 class="tde" style="font-size:${(BAI.tieu_de || "").length > 18 ? 3.8 : 7}cqw">${esc(BAI.tieu_de)}</h2>`);
   coPhu(O("tde2", 110, 315, 860, esc(BAI.tieu_de_phu || "")));
   const so = CANH.filter(c => !CANH_XEM[c.loai] && c.loai !== "phim" && c.loai !== "ket-qua").length;
   O("hang tho", 110, 410, 860, [BAI.thoi_luong && `<span class="chip">⏱ ${esc(BAI.thoi_luong)}</span>`, `<span class="chip">🔊 nên mở loa</span>`, so && `<span class="chip">✋ ${so} hoạt động</span>`].filter(Boolean).join(""));
