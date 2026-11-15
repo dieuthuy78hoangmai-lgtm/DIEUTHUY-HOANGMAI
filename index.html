@@ -21,6 +21,7 @@ nav a:hover{background:#e6f1ff}
 .hero .rong{display:grid;grid-template-columns:1.15fr .85fr;gap:26px;align-items:center}
 .hero h1{margin:0 0 8px;font-size:clamp(30px,5vw,46px);line-height:1.12;background:linear-gradient(90deg,var(--xanh2),#e8651a);-webkit-background-clip:text;background-clip:text;color:transparent}
 .hero p.vt{font-size:19px;color:var(--chu2);margin:6px 0 16px}
+.avatar{width:132px;height:132px;border-radius:50%;object-fit:cover;border:5px solid #fff;box-shadow:0 8px 22px rgba(30,64,120,.25);margin-bottom:14px;display:block}
 .chip{display:inline-block;background:#fff;border:1px solid var(--vien);border-radius:999px;padding:6px 14px;font-weight:600;font-size:14px;margin:0 6px 8px 0;box-shadow:0 3px 8px rgba(30,64,120,.08)}
 .nut{display:inline-block;text-decoration:none;color:#fff;font-weight:700;padding:12px 22px;border-radius:14px;background:linear-gradient(135deg,var(--xanh),var(--xanh2));box-shadow:0 6px 16px rgba(30,111,217,.32);transition:transform .15s;margin:6px 8px 0 0}
 .nut:hover{transform:translateY(-2px)}
@@ -38,14 +39,21 @@ h2.tieude::after{content:"";display:block;width:64px;height:5px;border-radius:9p
 .b1{background:linear-gradient(135deg,var(--xanh),var(--xanh2))}.b2{background:linear-gradient(135deg,#ffb347,#ff7a2f)}.b3{background:linear-gradient(135deg,#3cc8bd,#0e8f86)}.b4{background:linear-gradient(135deg,#9b7af0,#6a49cf)}
 .the h3{margin:0 0 6px;font-size:19px}
 .the p{margin:0;color:var(--chu2);font-size:15px}
+.the .tag{display:inline-block;font-size:12px;font-weight:700;color:#fff;border-radius:99px;padding:2px 10px;margin-bottom:8px}
+.cho{color:#b3541a;background:#fff2e4;border:1px dashed var(--cam);border-radius:8px;padding:0 6px}
 .moc{position:relative;margin-left:14px;border-left:4px solid #cfe0f7;padding-left:22px}
 .moc .m{position:relative;margin-bottom:20px}
 .moc .m::before{content:"";position:absolute;left:-33px;top:5px;width:16px;height:16px;border-radius:50%;background:var(--cam);border:3px solid #fff;box-shadow:0 0 0 3px #cfe0f7}
 .moc b{display:block}
+.so{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-top:18px}
+.so div{background:linear-gradient(135deg,#eef6ff,#fff3e6);border:1px solid var(--vien);border-radius:18px;padding:14px;text-align:center}
+.so strong{display:block;font-size:34px;color:var(--xanh2)}
+.so span{color:var(--chu2);font-size:14px}
 .lienhe{display:grid;gap:10px}
 .lienhe div{background:#fff;border:1px solid var(--vien);border-radius:14px;padding:12px 16px}
 footer{background:#10213d;color:#c9d6ee;padding:26px 0;font-size:14px;text-align:center}
 footer b{color:#fff}
+.nhap{display:inline-block;background:#fff7d6;border:1px solid #f1d45f;border-radius:99px;padding:3px 14px;font-size:13px;margin-top:8px}
 @media(max-width:760px){.hero .rong{grid-template-columns:1fr}.tranh{max-width:380px;margin:0 auto}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 </style>
@@ -58,8 +66,9 @@ footer b{color:#fff}
 
 <div class="hero"><div class="rong">
   <div>
+    <img class="avatar" src="chan-dung.jpg" width="132" height="132" alt="Cô Nguyễn Thị Diệu Thúy">
     <h1>Nguyễn Thị Diệu Thúy</h1>
-    <p class="vt">Giáo viên lớp 1A5 · Trường Tiểu học chất lượng cao Hoàng Mai, Hà Nội</p>
+    <p class="vt">Yêu nghề, mến trẻ · Nhiều năm đồng hành cùng các em lớp 1<br>Trường Tiểu học chất lượng cao Hoàng Mai, Hà Nội</p>
     <span class="chip">🍎 Giáo viên chủ nhiệm lớp 1</span><span class="chip">🤝 Chủ tịch công đoàn</span><span class="chip">💻 Làm sản phẩm số cho lớp học</span>
     <div><a class="nut" href="#san-pham">Xem sản phẩm số</a><a class="nut phu" href="#bai-giang">Kho bài giảng</a></div>
   </div>
@@ -87,16 +96,22 @@ footer b{color:#fff}
 
 <section id="gioi-thieu"><div class="rong">
   <h2 class="tieude">Giới thiệu</h2>
-  <p class="mota">Em xin chào thầy cô, các bậc phụ huynh và các bạn đồng nghiệp. Đây là nơi em lưu giữ và chia sẻ những gì em làm cho lớp học của mình.</p>
+  <p class="mota">Tốt nghiệp Đại học Sư phạm Hà Nội hệ chính quy, nhiều năm giảng dạy lớp 1, chuyên môn vững vàng. Em luôn tự học, tự bồi dưỡng để nâng cao trình độ, và dành trọn tình yêu nghề, yêu trẻ cho từng tiết học. Đây là nơi em lưu giữ và chia sẻ những gì em làm cho lớp học của mình.</p>
   <div class="luoi">
     <div class="the"><div class="bieu b1">🎓</div><h3>Công việc hiện tại</h3><p>Giáo viên chủ nhiệm lớp 1A5, dạy đủ các môn. Bộ sách Kết nối tri thức với cuộc sống.</p></div>
     <div class="the"><div class="bieu b2">🤝</div><h3>Kiêm nhiệm</h3><p>Chủ tịch công đoàn Trường Tiểu học chất lượng cao Hoàng Mai.</p></div>
-  </div>
+      </div>
 </div></section>
 
 <section id="ho-so"><div class="rong">
   <h2 class="tieude">Hồ sơ năng lực & thành tích</h2>
-  <p class="mota">Thông tin về trình độ, danh hiệu và sáng kiến sẽ được cập nhật tại đây khi có đủ minh chứng.</p>
+  <p class="mota">Những điều em đã tích luỹ qua nhiều năm đứng lớp.</p>
+  <div class="luoi">
+    <div class="the"><div class="bieu b1">🎓</div><h3>Trình độ đào tạo</h3><p>Tốt nghiệp Đại học Sư phạm Hà Nội, hệ chính quy. Thường xuyên tự học, tự bồi dưỡng để nâng cao trình độ chuyên môn.</p></div>
+    <div class="the"><div class="bieu b3">🍎</div><h3>Kinh nghiệm giảng dạy</h3><p>Nhiều năm giảng dạy lớp 1, chuyên môn vững vàng, tận tâm với từng em học sinh.</p></div>
+    <div class="the"><div class="bieu b2">🏅</div><h3>Danh hiệu thi đua</h3><p>Nhiều năm đạt danh hiệu Chiến sĩ thi đua, Lao động tiên tiến; Giáo viên dạy giỏi cấp trường và cấp quận.</p></div>
+    <div class="the"><div class="bieu b4">📝</div><h3>Sáng kiến kinh nghiệm</h3><p>Nhiều năm có sáng kiến kinh nghiệm được công nhận cấp Thành phố.</p></div>
+  </div>
   <h3 style="margin-top:30px">Quá trình công tác</h3>
   <div class="moc">
     <div class="m"><b>Năm học 2026–2027</b>Giáo viên chủ nhiệm lớp 1A5, Chủ tịch công đoàn — Trường Tiểu học chất lượng cao Hoàng Mai.</div>
