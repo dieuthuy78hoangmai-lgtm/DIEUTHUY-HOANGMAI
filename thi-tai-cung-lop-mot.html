@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thi tài cùng lớp Một</title>
+<!--
+  THI TÀI CÙNG LỚP MỘT — sân chơi kiến thức lớp 1–2 (bộ Kết nối tri thức với cuộc sống)
+  Tác giả: cô Nguyễn Thị Diệu Thúy — Trường Tiểu học chất lượng cao Hoàng Mai.
+  Làm cùng trợ lý Triway (AI). Một tệp, chạy không cần mạng, không gửi dữ liệu đi đâu.
+  Dữ liệu sửa (câu hỏi, tên đội) nằm trong trình duyệt của máy này — nhớ bấm "Xuất kho" để sao lưu.
+-->
+<style>
+:root{
+  --nen1:#1b1446; --nen2:#2a1b6e; --kinh:rgba(255,255,255,.08); --vien:rgba(255,255,255,.16);
+  --chu:#fffaf0; --mo:#c9c3ef; --chinh:#ffd23f; --nhan1:#ff6b9d; --nhan2:#3ddcff;
+  --dung:#2ecc71; --sai:#ff5c5c;
+  --A:#ef476f; --B:#2f80ed; --C:#f4b400; --D:#18b26b;
+  --bo:20px; --bong:0 12px 36px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{font-family:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;color:var(--chu);
+  background:radial-gradient(circle at 12% 18%,rgba(255,107,157,.28),transparent 42%),
+             radial-gradient(circle at 88% 82%,rgba(61,220,255,.22),transparent 45%),
+             linear-gradient(160deg,var(--nen1),var(--nen2));overflow:hidden}
+#sao-nen{position:fixed;inset:0;z-index:0;pointer-events:none}
+#app{position:relative;z-index:1;height:100vh;display:flex;flex-direction:column}
+button{font-family:inherit;cursor:pointer}
+.thanh-tren{display:flex;align-items:center;gap:14px;padding:10px 20px;background:rgba(0,0,0,.18);border-bottom:1px solid var(--vien)}
+.logo{display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none}
+.logo b{font-size:22px;background:linear-gradient(90deg,var(--chinh),var(--nhan1));-webkit-background-clip:text;background-clip:text;color:transparent;letter-spacing:.5px}
+.host{display:flex;align-items:center;gap:8px;padding:6px 14px 6px 8px;border-radius:999px;background:linear-gradient(135deg,rgba(255,107,157,.35),rgba(255,210,63,.25));border:1px solid rgba(255,210,63,.6);font-weight:800;font-size:17px;white-space:nowrap}
+.host .mic{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,var(--nhan1),#ff9a76);font-size:16px}
+.host small{color:var(--chinh);font-weight:900;letter-spacing:.5px}
+.host-lon{display:inline-flex;margin-top:10px;font-size:22px;padding:8px 20px 8px 10px}
+.host-lon .mic{width:40px;height:40px;font-size:22px}
+.bang-diem{display:flex;gap:8px;flex:1;justify-content:center;flex-wrap:wrap}
+.doi-chip{display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:14px;background:var(--kinh);border:2px solid var(--vien);font-weight:700;font-size:17px;transition:.2s}
+.doi-chip .d{font-size:20px;min-width:34px;text-align:right}
+.doi-chip.dang{transform:translateY(-2px) scale(1.06);box-shadow:0 0 0 3px var(--chinh),var(--bong)}
+.doi-chip.khoa{opacity:.35}
+.nut-nho{background:var(--kinh);border:1px solid var(--vien);color:var(--chu);border-radius:12px;height:44px;min-width:44px;padding:0 12px;font-size:18px;transition:.15s}
+.nut-nho:hover{transform:translateY(-2px);background:rgba(255,255,255,.16)}
+.nut{border:0;border-radius:16px;padding:12px 24px;min-height:52px;font-size:20px;font-weight:700;color:#24124d;
+  background:linear-gradient(135deg,var(--chinh),#ffb347);box-shadow:var(--bong);transition:.15s}
+.nut:hover{transform:translateY(-2px)} .nut:active{transform:translateY(1px)}
+.nut.phu{background:transparent;color:var(--chu);border:2px solid var(--vien);box-shadow:none}
+.nut.hong{background:linear-gradient(135deg,var(--nhan1),#ff9a76);color:#fff}
+.nut.xanh{background:linear-gradient(135deg,var(--nhan2),#5b8cff);color:#fff}
+.nut:disabled{opacity:.4;pointer-events:none}
+main{flex:1;position:relative;overflow:hidden}
+.man{position:absolute;inset:0;padding:22px 30px;display:none;flex-direction:column;overflow:auto;animation:hien .3s ease}
+.man.mo{display:flex}
+@keyframes hien{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.kinh{background:var(--kinh);border:1px solid var(--vien);border-radius:var(--bo);box-shadow:var(--bong);backdrop-filter:blur(6px)}
+h1,h2,h3{margin:.2em 0}
+.mo-ta{color:var(--mo)}
+/* MENU */
+.menu-dau{display:flex;align-items:center;gap:26px;margin:6px 0 18px}
+.menu-dau h1{font-size:46px;line-height:1.1;background:linear-gradient(90deg,#fff,var(--chinh) 45%,var(--nhan1));-webkit-background-clip:text;background-clip:text;color:transparent}
+.bong-noi{animation:noi 3s ease-in-out infinite}
+@keyframes noi{50%{transform:translateY(-10px)}}
+.luoi-che-do{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;flex:1;min-height:0}
+.the-che-do{display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:18px;text-align:center;cursor:pointer;transition:.2s;border:2px solid var(--vien)}
+.the-che-do:hover{transform:translateY(-6px) rotate(-.5deg);border-color:var(--chinh)}
+.the-che-do svg{width:100%;max-height:200px}
+.the-che-do h2{font-size:clamp(17px,1.55vw,26px);white-space:nowrap;letter-spacing:-.2px} .the-che-do p{margin:4px 0 10px;color:var(--mo);font-size:16px}
+.chan-menu{display:flex;gap:12px;justify-content:center;margin-top:16px;flex-wrap:wrap}
+/* CÂU HỎI */
+.khung-hoi{display:grid;grid-template-columns:1fr 300px;gap:22px;flex:1;min-height:0}
+.the-hoi{padding:26px 30px;display:flex;flex-direction:column;gap:18px;min-height:0}
+.nhan-cau{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.nhan{padding:5px 14px;border-radius:999px;font-weight:700;font-size:15px;background:rgba(255,255,255,.14)}
+.cau-hoi{font-size:clamp(26px,3.2vw,44px);font-weight:700;line-height:1.3;display:flex;gap:18px;align-items:center}
+.cau-hoi .bieu{font-size:1.6em;flex:none}
+.luoi-dap{display:grid;grid-template-columns:1fr 1fr;gap:16px;flex:1;grid-auto-rows:minmax(84px,150px);align-content:start}
+.dap{display:flex;align-items:center;gap:16px;text-align:left;padding:16px 20px;border-radius:18px;border:3px solid transparent;
+  background:rgba(255,255,255,.1);color:var(--chu);font-size:clamp(20px,2.2vw,30px);font-weight:600;min-height:84px;transition:.15s}
+.dap:hover{transform:translateY(-2px);background:rgba(255,255,255,.16)}
+.dap .chu-cai{flex:none;width:56px;height:56px;border-radius:14px;display:grid;place-items:center;font-size:30px;font-weight:900;color:#fff;box-shadow:inset 0 -4px 0 rgba(0,0,0,.2)}
+.dap.an{opacity:.18;pointer-events:none}
+.dap.dung{background:rgba(46,204,113,.3);border-color:var(--dung);animation:sang .6s}
+.dap.sai{background:rgba(255,92,92,.25);border-color:var(--sai);animation:rung .4s}
+@keyframes sang{50%{transform:scale(1.04)}}
+@keyframes rung{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.giai{font-size:20px;padding:12px 18px;border-radius:14px;background:rgba(255,210,63,.15);border-left:5px solid var(--chinh);display:none}
+.ben-phai{display:flex;flex-direction:column;gap:12px;min-height:0;overflow:auto}
+body.thang .dong-ho{width:110px;height:110px} body.thang .dong-ho .so{font-size:38px}
+.dong-ho{position:relative;width:180px;height:180px;margin:0 auto}
+.dong-ho svg{width:100%;height:100%;transform:rotate(-90deg)}
+.dong-ho .so{position:absolute;inset:0;display:grid;place-items:center;font-size:56px;font-weight:900}
+.dong-ho.gap .so{color:var(--sai);animation:sang .5s infinite}
+.hang-nut{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.chon-doi{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.chon-doi button{border:0;border-radius:14px;padding:10px;font-size:18px;font-weight:800;color:#fff;min-height:52px;transition:.15s}
+.chon-doi button.dang{outline:4px solid var(--chinh);transform:scale(1.05)}
+.chon-doi button:disabled{opacity:.3}
+.linh-vat-loi{display:flex;gap:10px;align-items:flex-end}
+.bong-noi-loi{background:#fff;color:#2a1b6e;border-radius:16px 16px 16px 4px;padding:10px 14px;font-weight:700;font-size:17px;flex:1}
+.tien-trinh{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
+.tien-trinh i{width:14px;height:14px;border-radius:50%;background:rgba(255,255,255,.2)}
+.tien-trinh i.d{background:var(--dung)} .tien-trinh i.s{background:var(--sai)} .tien-trinh i.h{background:var(--chinh);box-shadow:0 0 8px var(--chinh)}
+/* BÁNH XE */
+.khung-xe{display:grid;grid-template-columns:420px 1fr;gap:24px;flex:1;min-height:0}
+.xe-wrap{position:relative;display:flex;flex-direction:column;align-items:center;gap:14px}
+#banh-xe-svg{width:400px;height:400px;filter:drop-shadow(0 14px 30px rgba(0,0,0,.45))}
+#banh-xe-svg .quay{transform-box:view-box;transform-origin:0 0;transition:transform 4.2s cubic-bezier(.17,.67,.2,1)}
+.kim-xe{position:absolute;top:-6px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:20px solid transparent;border-right:20px solid transparent;border-top:42px solid var(--chinh);filter:drop-shadow(0 4px 4px rgba(0,0,0,.4));z-index:2}
+.ket-qua-xe{font-size:30px;font-weight:900;min-height:44px;text-align:center}
+.o-chu{display:flex;flex-wrap:wrap;gap:22px;justify-content:center;padding:20px}
+.tu{display:flex;gap:8px}
+.o{width:62px;height:76px;border-radius:12px;display:grid;place-items:center;font-size:40px;font-weight:900;
+  background:linear-gradient(180deg,#fff,#e9e4ff);color:#2a1b6e;box-shadow:inset 0 -5px 0 rgba(0,0,0,.12)}
+.o.an{background:linear-gradient(180deg,#5d4bd6,#3b2a9e);color:transparent}
+.o.lat{animation:lat .5s}
+.o.gach{background:transparent;box-shadow:none;color:var(--chu);width:24px}
+@keyframes lat{0%{transform:rotateY(90deg)}100%{transform:none}}
+.goi-y{font-size:26px;text-align:center;padding:14px 20px}
+.ban-phim{display:grid;grid-template-columns:repeat(10,1fr);gap:8px;padding:14px}
+.ban-phim button{height:56px;border-radius:12px;border:0;font-size:26px;font-weight:900;background:#fff;color:#2a1b6e;box-shadow:inset 0 -4px 0 rgba(0,0,0,.15)}
+.ban-phim button.co{background:var(--dung);color:#fff} .ban-phim button.khong{background:#7a6fae;color:#cfc8f5}
+/* BẬC THANG */
+.khung-thang{display:grid;grid-template-columns:1fr 280px;gap:22px;flex:1;min-height:0}
+.thang{display:flex;flex-direction:column-reverse;gap:4px;padding:10px}
+.bac{display:flex;align-items:center;gap:10px;padding:5px 14px;border-radius:12px;font-weight:800;font-size:19px;background:rgba(255,255,255,.06);transition:.3s}
+.bac .sb{width:30px;text-align:right;opacity:.7}
+.bac .sao{margin-left:auto;color:var(--chinh)}
+.bac.moc{border:2px solid rgba(255,210,63,.6)}
+.bac.qua{background:rgba(46,204,113,.22)}
+.bac.dang{background:linear-gradient(90deg,var(--chinh),#ffb347);color:#2a1b6e;transform:scale(1.05)}
+.bac.dang .sao{color:#2a1b6e}
+.tro-giup{display:flex;gap:10px;justify-content:center}
+.tro-giup button{width:78px;height:62px;border-radius:50%;border:3px solid var(--chinh);background:rgba(255,210,63,.12);color:var(--chu);font-size:17px;font-weight:900}
+.tro-giup button:disabled{opacity:.25;text-decoration:line-through}
+/* NGÔI SAO */
+.bau-troi{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;padding:10px}
+.bau-troi span{font-size:28px;transition:.4s;filter:drop-shadow(0 0 6px rgba(255,210,63,.7))}
+.bau-troi span.tat{opacity:.15;filter:grayscale(1);transform:scale(.8)}
+.dem-so{display:flex;align-items:center;gap:10px;justify-content:center;font-size:22px;font-weight:800}
+.dem-so b{font-size:44px;color:var(--chinh);min-width:60px;text-align:center}
+/* CÀI ĐẶT & KHO */
+.luoi-cai{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.khoi{padding:18px 22px}
+.hang{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:8px 0}
+.hop-chon{display:flex;align-items:center;gap:8px;padding:8px 14px;border-radius:12px;background:rgba(255,255,255,.08);font-size:18px;cursor:pointer;user-select:none}
+.hop-chon input{width:22px;height:22px}
+input[type=text],input[type=number],select,textarea{font:inherit;font-size:18px;padding:8px 12px;border-radius:10px;border:1px solid var(--vien);background:rgba(0,0,0,.25);color:var(--chu)}
+select option{color:#000}
+.ten-doi{display:flex;gap:8px;align-items:center;margin:6px 0}
+.ten-doi .mau{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;font-size:22px}
+table{width:100%;border-collapse:collapse;font-size:16px}
+th,td{padding:8px 10px;border-bottom:1px solid var(--vien);text-align:left;vertical-align:top}
+th{position:sticky;top:0;background:#2a1b6e}
+.bang-kho{overflow:auto;flex:1;min-height:0}
+td .dung-chu{color:var(--dung);font-weight:700}
+.hop-thoai{position:fixed;inset:0;background:rgba(10,6,30,.7);display:none;align-items:center;justify-content:center;z-index:50}
+.hop-thoai.mo{display:flex}
+.luat-ds{font-size:22px;line-height:1.5;margin:14px 0 18px;padding-left:30px}.luat-ds li{margin:8px 0}.luat-ds li::marker{color:var(--chinh);font-weight:800}
+.luat-chon{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:12px;margin:14px 0}.luat-chon .nut{font-size:20px;white-space:nowrap}
+.hop-thoai .kinh{background:#2a1b6e;padding:24px 28px;width:min(760px,92vw);max-height:90vh;overflow:auto}
+.hop-thoai label{display:block;margin:10px 0 4px;color:var(--mo)}
+.hop-thoai input[type=text],.hop-thoai textarea{width:100%}
+/* KẾT QUẢ */
+.buc{display:flex;align-items:flex-end;justify-content:center;gap:18px;flex:1;padding-top:30px}
+.cot-buc{display:flex;flex-direction:column;align-items:center;gap:8px;width:150px}
+.cot-buc .than{width:100%;border-radius:16px 16px 0 0;display:grid;place-items:start center;padding-top:12px;font-size:40px;font-weight:900;color:#fff;box-shadow:var(--bong);animation:moc 1s ease-out both}
+@keyframes moc{from{transform:scaleY(0);transform-origin:bottom}to{transform:none}}
+.thong-bao{position:fixed;left:50%;top:84px;transform:translateX(-50%);background:#fff;color:#2a1b6e;padding:12px 24px;border-radius:14px;font-weight:800;font-size:20px;box-shadow:var(--bong);z-index:60;display:none}
+#phao{position:fixed;inset:0;pointer-events:none;z-index:40}
+.du-lieu-thu{position:fixed;left:-52px;bottom:30px;transform:rotate(45deg);background:var(--nhan1);color:#fff;padding:4px 60px;font-weight:800;z-index:70;display:none}
+.chu-nho{font-size:14px;color:var(--mo)}
+@media (max-width:1100px){.luoi-che-do{grid-template-columns:1fr 1fr}.khung-hoi,.khung-xe,.khung-thang{grid-template-columns:1fr}}
+body.chup *{animation:none!important;transition:none!important}
+@media (max-width:760px){.thanh-tren{flex-wrap:wrap;gap:8px;padding:8px 10px}.logo b{font-size:17px}.host{font-size:14px}.bang-diem{order:5;width:100%}.man{padding:12px}.menu-dau{flex-wrap:wrap;gap:10px}.menu-dau h1{font-size:30px}.luoi-che-do,.luoi-cai,.luoi-dap{grid-template-columns:1fr}.ban-phim{grid-template-columns:repeat(6,1fr)}#banh-xe-svg{width:300px;height:300px}.o{width:40px;height:52px;font-size:26px}table{font-size:13px}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <linearGradient id="gVang" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe680"/><stop offset="1" stop-color="#ffb000"/></linearGradient>
+    <linearGradient id="gTim" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7b5cff"/><stop offset="1" stop-color="#4a2fbd"/></linearGradient>
+    <linearGradient id="gHong" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff9ac1"/><stop offset="1" stop-color="#ef476f"/></linearGradient>
+    <linearGradient id="gXanh" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7ee8ff"/><stop offset="1" stop-color="#2f80ed"/></linearGradient>
+    <linearGradient id="gLa" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8ef0b0"/><stop offset="1" stop-color="#18b26b"/></linearGradient>
+    <radialGradient id="gSang"><stop offset="0" stop-color="#fff" stop-opacity=".9"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+    <symbol id="cu" viewBox="0 0 120 130">
+      <ellipse cx="60" cy="122" rx="34" ry="6" fill="rgba(0,0,0,.25)"/>
+      <ellipse cx="60" cy="78" rx="42" ry="44" fill="url(#gTim)"/>
+      <ellipse cx="60" cy="90" rx="26" ry="28" fill="#cbb8ff"/>
+      <path d="M44 86q4 4 8 0M56 94q4 4 8 0M66 86q4 4 8 0" stroke="#7b5cff" stroke-width="2.5" fill="none"/>
+      <circle cx="42" cy="62" r="17" fill="#fff"/><circle cx="78" cy="62" r="17" fill="#fff"/>
+      <circle cx="44" cy="63" r="8" fill="#2a1b6e"/><circle cx="76" cy="63" r="8" fill="#2a1b6e"/>
+      <circle cx="47" cy="60" r="3" fill="#fff"/><circle cx="79" cy="60" r="3" fill="#fff"/>
+      <path d="M54 74l6 9 6-9z" fill="#ffb000"/>
+      <path d="M20 70q-14 18 4 34q6-14 0-34z" fill="#4a2fbd"/><path d="M100 70q14 18-4 34q-6-14 0-34z" fill="#4a2fbd"/>
+      <path d="M28 30l32-14 32 14-32 14z" fill="#24124d"/><rect x="44" y="34" width="32" height="12" rx="3" fill="#24124d"/>
+      <path d="M92 30v18" stroke="#ffd23f" stroke-width="3"/><circle cx="92" cy="50" r="4" fill="#ffd23f"/>
+      <path d="M48 118h8M64 118h8" stroke="#ffb000" stroke-width="5" stroke-linecap="round"/>
+    </symbol>
+  </defs>
+</svg>
+<canvas id="sao-nen"></canvas>
+<canvas id="phao"></canvas>
+<div class="du-lieu-thu" id="nhan-thu">DỮ LIỆU THỬ</div>
+<div class="thong-bao" id="thong-bao"></div>
+
+<div id="app">
+  <div class="thanh-tren">
+    <div class="logo" onclick="diToi('menu')" title="Về trang chính">
+      <svg width="44" height="48"><use href="#cu"/></svg><b>Thi tài cùng lớp Một</b>
+    </div>
+    <div class="host" title="Người dẫn chương trình — đổi ở ⚙️ Cài đặt"><span class="mic">🎤</span><small>HOST</small><span class="ten-host"></span></div>
+    <div class="bang-diem" id="bang-diem"></div>
+    <button class="nut-nho" onclick="doiAm()" id="nut-am" title="Bật/tắt âm thanh">🔊</button>
+    <button class="nut-nho" onclick="toanManHinh()" title="Toàn màn hình (phím F)">⛶</button>
+    <button class="nut-nho" onclick="diToi('ket-qua')" title="Bảng tổng kết">🏆</button>
+    <button class="nut-nho" onclick="diToi('cai-dat')" title="Cài đặt đội, lớp, môn">⚙️</button>
+  </div>
+  <main>
+    <!-- MENU -->
+    <section class="man" id="man-menu">
+      <div class="menu-dau">
+        <svg class="bong-noi" width="140" height="150"><use href="#cu"/></svg>
+        <div>
+          <h1>Thi tài cùng lớp Một</h1>
+          <div class="mo-ta" style="font-size:22px">Sân chơi kiến thức lớp 1 – lớp 2 · <span id="dem-kho"></span></div>
+          <div class="host host-lon"><span class="mic">🎤</span><small>HOST</small><span class="ten-host"></span></div>
+          <div class="mo-ta" style="font-size:17px;margin-top:8px">Cô bấm trên TV · các con giơ thẻ <b style="color:var(--A)">A</b> <b style="color:var(--B)">B</b> <b style="color:var(--C)">C</b> <b style="color:var(--D)">D</b> hoặc giơ tay giành quyền</div>
+        </div>
+      </div>
+      <div class="luoi-che-do">
+        <div class="the-che-do kinh" onclick="huongDan('tia-chop')">
+          <svg viewBox="0 0 200 160"><circle cx="100" cy="80" r="62" fill="url(#gSang)" opacity=".35"/><path d="M112 14L58 92h36l-12 56 60-84h-38z" fill="url(#gVang)" stroke="#fff" stroke-width="4" stroke-linejoin="round"/><circle cx="40" cy="40" r="5" fill="#fff"/><circle cx="168" cy="118" r="4" fill="#fff"/><circle cx="160" cy="30" r="3" fill="#3ddcff"/></svg>
+          <div><h2>⚡ Tia Chớp Nhí</h2><p>Đố nhanh — đội nào giơ tay trước được trả lời</p></div>
+          <span class="nut">Xem luật & chơi</span>
+        </div>
+        <div class="the-che-do kinh" onclick="huongDan('banh-xe')">
+          <svg viewBox="0 0 200 160"><g transform="translate(100 84)"><circle r="66" fill="#fff"/>
+            <path d="M0 0L0-62A62 62 0 0 1 53.7-31z" fill="#ef476f"/><path d="M0 0L53.7-31A62 62 0 0 1 53.7 31z" fill="#ffd23f"/><path d="M0 0L53.7 31A62 62 0 0 1 0 62z" fill="#18b26b"/><path d="M0 0L0 62A62 62 0 0 1-53.7 31z" fill="#2f80ed"/><path d="M0 0L-53.7 31A62 62 0 0 1-53.7-31z" fill="#ff9a76"/><path d="M0 0L-53.7-31A62 62 0 0 1 0-62z" fill="#7b5cff"/><circle r="14" fill="#fff"/><circle r="7" fill="#2a1b6e"/></g><path d="M88 6h24l-12 22z" fill="#ffd23f" stroke="#fff" stroke-width="3"/></svg>
+          <div><h2>🎡 Bánh Xe Ô Chữ</h2><p>Quay bánh xe, đoán chữ cái mở ô chữ bí mật</p></div>
+          <span class="nut">Xem luật & chơi</span>
+        </div>
+        <div class="the-che-do kinh" onclick="huongDan('bac-thang')">
+          <svg viewBox="0 0 200 160"><path d="M60 150L82 10M140 150L118 10" stroke="#ffd23f" stroke-width="8" stroke-linecap="round"/><g stroke="#fff" stroke-width="6" stroke-linecap="round"><path d="M66 128h68M70 104h60M74 80h52M78 56h44M81 32h38"/></g><text x="100" y="24" font-size="26" text-anchor="middle">⭐</text><use href="#cu" x="122" y="96" width="50" height="54"/></svg>
+          <div><h2>🪜 Bậc Thang Trí Tuệ</h2><p>10 bậc từ dễ đến khó · 3 quyền trợ giúp</p></div>
+          <span class="nut">Xem luật & chơi</span>
+        </div>
+        <div class="the-che-do kinh" onclick="huongDan('ngoi-sao')">
+          <svg viewBox="0 0 200 160"><g fill="url(#gVang)" stroke="#fff" stroke-width="2"><path d="M100 18l12 26 28 3-21 19 6 28-25-14-25 14 6-28-21-19 28-3z"/></g><g font-size="22" text-anchor="middle"><text x="34" y="132">⭐</text><text x="70" y="146">⭐</text><text x="130" y="146">⭐</text><text x="166" y="132">⭐</text><text x="100" y="134" opacity=".3">⭐</text></g></svg>
+          <div><h2>🌟 Ngôi Sao Cuối Cùng</h2><p>Cả lớp giơ thẻ A B C D — ai sai tạm ngồi nghỉ</p></div>
+          <span class="nut">Xem luật & chơi</span>
+        </div>
+      </div>
+      <div class="chan-menu">
+        <button class="nut phu" onclick="diToi('cai-dat')">⚙️ Đội chơi · Lớp · Môn</button>
+        <button class="nut phu" onclick="diToi('kho')">📚 Kho câu hỏi</button>
+        <button class="nut phu" onclick="huongDan()">❓ Cách chơi</button>
+      </div>
+    </section>
+
+    <!-- CÂU HỎI DÙNG CHUNG: tia chớp, bậc thang, ngôi sao -->
+    <section class="man" id="man-hoi">
+      <div class="khung-hoi">
+        <div class="the-hoi kinh">
+          <div class="nhan-cau"><span class="nhan" id="nhan-mon"></span><span class="nhan" id="nhan-lop"></span><span class="nhan" id="nhan-muc"></span><span style="flex:1"></span><span class="nhan" id="nhan-so"></span></div>
+          <div class="cau-hoi"><span class="bieu" id="bieu-cau"></span><span id="chu-cau"></span></div>
+          <div class="luoi-dap" id="luoi-dap"></div>
+          <div class="giai" id="giai"></div>
+          <div class="linh-vat-loi" style="margin-top:auto;align-items:center"><svg width="70" height="76" style="flex:none"><use href="#cu"/></svg><div class="bong-noi-loi" id="loi-cu">Các con sẵn sàng chưa nào?</div>
+            <button class="nut-nho" onclick="docCau()" title="Đọc câu hỏi">🔊 Đọc</button>
+            <button class="nut-nho" onclick="dungDongHo()" title="Dừng / chạy đồng hồ (phím P)">⏯</button>
+            <button class="nut-nho" onclick="hienDapAn()" title="Hiện đáp án (phím H)">👁 Đáp án</button>
+            <button class="nut" onclick="cauTiep()" id="nut-tiep">Câu tiếp ▶</button></div>
+        </div>
+        <div class="ben-phai">
+          <div class="kinh" style="padding:16px">
+            <div class="dong-ho" id="dong-ho"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" stroke="rgba(255,255,255,.15)" stroke-width="10" fill="none"/><circle id="vong-gio" cx="50" cy="50" r="44" stroke="url(#gVang)" stroke-width="10" fill="none" stroke-linecap="round" stroke-dasharray="276.5" stroke-dashoffset="0"/></svg><div class="so" id="so-giay">10</div></div>
+            <div class="tien-trinh" id="tien-trinh" style="margin-top:10px"></div>
+          </div>
+          <div id="phai-rieng"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BÁNH XE -->
+    <section class="man" id="man-banh-xe">
+      <div class="khung-xe">
+        <div class="xe-wrap kinh" style="padding:18px">
+          <div style="position:relative">
+            <div class="kim-xe"></div>
+            <svg id="banh-xe-svg" viewBox="-210 -210 420 420" onclick="quayXe()"><g class="quay" id="xe-quay"></g><circle r="34" fill="#fff" stroke="#ffd23f" stroke-width="6"/><text y="10" text-anchor="middle" font-size="26" font-weight="900" fill="#2a1b6e">QUAY</text></svg>
+          </div>
+          <div class="ket-qua-xe" id="ket-qua-xe">Bấm bánh xe để quay!</div>
+          <div class="mo-ta" id="luot-xe" style="font-size:20px"></div>
+          <div class="linh-vat-loi" style="margin-top:auto;width:100%"><svg width="70" height="76"><use href="#cu"/></svg><div class="bong-noi-loi">Có chữ cái đó: được điểm × số ô mở, quay tiếp. Không có: sang đội khác!</div></div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:14px;min-height:0">
+          <div class="kinh goi-y" id="goi-y-xe"></div>
+          <div class="kinh o-chu" id="o-chu"></div>
+          <div class="kinh ban-phim" id="ban-phim"></div>
+          <div class="hang-nut">
+            <button class="nut hong" onclick="giaiOChu()">🎉 Đội đang chơi đoán được cả ô chữ</button>
+            <button class="nut-nho" onclick="docGoiY()">🔊 Đọc gợi ý</button>
+            <button class="nut-nho" onclick="doiLuot()">⏭ Sang đội khác</button>
+            <button class="nut phu" onclick="oChuMoi()">Ô chữ mới ▶</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CÀI ĐẶT -->
+    <section class="man" id="man-cai-dat">
+      <h1>⚙️ Cài đặt sân chơi</h1>
+      <div class="luoi-cai" style="margin-top:12px">
+        <div class="kinh khoi">
+          <h2>🎤 Host (người dẫn chương trình)</h2>
+          <div class="hang"><input type="text" id="ten-host" maxlength="30" style="flex:1" oninput="cd.host=this.value;luuCaiDat(true);veHost()"></div>
+          <h2 style="margin-top:14px">👥 Đội chơi</h2>
+          <div class="hang">Số đội: <select id="so-doi" onchange="doiSoDoi(this.value)"></select></div>
+          <div id="ds-doi"></div>
+          <div class="hang"><button class="nut-nho" onclick="xoaDiem()">🔄 Đưa điểm các đội về 0</button></div>
+        </div>
+        <div class="kinh khoi">
+          <h2>📚 Lấy câu hỏi từ</h2>
+          <div class="hang" id="chon-lop"></div>
+          <div class="hang" id="chon-mon"></div>
+          <div class="chu-nho" id="dem-loc"></div>
+          <h2 style="margin-top:14px">⏱ Thời gian</h2>
+          <div class="hang">Tia Chớp Nhí: <input type="number" id="giay-tc" min="5" max="90" style="width:80px"> giây/câu · <input type="number" id="so-tc" min="5" max="50" style="width:80px"> câu/lượt</div>
+          <div class="hang">Ngôi Sao Cuối Cùng: <input type="number" id="giay-ns" min="5" max="90" style="width:80px"> giây/câu · sĩ số <input type="number" id="si-so" min="2" max="60" style="width:80px"></div>
+          <div class="hang">Bậc Thang Trí Tuệ: <input type="number" id="giay-bt" min="10" max="120" style="width:80px"> giây/câu</div>
+        </div>
+      </div>
+      <div class="chan-menu"><button class="nut" onclick="luuCaiDat();diToi('menu')">✔ Xong</button></div>
+    </section>
+
+    <!-- KHO -->
+    <section class="man" id="man-kho">
+      <div class="hang" style="justify-content:space-between">
+        <h1>📚 Kho câu hỏi</h1>
+        <div class="hang">
+          <button class="nut-nho" id="tab-cau" onclick="tabKho('cau')">Câu hỏi</button>
+          <button class="nut-nho" id="tab-o" onclick="tabKho('o')">Ô chữ</button>
+        </div>
+      </div>
+      <div class="hang">
+        <input type="text" id="tim-kho" placeholder="🔎 Tìm câu…" oninput="veKho()" style="flex:1;min-width:200px">
+        <select id="loc-mon-kho" onchange="veKho()"></select>
+        <select id="loc-lop-kho" onchange="veKho()"><option value="">Mọi lớp</option><option value="1">Lớp 1</option><option value="2">Lớp 2</option><option value="0">Chung</option></select>
+        <button class="nut-nho" onclick="tab==='o'?moSuaO(null):moSua(null)">➕ Thêm</button>
+        <button class="nut-nho" onclick="xuatKho()">💾 Xuất kho</button>
+        <button class="nut-nho" onclick="document.getElementById('file-nhap').click()">📂 Nhập kho</button>
+        <button class="nut-nho" onclick="khoiPhuc()">↩ Kho gốc</button>
+        <input type="file" id="file-nhap" accept=".json" style="display:none" onchange="nhapKho(this)">
+      </div>
+      <div class="chu-nho" id="dem-kho-loc"></div>
+      <div class="kinh bang-kho" style="margin-top:8px"><table id="bang-kho"></table></div>
+    </section>
+
+    <!-- KẾT QUẢ -->
+    <section class="man" id="man-ket-qua">
+      <h1 style="text-align:center">🏆 Bảng tổng kết</h1>
+      <div style="text-align:center"><div class="host host-lon"><span class="mic">🎤</span><small>HOST</small><span class="ten-host"></span></div></div>
+      <div class="buc" id="buc"></div>
+      <div class="chan-menu"><button class="nut" onclick="diToi('menu')">🏠 Về trang chính</button><button class="nut phu" onclick="xoaDiem();veKetQua()">🔄 Chơi lại từ 0 điểm</button></div>
+    </section>
+  </main>
+</div>
+
+<!-- Hộp sửa câu -->
+<div class="hop-thoai" id="hop-sua"><div class="kinh" id="noi-dung-sua"></div></div>
+<div class="hop-thoai" id="hop-hd"><div class="kinh" id="noi-dung-hd"></div></div>
+
+<script>/*GIONG-VIET-BAT*/
+const GIONG_VIET = {};
+let __amDang = null, __giongMay = null;
+function __chuanGiong(t){ return String(t).normalize("NFC").replace(/\s+/g, " ").trim(); }
+function __choDeNghe(t){
+  const doi = [["π"," pi "],["cm³"," xăng-ti-mét khối"],["cm²"," xăng-ti-mét vuông"],["dm³"," đề-xi-mét khối"],["m³"," mét khối"],
+    ["m²"," mét vuông"],["×"," nhân "],["÷"," chia "],["−"," trừ "],["≈"," xấp xỉ "],["="," bằng "],["+"," cộng "]];
+  t = String(t).replace(/<[^>]+>/g, "");
+  for (const [a, b] of doi) t = t.split(a).join(b);
+  return __chuanGiong(t.replace(/(\d)\s*cm\b/g, "$1 xăng-ti-mét").replace(/(\d)\s*m\b/g, "$1 mét"));
+}
+function __timGiongMay(){ try { const ds = speechSynthesis.getVoices().filter(v => /^vi/i.test(v.lang));
+  __giongMay = ds.find(v => /Natural|Online|HoaiMy|Hoài/i.test(v.name)) || ds[0] || null; } catch(e){} return __giongMay; }
+try { if (window.speechSynthesis){ __timGiongMay(); speechSynthesis.addEventListener("voiceschanged", __timGiongMay); } } catch(e){}
+function coGiongViet(chu){ return !!(GIONG_VIET[__chuanGiong(chu)] || __giongMay || __timGiongMay()); }
+function dungGiong(){ try { if (__amDang){ __amDang.pause(); __amDang = null; } if (window.speechSynthesis) speechSynthesis.cancel(); } catch(e){} }
+function __baoChuaCoGiong(){ try { if (document.getElementById("__baoGiong")) return; const d = document.createElement("div"); d.id = "__baoGiong";
+  d.setAttribute("role", "status");
+  d.textContent = "Máy chưa có giọng đọc tiếng Việt cho câu này. Mở bằng Microsoft Edge (có mạng) để nghe giọng Việt, hoặc cài thêm giọng Tiếng Việt: Cài đặt Windows → Thời gian và ngôn ngữ → Giọng nói.";
+  d.style.cssText = "position:fixed;left:50%;bottom:18px;transform:translateX(-50%);max-width:92vw;background:#1f2937;color:#fff;padding:12px 16px;border-radius:12px;font:15px/1.4 system-ui,sans-serif;z-index:99999;box-shadow:0 6px 20px rgba(0,0,0,.3)";
+  document.body.appendChild(d); setTimeout(() => d.remove(), 7000); } catch(e){} }
+function __docMay(chu, toc){
+  if (!__giongMay){ __baoChuaCoGiong(); return; }   // KHÔNG có giọng Việt → báo, không đọc bằng giọng Anh
+  const u = new SpeechSynthesisUtterance(chu); u.voice = __giongMay; u.lang = __giongMay.lang; u.rate = toc || 0.9; speechSynthesis.speak(u);
+}
+function docGiongViet(goc, chuMay, toc){
+  dungGiong(); const k = __chuanGiong(goc);
+  if (GIONG_VIET[k]){ try { __amDang = new Audio(GIONG_VIET[k]); const h = __amDang.play(); if (h && h.catch) h.catch(() => {}); return; } catch(e){} }
+  try { if (!window.speechSynthesis){ __baoChuaCoGiong(); return; }
+    const chu = chuMay || __choDeNghe(goc);
+    if (!__giongMay && !__timGiongMay() && !speechSynthesis.getVoices().length){   // Chrome nạp danh sách giọng chậm
+      setTimeout(() => { __timGiongMay(); __docMay(chu, toc); }, 700); return; }
+    __docMay(chu, toc); } catch(e){}
+}
+/*GIONG-VIET-HET*/</script>
+<script>
+const KHO_GOC=[{"id": 1, "lop": 1, "mon": "toan", "muc": 1, "q": "3 + 2 = ?", "a": ["5", "4", "6", "7"], "g": "Ba thêm hai là năm."}, {"id": 2, "lop": 1, "mon": "toan", "muc": 1, "q": "5 + 4 = ?", "a": ["9", "8", "10", "7"], "g": ""}, {"id": 3, "lop": 1, "mon": "toan", "muc": 1, "q": "6 + 1 = ?", "a": ["7", "6", "8", "5"], "g": ""}, {"id": 4, "lop": 1, "mon": "toan", "muc": 1, "q": "2 + 2 = ?", "a": ["4", "3", "5", "2"], "g": ""}, {"id": 5, "lop": 1, "mon": "toan", "muc": 1, "q": "7 − 3 = ?", "a": ["4", "3", "5", "10"], "g": "Bảy bớt ba còn bốn."}, {"id": 6, "lop": 1, "mon": "toan", "muc": 1, "q": "9 − 4 = ?", "a": ["5", "4", "6", "3"], "g": ""}, {"id": 7, "lop": 1, "mon": "toan", "muc": 1, "q": "10 − 2 = ?", "a": ["8", "7", "9", "12"], "g": ""}, {"id": 8, "lop": 1, "mon": "toan", "muc": 1, "q": "8 − 8 = ?", "a": ["0", "1", "8", "16"], "g": "Một số trừ đi chính nó thì bằng 0."}, {"id": 9, "lop": 1, "mon": "toan", "muc": 1, "q": "Số nào lớn nhất: 3, 7, 5, 1?", "a": ["7", "5", "3", "1"], "g": ""}, {"id": 10, "lop": 1, "mon": "toan", "muc": 1, "q": "Số nào bé nhất: 6, 2, 9, 4?", "a": ["2", "4", "6", "9"], "g": ""}, {"id": 11, "lop": 1, "mon": "toan", "muc": 1, "q": "Đếm thêm: 1, 2, 3, 4, … Số tiếp theo là số mấy?", "a": ["5", "6", "3", "4"], "g": ""}, {"id": 12, "lop": 1, "mon": "toan", "muc": 1, "q": "Số 0 bé hơn hay lớn hơn số 1?", "a": ["Bé hơn", "Lớn hơn", "Bằng nhau", "Không so sánh được"], "g": ""}, {"id": 13, "lop": 1, "mon": "toan", "muc": 1, "q": "Hình nào có 3 cạnh?", "a": ["Hình tam giác", "Hình vuông", "Hình tròn", "Hình chữ nhật"], "g": ""}, {"id": 14, "lop": 1, "mon": "toan", "muc": 1, "q": "Hình vuông có mấy cạnh?", "a": ["4", "3", "5", "2"], "g": ""}, {"id": 15, "lop": 1, "mon": "toan", "muc": 1, "q": "Mặt đồng hồ, cái đĩa có dạng hình gì?", "a": ["Hình tròn", "Hình vuông", "Hình tam giác", "Hình chữ nhật"], "g": ""}, {"id": 16, "lop": 1, "mon": "toan", "muc": 1, "q": "Một tuần lễ có mấy ngày?", "a": ["7", "5", "6", "10"], "g": ""}, {"id": 17, "lop": 1, "mon": "toan", "muc": 1, "q": "Hôm nay là thứ Hai, ngày mai là thứ mấy?", "a": ["Thứ Ba", "Chủ nhật", "Thứ Tư", "Thứ Bảy"], "g": ""}, {"id": 18, "lop": 1, "mon": "toan", "muc": 1, "q": "Hai tay em có tất cả bao nhiêu ngón?", "a": ["10", "5", "8", "12"], "g": ""}, {"id": 19, "lop": 1, "mon": "toan", "muc": 1, "q": "Số 10 có mấy chữ số?", "a": ["2", "1", "3", "10"], "g": ""}, {"id": 20, "lop": 1, "mon": "toan", "muc": 1, "q": "Con mèo có mấy chân?", "a": ["4", "2", "6", "8"], "g": ""}, {"id": 21, "lop": 1, "mon": "toan", "muc": 1, "q": "Lan có 5 cái kẹo, mẹ cho thêm 3 cái. Lan có tất cả mấy cái kẹo?", "a": ["8", "7", "9", "2"], "g": "5 + 3 = 8."}, {"id": 22, "lop": 1, "mon": "toan", "muc": 1, "q": "Trên cành có 8 con chim, 3 con bay đi. Còn lại mấy con?", "a": ["5", "4", "6", "11"], "g": "8 − 3 = 5."}, {"id": 23, "lop": 1, "mon": "toan", "muc": 1, "q": "Số liền sau số 9 khi đếm là số mấy?", "a": ["10", "8", "11", "19"], "g": ""}, {"id": 24, "lop": 1, "mon": "toan", "muc": 1, "q": "4 + 0 = ?", "a": ["4", "0", "5", "40"], "g": "Cộng với 0 thì số đó giữ nguyên."}, {"id": 25, "lop": 1, "mon": "toan", "muc": 2, "q": "3 + 4 + 2 = ?", "a": ["9", "8", "7", "10"], "g": "3 + 4 = 7, 7 + 2 = 9."}, {"id": 26, "lop": 1, "mon": "toan", "muc": 2, "q": "10 − 3 − 2 = ?", "a": ["5", "6", "7", "4"], "g": "10 − 3 = 7, 7 − 2 = 5."}, {"id": 27, "lop": 1, "mon": "toan", "muc": 2, "q": "Số nào điền vào chỗ trống: 6 + … = 10?", "a": ["4", "3", "5", "16"], "g": ""}, {"id": 28, "lop": 1, "mon": "toan", "muc": 2, "q": "Số nào điền vào chỗ trống: … − 2 = 7?", "a": ["9", "5", "8", "10"], "g": ""}, {"id": 29, "lop": 1, "mon": "toan", "muc": 2, "q": "Số gồm 4 chục và 5 đơn vị là số nào?", "a": ["45", "54", "40", "9"], "g": ""}, {"id": 30, "lop": 1, "mon": "toan", "muc": 2, "q": "Số 70 đọc là gì?", "a": ["Bảy mươi", "Bảy không", "Bảy mươi mốt", "Mười bảy"], "g": ""}, {"id": 31, "lop": 1, "mon": "toan", "muc": 2, "q": "Số \"năm mươi tư\" viết là:", "a": ["54", "45", "504", "50"], "g": ""}, {"id": 32, "lop": 1, "mon": "toan", "muc": 2, "q": "Số bé nhất có hai chữ số là số nào?", "a": ["10", "11", "1", "99"], "g": ""}, {"id": 33, "lop": 1, "mon": "toan", "muc": 2, "q": "Số lớn nhất có hai chữ số là số nào?", "a": ["99", "90", "100", "98"], "g": ""}, {"id": 34, "lop": 1, "mon": "toan", "muc": 2, "q": "Số lớn nhất có một chữ số là số nào?", "a": ["9", "10", "1", "99"], "g": ""}, {"id": 35, "lop": 1, "mon": "toan", "muc": 2, "q": "Điền dấu: 56 … 65", "a": ["<", ">", "=", "+"], "g": "56 bé hơn 65 vì 5 chục bé hơn 6 chục."}, {"id": 36, "lop": 1, "mon": "toan", "muc": 2, "q": "Điền dấu: 80 … 79", "a": [">", "<", "=", "−"], "g": ""}, {"id": 37, "lop": 1, "mon": "toan", "muc": 2, "q": "35 + 4 = ?", "a": ["39", "75", "38", "31"], "g": ""}, {"id": 38, "lop": 1, "mon": "toan", "muc": 2, "q": "47 + 21 = ?", "a": ["68", "26", "69", "58"], "g": ""}, {"id": 39, "lop": 1, "mon": "toan", "muc": 2, "q": "68 − 5 = ?", "a": ["63", "18", "64", "73"], "g": ""}, {"id": 40, "lop": 1, "mon": "toan", "muc": 2, "q": "89 − 36 = ?", "a": ["53", "52", "43", "125"], "g": ""}, {"id": 41, "lop": 1, "mon": "toan", "muc": 2, "q": "30 + 40 = ?", "a": ["70", "34", "7", "60"], "g": "3 chục cộng 4 chục là 7 chục."}, {"id": 42, "lop": 1, "mon": "toan", "muc": 2, "q": "90 − 50 = ?", "a": ["40", "4", "30", "50"], "g": ""}, {"id": 43, "lop": 1, "mon": "toan", "muc": 2, "q": "Số 37 gồm mấy chục và mấy đơn vị?", "a": ["3 chục và 7 đơn vị", "7 chục và 3 đơn vị", "37 chục", "3 chục và 0 đơn vị"], "g": ""}, {"id": 44, "lop": 1, "mon": "toan", "muc": 2, "q": "Kim ngắn chỉ số 3, kim dài chỉ số 12. Đồng hồ chỉ mấy giờ?", "a": ["3 giờ", "12 giờ", "9 giờ", "15 giờ"], "g": "Kim ngắn chỉ giờ, kim dài chỉ số 12 là giờ đúng."}, {"id": 45, "lop": 1, "mon": "toan", "muc": 2, "q": "Đơn vị đo độ dài các em học ở lớp 1 là gì?", "a": ["Xăng-ti-mét", "Ki-lô-gam", "Lít", "Giờ"], "g": ""}, {"id": 46, "lop": 1, "mon": "toan", "muc": 2, "q": "Con xúc xắc có dạng khối gì?", "a": ["Khối lập phương", "Khối hộp chữ nhật", "Khối cầu", "Hình tròn"], "g": ""}, {"id": 47, "lop": 1, "mon": "toan", "muc": 2, "q": "Viên gạch, hộp bánh thường có dạng khối gì?", "a": ["Khối hộp chữ nhật", "Khối lập phương", "Khối cầu", "Hình tam giác"], "g": ""}, {"id": 48, "lop": 1, "mon": "toan", "muc": 2, "q": "Hôm qua là thứ Sáu thì hôm nay là thứ mấy?", "a": ["Thứ Bảy", "Thứ Năm", "Chủ nhật", "Thứ Tư"], "g": ""}, {"id": 49, "lop": 1, "mon": "toan", "muc": 2, "q": "Lớp có 20 bạn nữ và 15 bạn nam. Lớp có tất cả bao nhiêu bạn?", "a": ["35", "5", "25", "30"], "g": "20 + 15 = 35."}, {"id": 50, "lop": 1, "mon": "toan", "muc": 2, "q": "Mẹ có 45 quả trứng, đã bán 20 quả. Mẹ còn lại bao nhiêu quả?", "a": ["25", "65", "20", "15"], "g": "45 − 20 = 25."}, {"id": 51, "lop": 1, "mon": "toan", "muc": 2, "q": "Số liền trước số 50 khi đếm là số nào?", "a": ["49", "51", "40", "60"], "g": ""}, {"id": 52, "lop": 1, "mon": "toan", "muc": 2, "q": "Bút chì dài 15 cm, thước dài 20 cm. Vật nào dài hơn?", "a": ["Cái thước", "Bút chì", "Dài bằng nhau", "Không biết được"], "g": ""}, {"id": 53, "lop": 1, "mon": "toan", "muc": 3, "q": "Có bao nhiêu số có hai chữ số giống nhau (như 11, 22)?", "a": ["9", "10", "8", "11"], "g": "11, 22, 33, 44, 55, 66, 77, 88, 99 — có 9 số."}, {"id": 54, "lop": 1, "mon": "toan", "muc": 3, "q": "Từ 10 đến 20 có bao nhiêu số tròn chục?", "a": ["2", "1", "3", "10"], "g": "Đó là số 10 và số 20."}, {"id": 55, "lop": 1, "mon": "toan", "muc": 3, "q": "Số nào vừa lớn hơn 40 vừa bé hơn 42?", "a": ["41", "43", "40", "39"], "g": ""}, {"id": 56, "lop": 1, "mon": "toan", "muc": 3, "q": "Bạn Nam vẽ 2 hình tam giác và 3 hình vuông. Nam vẽ tất cả mấy hình?", "a": ["5", "6", "4", "23"], "g": ""}, {"id": 57, "lop": 1, "mon": "toan", "muc": 3, "q": "Em có 10 viên bi, cho bạn 4 viên, rồi được anh cho 2 viên. Em có mấy viên bi?", "a": ["8", "6", "12", "4"], "g": "10 − 4 = 6, 6 + 2 = 8."}, {"id": 58, "lop": 1, "mon": "toan", "muc": 3, "q": "Số nào lớn nhất trong các số: 59, 95, 90, 69?", "a": ["95", "90", "69", "59"], "g": ""}, {"id": 59, "lop": 1, "mon": "toan", "muc": 3, "q": "Hôm nay là Chủ nhật. Hai ngày nữa là thứ mấy?", "a": ["Thứ Ba", "Thứ Hai", "Thứ Tư", "Thứ Bảy"], "g": "Chủ nhật → thứ Hai → thứ Ba."}, {"id": 60, "lop": 1, "mon": "toan", "muc": 3, "q": "Tổng của số bé nhất có hai chữ số và số lớn nhất có một chữ số là:", "a": ["19", "20", "109", "11"], "g": "10 + 9 = 19."}, {"id": 61, "lop": 2, "mon": "toan", "muc": 1, "q": "8 + 5 = ?", "a": ["13", "12", "14", "3"], "g": ""}, {"id": 62, "lop": 2, "mon": "toan", "muc": 1, "q": "9 + 7 = ?", "a": ["16", "15", "17", "2"], "g": ""}, {"id": 63, "lop": 2, "mon": "toan", "muc": 1, "q": "6 + 6 = ?", "a": ["12", "11", "13", "66"], "g": ""}, {"id": 64, "lop": 2, "mon": "toan", "muc": 1, "q": "14 − 6 = ?", "a": ["8", "7", "9", "20"], "g": ""}, {"id": 65, "lop": 2, "mon": "toan", "muc": 1, "q": "15 − 8 = ?", "a": ["7", "6", "8", "23"], "g": ""}, {"id": 66, "lop": 2, "mon": "toan", "muc": 1, "q": "12 − 9 = ?", "a": ["3", "4", "2", "21"], "g": ""}, {"id": 67, "lop": 2, "mon": "toan", "muc": 1, "q": "2 × 5 = ?", "a": ["10", "7", "25", "3"], "g": "2 lấy 5 lần là 10."}, {"id": 68, "lop": 2, "mon": "toan", "muc": 1, "q": "5 × 4 = ?", "a": ["20", "9", "15", "25"], "g": ""}, {"id": 69, "lop": 2, "mon": "toan", "muc": 1, "q": "2 × 8 = ?", "a": ["16", "10", "18", "14"], "g": ""}, {"id": 70, "lop": 2, "mon": "toan", "muc": 1, "q": "10 : 2 = ?", "a": ["5", "8", "12", "20"], "g": ""}, {"id": 71, "lop": 2, "mon": "toan", "muc": 1, "q": "20 : 5 = ?", "a": ["4", "5", "15", "25"], "g": ""}, {"id": 72, "lop": 2, "mon": "toan", "muc": 1, "q": "Số liền sau của 99 là số nào?", "a": ["100", "98", "90", "101"], "g": ""}, {"id": 73, "lop": 2, "mon": "toan", "muc": 1, "q": "1 m bằng bao nhiêu đề-xi-mét?", "a": ["10 dm", "100 dm", "1 dm", "5 dm"], "g": ""}, {"id": 74, "lop": 2, "mon": "toan", "muc": 1, "q": "1 dm bằng bao nhiêu xăng-ti-mét?", "a": ["10 cm", "100 cm", "1 cm", "20 cm"], "g": ""}, {"id": 75, "lop": 2, "mon": "toan", "muc": 1, "q": "1 giờ bằng bao nhiêu phút?", "a": ["60 phút", "100 phút", "30 phút", "24 phút"], "g": ""}, {"id": 76, "lop": 2, "mon": "toan", "muc": 1, "q": "Một ngày có bao nhiêu giờ?", "a": ["24 giờ", "12 giờ", "60 giờ", "10 giờ"], "g": ""}, {"id": 77, "lop": 2, "mon": "toan", "muc": 1, "q": "Một năm có bao nhiêu tháng?", "a": ["12 tháng", "10 tháng", "7 tháng", "24 tháng"], "g": ""}, {"id": 78, "lop": 2, "mon": "toan", "muc": 1, "q": "Đơn vị dùng để đo khối lượng (nặng, nhẹ) là:", "a": ["Ki-lô-gam", "Lít", "Mét", "Giờ"], "g": ""}, {"id": 79, "lop": 2, "mon": "toan", "muc": 1, "q": "Đơn vị dùng để đo lượng nước trong can, trong chai là:", "a": ["Lít", "Ki-lô-gam", "Xăng-ti-mét", "Phút"], "g": ""}, {"id": 80, "lop": 2, "mon": "toan", "muc": 1, "q": "Đơn vị tiền của Việt Nam là gì?", "a": ["Đồng", "Đô-la", "Hào", "Lít"], "g": ""}, {"id": 81, "lop": 2, "mon": "toan", "muc": 1, "q": "Hình tứ giác có mấy cạnh?", "a": ["4", "3", "5", "6"], "g": ""}, {"id": 82, "lop": 2, "mon": "toan", "muc": 1, "q": "Quả bóng có dạng khối gì?", "a": ["Khối cầu", "Khối trụ", "Khối lập phương", "Hình tròn"], "g": ""}, {"id": 83, "lop": 2, "mon": "toan", "muc": 1, "q": "Lon nước ngọt có dạng khối gì?", "a": ["Khối trụ", "Khối cầu", "Khối hộp chữ nhật", "Khối lập phương"], "g": ""}, {"id": 84, "lop": 2, "mon": "toan", "muc": 1, "q": "Số 305 đọc là:", "a": ["Ba trăm linh năm", "Ba trăm năm mươi", "Ba mươi lăm", "Năm trăm linh ba"], "g": ""}, {"id": 85, "lop": 2, "mon": "toan", "muc": 2, "q": "38 + 5 = ?", "a": ["43", "33", "42", "88"], "g": "8 + 5 = 13, viết 3 nhớ 1; 3 thêm 1 là 4."}, {"id": 86, "lop": 2, "mon": "toan", "muc": 2, "q": "46 + 27 = ?", "a": ["73", "63", "72", "19"], "g": ""}, {"id": 87, "lop": 2, "mon": "toan", "muc": 2, "q": "52 − 7 = ?", "a": ["45", "55", "44", "59"], "g": ""}, {"id": 88, "lop": 2, "mon": "toan", "muc": 2, "q": "81 − 34 = ?", "a": ["47", "57", "53", "115"], "g": ""}, {"id": 89, "lop": 2, "mon": "toan", "muc": 2, "q": "5 × 7 = ?", "a": ["35", "12", "30", "40"], "g": ""}, {"id": 90, "lop": 2, "mon": "toan", "muc": 2, "q": "2 × 9 = ?", "a": ["18", "11", "16", "29"], "g": ""}, {"id": 91, "lop": 2, "mon": "toan", "muc": 2, "q": "35 : 5 = ?", "a": ["7", "6", "8", "30"], "g": ""}, {"id": 92, "lop": 2, "mon": "toan", "muc": 2, "q": "18 : 2 = ?", "a": ["9", "8", "16", "20"], "g": ""}, {"id": 93, "lop": 2, "mon": "toan", "muc": 2, "q": "Trong phép nhân 2 × 6 = 12, số 12 được gọi là:", "a": ["Tích", "Thừa số", "Tổng", "Thương"], "g": ""}, {"id": 94, "lop": 2, "mon": "toan", "muc": 2, "q": "Trong phép chia 10 : 2 = 5, số 5 được gọi là:", "a": ["Thương", "Số bị chia", "Số chia", "Tích"], "g": ""}, {"id": 95, "lop": 2, "mon": "toan", "muc": 2, "q": "Trong phép cộng 7 + 5 = 12, hai số 7 và 5 được gọi là:", "a": ["Số hạng", "Tổng", "Thừa số", "Hiệu"], "g": ""}, {"id": 96, "lop": 2, "mon": "toan", "muc": 2, "q": "Trong phép trừ 15 − 6 = 9, số 15 được gọi là:", "a": ["Số bị trừ", "Số trừ", "Hiệu", "Số hạng"], "g": ""}, {"id": 97, "lop": 2, "mon": "toan", "muc": 2, "q": "Số gồm 4 trăm, 2 chục và 7 đơn vị là:", "a": ["427", "472", "724", "4027"], "g": ""}, {"id": 98, "lop": 2, "mon": "toan", "muc": 2, "q": "Số lớn nhất có ba chữ số là:", "a": ["999", "900", "100", "1000"], "g": ""}, {"id": 99, "lop": 2, "mon": "toan", "muc": 2, "q": "Số bé nhất có ba chữ số là:", "a": ["100", "101", "999", "10"], "g": ""}, {"id": 100, "lop": 2, "mon": "toan", "muc": 2, "q": "Số liền sau của 999 là:", "a": ["1 000", "998", "990", "9 999"], "g": ""}, {"id": 101, "lop": 2, "mon": "toan", "muc": 2, "q": "So sánh: 452 … 425", "a": [">", "<", "=", "+"], "g": "Cùng 4 trăm; 5 chục lớn hơn 2 chục."}, {"id": 102, "lop": 2, "mon": "toan", "muc": 2, "q": "300 + 200 = ?", "a": ["500", "100", "320", "5 000"], "g": ""}, {"id": 103, "lop": 2, "mon": "toan", "muc": 2, "q": "1 m bằng bao nhiêu xăng-ti-mét?", "a": ["100 cm", "10 cm", "1 000 cm", "50 cm"], "g": ""}, {"id": 104, "lop": 2, "mon": "toan", "muc": 2, "q": "Số 15 hơn số 9 bao nhiêu đơn vị?", "a": ["6", "24", "5", "7"], "g": "15 − 9 = 6."}, {"id": 105, "lop": 2, "mon": "toan", "muc": 2, "q": "Mỗi đĩa có 5 quả cam. 3 đĩa như thế có bao nhiêu quả cam?", "a": ["15 quả", "8 quả", "10 quả", "35 quả"], "g": "5 × 3 = 15."}, {"id": 106, "lop": 2, "mon": "toan", "muc": 2, "q": "Có 20 cái bánh chia đều vào 2 hộp. Mỗi hộp có mấy cái bánh?", "a": ["10 cái", "18 cái", "22 cái", "40 cái"], "g": "20 : 2 = 10."}, {"id": 107, "lop": 2, "mon": "toan", "muc": 2, "q": "Can to có 5 l dầu, rót ra 2 l. Can còn bao nhiêu lít?", "a": ["3 l", "7 l", "2 l", "10 l"], "g": ""}, {"id": 108, "lop": 2, "mon": "toan", "muc": 2, "q": "Tờ tiền 200 đồng đổi được mấy tờ 100 đồng?", "a": ["2 tờ", "1 tờ", "3 tờ", "20 tờ"], "g": ""}, {"id": 109, "lop": 2, "mon": "toan", "muc": 2, "q": "Ba điểm cùng nằm trên một đường thẳng gọi là gì?", "a": ["Ba điểm thẳng hàng", "Đường gấp khúc", "Hình tam giác", "Đoạn thẳng"], "g": ""}, {"id": 110, "lop": 2, "mon": "toan", "muc": 2, "q": "Trong hộp chỉ có bi đỏ. Lấy ra 1 viên bi, viên bi đó … là bi đỏ.", "a": ["Chắc chắn", "Có thể", "Không thể", "Ít khi"], "g": ""}, {"id": 111, "lop": 2, "mon": "toan", "muc": 2, "q": "Trong hộp chỉ có bi xanh. Lấy được bi vàng là điều:", "a": ["Không thể", "Chắc chắn", "Có thể", "Dễ dàng"], "g": ""}, {"id": 112, "lop": 2, "mon": "toan", "muc": 2, "q": "Đồng hồ chỉ 15 giờ, còn gọi là:", "a": ["3 giờ chiều", "5 giờ chiều", "3 giờ sáng", "15 giờ sáng"], "g": "15 − 12 = 3."}, {"id": 113, "lop": 2, "mon": "toan", "muc": 3, "q": "Đường gấp khúc gồm 3 đoạn dài 2 cm, 3 cm và 4 cm. Đường gấp khúc dài bao nhiêu?", "a": ["9 cm", "7 cm", "24 cm", "10 cm"], "g": "2 + 3 + 4 = 9."}, {"id": 114, "lop": 2, "mon": "toan", "muc": 3, "q": "257 + 136 = ?", "a": ["393", "383", "121", "493"], "g": "7 + 6 = 13 viết 3 nhớ 1; 5 + 3 + 1 = 9; 2 + 1 = 3."}, {"id": 115, "lop": 2, "mon": "toan", "muc": 3, "q": "532 − 218 = ?", "a": ["314", "324", "326", "750"], "g": ""}, {"id": 116, "lop": 2, "mon": "toan", "muc": 3, "q": "Số tròn chục liền sau số 470 là:", "a": ["480", "471", "460", "500"], "g": ""}, {"id": 117, "lop": 2, "mon": "toan", "muc": 3, "q": "Số gồm 6 trăm và 5 đơn vị là:", "a": ["605", "650", "65", "6 005"], "g": "Không có chục nên hàng chục viết chữ số 0."}, {"id": 118, "lop": 2, "mon": "toan", "muc": 3, "q": "Bảng nhân 5: 5, 10, 15, 20, … Số tiếp theo là:", "a": ["25", "21", "30", "50"], "g": ""}, {"id": 119, "lop": 2, "mon": "toan", "muc": 3, "q": "Có 4 con gà. Mỗi con gà có 2 chân. Có tất cả bao nhiêu chân gà?", "a": ["8 chân", "6 chân", "4 chân", "16 chân"], "g": "2 × 4 = 8."}, {"id": 120, "lop": 2, "mon": "toan", "muc": 3, "q": "Thứ Hai tuần này là ngày 10. Thứ Hai tuần sau là ngày mấy?", "a": ["17", "11", "16", "20"], "g": "Một tuần có 7 ngày: 10 + 7 = 17."}, {"id": 121, "lop": 2, "mon": "toan", "muc": 3, "q": "Bao gạo nặng 25 kg, bao ngô nhẹ hơn bao gạo 8 kg. Bao ngô nặng bao nhiêu?", "a": ["17 kg", "33 kg", "18 kg", "23 kg"], "g": "25 − 8 = 17."}, {"id": 122, "lop": 2, "mon": "toan", "muc": 3, "q": "Số nào bé nhất: 709, 790, 907, 970?", "a": ["709", "790", "907", "970"], "g": "Cùng 7 trăm thì so hàng chục: 0 chục bé hơn 9 chục."}, {"id": 123, "lop": 2, "mon": "toan", "muc": 3, "q": "Viết số 846 thành tổng các trăm, chục, đơn vị:", "a": ["800 + 40 + 6", "8 + 4 + 6", "800 + 46", "84 + 6"], "g": ""}, {"id": 124, "lop": 2, "mon": "toan", "muc": 3, "q": "An đi học lúc 6 giờ 30 phút, đi mất 15 phút. An đến trường lúc mấy giờ?", "a": ["6 giờ 45 phút", "7 giờ", "6 giờ 15 phút", "7 giờ 15 phút"], "g": ""}, {"id": 125, "lop": 1, "mon": "tv", "muc": 1, "q": "Chữ cái đứng đầu tiên trong bảng chữ cái là chữ nào?", "a": ["a", "b", "c", "o"], "g": ""}, {"id": 126, "lop": 1, "mon": "tv", "muc": 1, "q": "Tiếng \"mẹ\" có dấu thanh gì?", "a": ["Dấu nặng", "Dấu sắc", "Dấu huyền", "Dấu hỏi"], "g": ""}, {"id": 127, "lop": 1, "mon": "tv", "muc": 1, "q": "Tiếng \"cá\" có dấu thanh gì?", "a": ["Dấu sắc", "Dấu huyền", "Dấu nặng", "Dấu ngã"], "g": ""}, {"id": 128, "lop": 1, "mon": "tv", "muc": 1, "q": "Tiếng \"bà\" có dấu thanh gì?", "a": ["Dấu huyền", "Dấu sắc", "Dấu hỏi", "Dấu ngã"], "g": ""}, {"id": 129, "lop": 1, "mon": "tv", "muc": 1, "q": "Tiếng \"cỏ\" có dấu thanh gì?", "a": ["Dấu hỏi", "Dấu ngã", "Dấu nặng", "Dấu sắc"], "g": ""}, {"id": 130, "lop": 1, "mon": "tv", "muc": 1, "q": "Tiếng \"mũ\" có dấu thanh gì?", "a": ["Dấu ngã", "Dấu hỏi", "Dấu huyền", "Dấu sắc"], "g": ""}, {"id": 131, "lop": 1, "mon": "tv", "muc": 1, "q": "Tiếng \"nhà\" bắt đầu bằng âm nào?", "a": ["nh", "n", "h", "ng"], "g": ""}, {"id": 132, "lop": 1, "mon": "tv", "muc": 1, "q": "Tiếng \"trăng\" bắt đầu bằng âm nào?", "a": ["tr", "t", "ch", "th"], "g": ""}, {"id": 133, "lop": 1, "mon": "tv", "muc": 1, "q": "Tiếng \"hoa\" có vần gì?", "a": ["oa", "ao", "a", "ho"], "g": ""}, {"id": 134, "lop": 1, "mon": "tv", "muc": 1, "q": "Từ nào viết đúng chính tả?", "a": ["con kiến", "con ciến", "kon kiến", "con kiếng"], "g": "Âm \"cờ\" đứng trước i, e, ê viết bằng chữ k."}, {"id": 135, "lop": 1, "mon": "tv", "muc": 1, "q": "Từ nào viết đúng chính tả?", "a": ["cái kéo", "cái céo", "kái kéo", "cái quéo"], "g": ""}, {"id": 136, "lop": 1, "mon": "tv", "muc": 1, "q": "Từ nào viết đúng chính tả?", "a": ["ghế gỗ", "gế gỗ", "ghế ghỗ", "gế ghỗ"], "g": "Âm \"gờ\" đứng trước i, e, ê viết là gh."}, {"id": 137, "lop": 1, "mon": "tv", "muc": 1, "q": "Từ nào viết đúng chính tả?", "a": ["nghỉ hè", "ngỉ hè", "nghĩ hè", "ngĩ hè"], "g": "Âm \"ngờ\" đứng trước i, e, ê viết là ngh."}, {"id": 138, "lop": 1, "mon": "tv", "muc": 1, "q": "Từ nào viết đúng chính tả?", "a": ["con gà", "con ghà", "kon gà", "con gá"], "g": ""}, {"id": 139, "lop": 1, "mon": "tv", "muc": 1, "q": "Từ nào viết đúng chính tả?", "a": ["quả na", "qủa na", "cuả na", "quã na"], "g": ""}, {"id": 140, "lop": 1, "mon": "tv", "muc": 1, "q": "Từ nào chỉ một con vật?", "a": ["con mèo", "cái bàn", "quả cam", "bông hoa"], "g": ""}, {"id": 141, "lop": 1, "mon": "tv", "muc": 1, "q": "Từ nào chỉ một loại quả?", "a": ["quả xoài", "con cá", "cái ghế", "đôi dép"], "g": ""}, {"id": 142, "lop": 1, "mon": "tv", "muc": 1, "q": "Từ nào chỉ màu sắc?", "a": ["xanh lá", "chạy nhảy", "bàn học", "vui vẻ"], "g": ""}, {"id": 143, "lop": 1, "mon": "tv", "muc": 1, "q": "Tiếng nào có vần \"an\"?", "a": ["bàn", "bên", "bơn", "bun"], "g": ""}, {"id": 144, "lop": 1, "mon": "tv", "muc": 1, "q": "Tiếng nào có vần \"ao\"?", "a": ["sao", "seo", "su", "sơ"], "g": ""}, {"id": 145, "lop": 1, "mon": "tv", "muc": 1, "q": "Tiếng nào có vần \"anh\"?", "a": ["cành", "cơm", "còn", "cầm"], "g": ""}, {"id": 146, "lop": 1, "mon": "tv", "muc": 1, "q": "Chữ \"ngh\" (ngờ kép) chỉ đứng trước những chữ nào?", "a": ["i, e, ê", "a, o, u", "ô, ơ, ư", "ă, â, o"], "g": ""}, {"id": 147, "lop": 1, "mon": "tv", "muc": 2, "q": "Ghép âm \"b\" với vần \"anh\" và dấu huyền ta được tiếng gì?", "a": ["bành", "bánh", "banh", "bạnh"], "g": ""}, {"id": 148, "lop": 1, "mon": "tv", "muc": 2, "q": "Ghép âm \"ch\" với vần \"ơi\" ta được tiếng gì?", "a": ["chơi", "chôi", "choi", "chưi"], "g": ""}, {"id": 149, "lop": 1, "mon": "tv", "muc": 2, "q": "Tiếng \"khoai\" có vần gì?", "a": ["oai", "ai", "oa", "khoa"], "g": ""}, {"id": 150, "lop": 1, "mon": "tv", "muc": 2, "q": "Tiếng \"thuyền\" có vần gì?", "a": ["uyên", "uyền", "yên", "uên"], "g": "Dấu thanh không thuộc vần, vần là \"uyên\"."}, {"id": 151, "lop": 1, "mon": "tv", "muc": 2, "q": "Từ nào có vần \"ương\"?", "a": ["con đường", "con đàng", "con đồng", "con đêm"], "g": ""}, {"id": 152, "lop": 1, "mon": "tv", "muc": 2, "q": "Điền chữ: ….é bạn (k hay c)?", "a": ["k", "c", "q", "g"], "g": "Trước e viết k: \"kể\", \"ké\"."}, {"id": 153, "lop": 1, "mon": "tv", "muc": 2, "q": "Điền chữ: con …ẹ (g hay gh)?", "a": ["gh", "g", "ng", "ngh"], "g": "Trước e viết gh: \"con ghẹ\"."}, {"id": 154, "lop": 1, "mon": "tv", "muc": 2, "q": "Điền chữ: …ỉ ngơi (ng hay ngh)?", "a": ["ngh", "ng", "g", "gh"], "g": ""}, {"id": 155, "lop": 1, "mon": "tv", "muc": 2, "q": "Điền chữ: …ủ kĩ (ng hay ngh)?", "a": ["ng", "ngh", "gh", "k"], "g": "Trước u viết ng: \"ngủ\"."}, {"id": 156, "lop": 1, "mon": "tv", "muc": 2, "q": "Câu nào viết đúng?", "a": ["Bé đi học.", "bé đi học.", "Bé đi học", "bé Đi học"], "g": "Đầu câu viết hoa, cuối câu có dấu chấm."}, {"id": 157, "lop": 1, "mon": "tv", "muc": 2, "q": "Chữ cái đầu câu phải viết thế nào?", "a": ["Viết hoa", "Viết thường", "Viết nghiêng", "Viết to gấp đôi"], "g": ""}, {"id": 158, "lop": 1, "mon": "tv", "muc": 2, "q": "Trong truyện \"Con quạ thông minh\", quạ làm thế nào để uống được nước?", "a": ["Thả sỏi vào bình", "Làm đổ bình", "Gọi bạn đến giúp", "Bay đi tìm sông"], "g": "Sỏi làm nước dâng lên miệng bình."}, {"id": 159, "lop": 1, "mon": "tv", "muc": 2, "q": "Từ nào chỉ hoạt động?", "a": ["nhảy dây", "cái bút", "màu đỏ", "ngôi nhà"], "g": ""}, {"id": 160, "lop": 1, "mon": "tv", "muc": 2, "q": "Từ nào có tiếng chứa vần \"uôi\"?", "a": ["con muỗi", "con mèo", "con mối", "cái mai"], "g": ""}, {"id": 161, "lop": 1, "mon": "tv", "muc": 2, "q": "Từ nào có tiếng chứa vần \"ươu\"?", "a": ["con hươu", "con hổ", "con heo", "con hoẵng"], "g": ""}, {"id": 162, "lop": 1, "mon": "tv", "muc": 2, "q": "Tiếng nào có âm \"qu\"?", "a": ["quà", "cà", "gà", "kà"], "g": ""}, {"id": 163, "lop": 1, "mon": "tv", "muc": 2, "q": "Chữ \"q\" luôn đi cùng chữ nào để thành âm \"qu\"?", "a": ["u", "a", "o", "i"], "g": ""}, {"id": 164, "lop": 1, "mon": "tv", "muc": 2, "q": "Bảng chữ cái tiếng Việt có bao nhiêu chữ cái?", "a": ["29", "26", "24", "33"], "g": ""}, {"id": 165, "lop": 1, "mon": "tv", "muc": 3, "q": "Tiếng \"nghiêng\" có âm đầu và vần là gì?", "a": ["ngh và iêng", "ng và hiêng", "n và ghiêng", "ngh và iên"], "g": ""}, {"id": 166, "lop": 1, "mon": "tv", "muc": 3, "q": "Có mấy dấu thanh trong tiếng Việt (không kể thanh ngang)?", "a": ["5", "6", "4", "3"], "g": "Huyền, sắc, hỏi, ngã, nặng."}, {"id": 167, "lop": 1, "mon": "tv", "muc": 3, "q": "Từ nào viết sai chính tả?", "a": ["con ngé", "nghe nhạc", "ngã ba", "nghỉ ngơi"], "g": "Trước e phải viết \"ngh\": \"con nghé\"."}, {"id": 168, "lop": 1, "mon": "tv", "muc": 3, "q": "Từ nào viết sai chính tả?", "a": ["gi đình", "gia đình", "giữ gìn", "ghi nhớ"], "g": "Đúng là \"gia đình\"."}, {"id": 169, "lop": 1, "mon": "tv", "muc": 3, "q": "Dòng nào gồm các từ chỉ đồ dùng học tập?", "a": ["bút, thước, vở", "bàn, giường, tủ", "mèo, chó, gà", "cam, chuối, na"], "g": ""}, {"id": 170, "lop": 1, "mon": "tv", "muc": 3, "q": "Tiếng nào có vần \"oăt\"?", "a": ["nhọn hoắt", "hoạt hình", "hát ca", "hoa mai"], "g": ""}, {"id": 171, "lop": 1, "mon": "tv", "muc": 3, "q": "Sắp xếp thành câu: \"đi / Mẹ / chợ\"", "a": ["Mẹ đi chợ.", "Chợ đi mẹ.", "Đi mẹ chợ.", "Mẹ chợ đi."], "g": ""}, {"id": 172, "lop": 1, "mon": "tv", "muc": 3, "q": "Từ nào là tên một loài hoa?", "a": ["hoa cúc", "hoa tay", "hoa mắt", "hoa văn"], "g": ""}, {"id": 173, "lop": 2, "mon": "tv", "muc": 1, "q": "Bài đọc mở đầu Tiếng Việt 2 có tên là gì?", "a": ["Tôi là học sinh lớp 2", "Một giờ học", "Cây xấu hổ", "Thả diều"], "g": ""}, {"id": 174, "lop": 2, "mon": "tv", "muc": 1, "q": "Từ nào là từ chỉ sự vật?", "a": ["quyển vở", "đọc sách", "chăm chỉ", "xinh xắn"], "g": ""}, {"id": 175, "lop": 2, "mon": "tv", "muc": 1, "q": "Từ nào là từ chỉ hoạt động?", "a": ["quét nhà", "cái chổi", "sạch sẽ", "ngôi nhà"], "g": ""}, {"id": 176, "lop": 2, "mon": "tv", "muc": 1, "q": "Từ nào là từ chỉ đặc điểm?", "a": ["cao lớn", "cái cây", "leo trèo", "con sóc"], "g": ""}, {"id": 177, "lop": 2, "mon": "tv", "muc": 1, "q": "Cuối câu hỏi thường có dấu gì?", "a": ["Dấu chấm hỏi", "Dấu chấm", "Dấu phẩy", "Dấu hai chấm"], "g": ""}, {"id": 178, "lop": 2, "mon": "tv", "muc": 1, "q": "Câu kể thường kết thúc bằng dấu gì?", "a": ["Dấu chấm", "Dấu chấm hỏi", "Dấu chấm than", "Dấu phẩy"], "g": ""}, {"id": 179, "lop": 2, "mon": "tv", "muc": 1, "q": "Câu \"Ôi, bông hoa đẹp quá!\" kết thúc bằng dấu gì?", "a": ["Dấu chấm than", "Dấu chấm", "Dấu chấm hỏi", "Dấu phẩy"], "g": "Dấu chấm than dùng để bày tỏ cảm xúc."}, {"id": 180, "lop": 2, "mon": "tv", "muc": 1, "q": "Từ nào trái nghĩa với \"cao\"?", "a": ["thấp", "to", "dài", "lớn"], "g": ""}, {"id": 181, "lop": 2, "mon": "tv", "muc": 1, "q": "Từ nào trái nghĩa với \"nóng\"?", "a": ["lạnh", "ấm", "mát mẻ", "ướt"], "g": ""}, {"id": 182, "lop": 2, "mon": "tv", "muc": 1, "q": "Từ nào cùng nghĩa với \"chăm chỉ\"?", "a": ["siêng năng", "lười biếng", "nhanh nhẹn", "vui vẻ"], "g": ""}, {"id": 183, "lop": 2, "mon": "tv", "muc": 1, "q": "Tên riêng của người phải viết thế nào?", "a": ["Viết hoa chữ cái đầu mỗi tiếng", "Viết thường", "Viết hoa cả tên", "Viết nghiêng"], "g": ""}, {"id": 184, "lop": 2, "mon": "tv", "muc": 1, "q": "Trong bài \"Mai An Tiêm\", An Tiêm đã trồng được loại quả gì?", "a": ["Dưa hấu", "Bí ngô", "Xoài", "Mít"], "g": ""}, {"id": 185, "lop": 2, "mon": "tv", "muc": 1, "q": "Bài đọc \"Hồ Gươm\" kể về một cảnh đẹp ở đâu?", "a": ["Hà Nội", "Huế", "Thành phố Hồ Chí Minh", "Đà Nẵng"], "g": ""}, {"id": 186, "lop": 2, "mon": "tv", "muc": 1, "q": "Cây xấu hổ có đặc điểm gì khi có tiếng động hay bị chạm vào?", "a": ["Lá khép lại", "Ra hoa ngay", "Lá rụng hết", "Mọc cao thêm"], "g": ""}, {"id": 187, "lop": 2, "mon": "tv", "muc": 1, "q": "Trò chơi \"Rồng rắn lên mây\" là loại trò chơi gì?", "a": ["Trò chơi dân gian", "Trò chơi điện tử", "Môn bơi lội", "Bài hát ru"], "g": ""}, {"id": 188, "lop": 2, "mon": "tv", "muc": 2, "q": "Câu \"Em là học sinh lớp 2.\" thuộc kiểu câu nào?", "a": ["Câu giới thiệu (Ai là gì?)", "Câu nêu hoạt động (Ai làm gì?)", "Câu nêu đặc điểm (Ai thế nào?)", "Câu hỏi"], "g": ""}, {"id": 189, "lop": 2, "mon": "tv", "muc": 2, "q": "Câu \"Bạn Lan đang tưới cây.\" thuộc kiểu câu nào?", "a": ["Câu nêu hoạt động (Ai làm gì?)", "Câu giới thiệu (Ai là gì?)", "Câu nêu đặc điểm (Ai thế nào?)", "Câu cảm"], "g": ""}, {"id": 190, "lop": 2, "mon": "tv", "muc": 2, "q": "Câu \"Bông hoa hồng rất thơm.\" thuộc kiểu câu nào?", "a": ["Câu nêu đặc điểm (Ai thế nào?)", "Câu giới thiệu (Ai là gì?)", "Câu nêu hoạt động (Ai làm gì?)", "Câu hỏi"], "g": ""}, {"id": 191, "lop": 2, "mon": "tv", "muc": 2, "q": "Trong câu \"Chú gà trống gáy vang.\", bộ phận trả lời câu hỏi \"Làm gì?\" là:", "a": ["gáy vang", "Chú gà trống", "gà trống", "Chú"], "g": ""}, {"id": 192, "lop": 2, "mon": "tv", "muc": 2, "q": "Dấu phẩy đặt đúng ở câu nào?", "a": ["Lớp em có Lan, Hoa, Minh.", "Lớp em, có Lan Hoa Minh.", "Lớp, em có Lan Hoa Minh.", "Lớp em có Lan Hoa, Minh,"], "g": "Dấu phẩy ngăn cách các tên được kể ra."}, {"id": 193, "lop": 2, "mon": "tv", "muc": 2, "q": "Bài \"Bóp nát quả cam\" kể về người anh hùng nhỏ tuổi nào?", "a": ["Trần Quốc Toản", "Thánh Gióng", "Lê Lợi", "Mai An Tiêm"], "g": ""}, {"id": 194, "lop": 2, "mon": "tv", "muc": 2, "q": "Bài đọc \"Chiếc rễ đa tròn\" kể chuyện về ai?", "a": ["Bác Hồ", "Bà ngoại", "Thầy giáo", "Chú bộ đội biên phòng"], "g": ""}, {"id": 195, "lop": 2, "mon": "tv", "muc": 2, "q": "Trong bài \"Từ chú bồ câu đến in-tơ-nét\", ngày xưa người ta dùng con vật nào để đưa thư?", "a": ["Chim bồ câu", "Con mèo", "Con ngựa vằn", "Con cá heo"], "g": ""}, {"id": 196, "lop": 2, "mon": "tv", "muc": 2, "q": "Theo bài \"Chuyện quả bầu\", từ trong quả bầu có những ai bước ra?", "a": ["Người các dân tộc anh em", "Các loài cá", "Những chú chim nhỏ", "Các vị thần"], "g": ""}, {"id": 197, "lop": 2, "mon": "tv", "muc": 2, "q": "Khủng long là loài vật thế nào?", "a": ["Đã sống trên Trái Đất từ rất lâu, nay không còn", "Đang sống trong vườn nhà em", "Chỉ có trong truyện cổ tích, chưa từng có thật", "Là một loài cá nhỏ"], "g": ""}, {"id": 198, "lop": 2, "mon": "tv", "muc": 2, "q": "Trong bài thơ \"Ngày hôm qua đâu rồi?\", em bé hỏi ai?", "a": ["Bố", "Cô giáo", "Bạn thân", "Ông nội"], "g": ""}, {"id": 199, "lop": 2, "mon": "tv", "muc": 2, "q": "Từ nào chỉ tình cảm gia đình?", "a": ["yêu thương", "chạy nhảy", "tròn xoe", "cái bàn"], "g": ""}, {"id": 200, "lop": 2, "mon": "tv", "muc": 2, "q": "Cặp từ nào có nghĩa trái ngược nhau?", "a": ["khóc – cười", "to – lớn", "đẹp – xinh", "chăm – siêng"], "g": ""}, {"id": 201, "lop": 2, "mon": "tv", "muc": 2, "q": "Từ nào viết đúng chính tả?", "a": ["sương mù", "xương mù", "sươn mù", "xươn mù"], "g": ""}, {"id": 202, "lop": 2, "mon": "tv", "muc": 2, "q": "Từ nào viết đúng chính tả?", "a": ["chăm chỉ", "trăm chỉ", "chăm trỉ", "trăm trỉ"], "g": ""}, {"id": 203, "lop": 2, "mon": "tv", "muc": 2, "q": "Từ nào viết đúng chính tả?", "a": ["con trâu", "con châu", "con tâu", "con trau"], "g": ""}, {"id": 204, "lop": 2, "mon": "tv", "muc": 2, "q": "Từ nào viết đúng chính tả?", "a": ["sạch sẽ", "xạch xẽ", "sạch xẽ", "xạch sẽ"], "g": ""}, {"id": 205, "lop": 2, "mon": "tv", "muc": 2, "q": "\"Vè chim\" là bài viết theo thể gì?", "a": ["Vè (bài vè dân gian)", "Truyện cổ tích", "Thư từ", "Bản tin"], "g": ""}, {"id": 206, "lop": 2, "mon": "tv", "muc": 2, "q": "Chữ cái \"g\" trong bảng chữ cái có tên gọi là gì?", "a": ["giê", "gờ", "ghê", "gi"], "g": ""}, {"id": 207, "lop": 2, "mon": "tv", "muc": 2, "q": "Tên chữ cái \"h\" đọc là gì?", "a": ["hát", "hờ", "hê", "ha"], "g": ""}, {"id": 208, "lop": 2, "mon": "tv", "muc": 2, "q": "Chuyện bốn mùa: mùa nào cây cối đâm chồi nảy lộc?", "a": ["Mùa xuân", "Mùa hạ", "Mùa thu", "Mùa đông"], "g": ""}, {"id": 209, "lop": 2, "mon": "tv", "muc": 2, "q": "Sự tích cây thì là: cây có tên \"thì là\" vì sao?", "a": ["Vì cây quên tên, nói \"thì là… thì là…\"", "Vì cây rất thơm", "Vì cây mọc ở ruộng lúa", "Vì cây có hoa vàng"], "g": ""}, {"id": 210, "lop": 2, "mon": "tv", "muc": 3, "q": "Từ nào khác loại với các từ còn lại?", "a": ["nhảy", "bàn", "ghế", "tủ"], "g": "\"Nhảy\" chỉ hoạt động, còn lại chỉ đồ vật."}, {"id": 211, "lop": 2, "mon": "tv", "muc": 3, "q": "Từ nào khác loại với các từ còn lại?", "a": ["đỏ thắm", "học bài", "tập múa", "chạy thi"], "g": "\"Đỏ thắm\" chỉ đặc điểm, còn lại chỉ hoạt động."}, {"id": 212, "lop": 2, "mon": "tv", "muc": 3, "q": "Câu nào là câu nêu đặc điểm?", "a": ["Bầu trời trong xanh.", "Bé đang ăn cơm.", "Đây là mẹ em.", "Bạn đi đâu thế?"], "g": ""}, {"id": 213, "lop": 2, "mon": "tv", "muc": 3, "q": "Bộ phận được nêu trả lời câu hỏi nào: \"Trong vườn, hoa nở rộ.\" (phần \"Trong vườn\")?", "a": ["Ở đâu?", "Khi nào?", "Vì sao?", "Làm gì?"], "g": ""}, {"id": 214, "lop": 2, "mon": "tv", "muc": 3, "q": "Bộ phận được nêu trả lời câu hỏi nào: \"Sáng nay, em đi học sớm.\" (phần \"Sáng nay\")?", "a": ["Khi nào?", "Ở đâu?", "Thế nào?", "Là gì?"], "g": ""}, {"id": 215, "lop": 2, "mon": "tv", "muc": 3, "q": "Câu nào cần đặt dấu chấm hỏi ở cuối?", "a": ["Hôm nay bạn có đi học không", "Hôm nay em đi học", "Trời đẹp quá", "Em thích đọc truyện"], "g": ""}, {"id": 216, "lop": 2, "mon": "tv", "muc": 3, "q": "Từ ghép nào chỉ người trong gia đình?", "a": ["ông bà", "thầy cô", "bạn bè", "hàng xóm"], "g": ""}, {"id": 217, "lop": 2, "mon": "tv", "muc": 3, "q": "Từ nào chỉ đặc điểm của mùa đông?", "a": ["lạnh giá", "oi bức", "mát mẻ", "nắng chói"], "g": ""}, {"id": 218, "lop": 2, "mon": "tv", "muc": 3, "q": "Từ \"lấp lánh\" thường dùng để tả gì?", "a": ["Ánh sao, ánh nước", "Tiếng chim hót", "Mùi hoa thơm", "Vị ngọt của kẹo"], "g": ""}, {"id": 219, "lop": 2, "mon": "tv", "muc": 3, "q": "Tên địa danh nào viết hoa đúng?", "a": ["Hà Nội", "hà nội", "Hà nội", "hà Nội"], "g": "Tên địa lí Việt Nam viết hoa chữ cái đầu mỗi tiếng."}, {"id": 220, "lop": 2, "mon": "tv", "muc": 3, "q": "Câu nào dùng dấu chấm than đúng?", "a": ["Ôi, đẹp quá!", "Em đi học!", "Bạn tên là gì!", "Mẹ đi chợ!"], "g": ""}, {"id": 221, "lop": 2, "mon": "tv", "muc": 3, "q": "\"Thư gửi bố ngoài đảo\": bố của bạn nhỏ đang làm nhiệm vụ ở đâu?", "a": ["Ngoài đảo xa", "Trên núi cao", "Ở thành phố", "Trong rừng"], "g": ""}, {"id": 222, "lop": 1, "mon": "tnxh", "muc": 1, "q": "Em dùng bộ phận nào để nhìn?", "a": ["Mắt", "Tai", "Mũi", "Lưỡi"], "g": ""}, {"id": 223, "lop": 1, "mon": "tnxh", "muc": 1, "q": "Em dùng bộ phận nào để nghe?", "a": ["Tai", "Mắt", "Mũi", "Tay"], "g": ""}, {"id": 224, "lop": 1, "mon": "tnxh", "muc": 1, "q": "Em dùng bộ phận nào để ngửi mùi thơm của hoa?", "a": ["Mũi", "Tai", "Mắt", "Chân"], "g": ""}, {"id": 225, "lop": 1, "mon": "tnxh", "muc": 1, "q": "Bộ phận nào giúp em biết vị ngọt, mặn, chua?", "a": ["Lưỡi", "Tai", "Mắt", "Tóc"], "g": ""}, {"id": 226, "lop": 1, "mon": "tnxh", "muc": 1, "q": "Da giúp em cảm nhận được điều gì?", "a": ["Nóng, lạnh", "Màu sắc", "Âm thanh", "Mùi vị"], "g": ""}, {"id": 227, "lop": 1, "mon": "tnxh", "muc": 1, "q": "Cơ thể có mấy giác quan?", "a": ["5", "3", "4", "6"], "g": "Thị giác, thính giác, khứu giác, vị giác, xúc giác."}, {"id": 228, "lop": 1, "mon": "tnxh", "muc": 1, "q": "Đồ dùng nào trong nhà dễ gây bỏng nếu không cẩn thận?", "a": ["Phích nước nóng", "Cái gối", "Quyển truyện", "Chiếc dép"], "g": ""}, {"id": 229, "lop": 1, "mon": "tnxh", "muc": 1, "q": "Khi thấy ổ điện, em nên làm gì?", "a": ["Không chạm tay hay cho vật vào ổ điện", "Cắm que vào thử", "Dùng tay ướt để chạm", "Rủ bạn cùng nghịch"], "g": ""}, {"id": 230, "lop": 1, "mon": "tnxh", "muc": 1, "q": "Cây cần gì để sống và lớn lên?", "a": ["Nước, ánh sáng, không khí", "Chỉ cần bóng tối", "Chỉ cần đất khô", "Không cần gì cả"], "g": ""}, {"id": 231, "lop": 1, "mon": "tnxh", "muc": 1, "q": "Bộ phận nào của cây thường hút nước từ đất?", "a": ["Rễ", "Lá", "Hoa", "Quả"], "g": ""}, {"id": 232, "lop": 1, "mon": "tnxh", "muc": 1, "q": "Con vật nào là vật nuôi trong nhà?", "a": ["Con chó", "Con hổ", "Con sư tử", "Con cá mập"], "g": ""}, {"id": 233, "lop": 1, "mon": "tnxh", "muc": 1, "q": "Ban ngày, vật gì chiếu sáng và sưởi ấm Trái Đất?", "a": ["Mặt Trời", "Mặt Trăng", "Ngôi sao", "Đám mây"], "g": ""}, {"id": 234, "lop": 1, "mon": "tnxh", "muc": 1, "q": "Khi trời mưa, em cần mang theo gì khi ra ngoài?", "a": ["Áo mưa hoặc ô", "Kính râm", "Quạt", "Áo len dày"], "g": ""}, {"id": 235, "lop": 1, "mon": "tnxh", "muc": 1, "q": "Khi đi bộ trên đường, em nên đi ở đâu?", "a": ["Trên vỉa hè", "Giữa lòng đường", "Trên dải phân cách", "Dưới lòng đường cạnh ô tô"], "g": ""}, {"id": 236, "lop": 1, "mon": "tnxh", "muc": 1, "q": "Đèn giao thông màu đỏ báo hiệu điều gì?", "a": ["Dừng lại", "Được đi", "Đi chậm lại", "Đi nhanh lên"], "g": ""}, {"id": 237, "lop": 1, "mon": "tnxh", "muc": 1, "q": "Ngày Tết Nguyên đán, nhiều gia đình gói loại bánh nào?", "a": ["Bánh chưng", "Bánh mì", "Bánh pizza", "Bánh kem"], "g": ""}, {"id": 238, "lop": 1, "mon": "tnxh", "muc": 2, "q": "Đèn giao thông màu xanh báo hiệu điều gì?", "a": ["Được đi", "Dừng lại", "Chuẩn bị dừng", "Cấm đi"], "g": ""}, {"id": 239, "lop": 1, "mon": "tnxh", "muc": 2, "q": "Đèn giao thông màu vàng báo hiệu điều gì?", "a": ["Đi chậm lại, chuẩn bị dừng", "Được đi nhanh", "Quay đầu xe", "Bấm còi"], "g": ""}, {"id": 240, "lop": 1, "mon": "tnxh", "muc": 2, "q": "Muốn có cơ thể khoẻ mạnh, em nên làm gì?", "a": ["Ăn đủ chất, vận động, ngủ đủ giấc", "Ăn nhiều bánh kẹo", "Thức khuya xem ti vi", "Ngồi một chỗ cả ngày"], "g": ""}, {"id": 241, "lop": 1, "mon": "tnxh", "muc": 2, "q": "Nên làm gì trước khi ăn?", "a": ["Rửa tay bằng xà phòng", "Chơi đồ chơi", "Xem điện thoại", "Chạy nhảy thật nhiều"], "g": ""}, {"id": 242, "lop": 1, "mon": "tnxh", "muc": 2, "q": "Khi có người lạ cho quà và rủ đi, em nên làm gì?", "a": ["Không nhận, không đi và báo ngay cho người lớn", "Nhận quà và đi theo", "Đi theo nhưng không nhận quà", "Giữ bí mật"], "g": ""}, {"id": 243, "lop": 1, "mon": "tnxh", "muc": 2, "q": "Muốn chăm sóc cây trồng, em cần làm gì?", "a": ["Tưới nước, nhổ cỏ", "Bẻ cành", "Hái hết lá", "Giẫm lên cây"], "g": ""}, {"id": 244, "lop": 1, "mon": "tnxh", "muc": 2, "q": "Khi chơi với chó, mèo, em cần lưu ý điều gì?", "a": ["Không trêu chọc, rửa tay sau khi chơi", "Kéo đuôi chúng", "Cho chúng ăn bằng tay rồi không rửa tay", "Đánh khi chúng kêu"], "g": ""}, {"id": 245, "lop": 1, "mon": "tnxh", "muc": 2, "q": "Khi nhìn lên bầu trời ban đêm, em thường thấy gì?", "a": ["Mặt Trăng và các vì sao", "Mặt Trời chói chang", "Cầu vồng", "Mây ngũ sắc"], "g": ""}, {"id": 246, "lop": 1, "mon": "tnxh", "muc": 2, "q": "Những người cùng sống trong một nhà gọi là gì?", "a": ["Gia đình", "Lớp học", "Đội bóng", "Hàng xóm"], "g": ""}, {"id": 247, "lop": 1, "mon": "tnxh", "muc": 3, "q": "Vì sao không nên nhìn thẳng vào Mặt Trời?", "a": ["Vì có hại cho mắt", "Vì Mặt Trời quá nhỏ", "Vì không thấy gì", "Vì làm nóng tai"], "g": ""}, {"id": 248, "lop": 1, "mon": "tnxh", "muc": 3, "q": "Trời nóng, em nên mặc trang phục thế nào?", "a": ["Quần áo mỏng, thoáng mát", "Áo khoác dày", "Áo len và khăn", "Áo mưa"], "g": ""}, {"id": 249, "lop": 1, "mon": "tnxh", "muc": 3, "q": "Con vật nào vừa sống được dưới nước vừa sống được trên cạn?", "a": ["Con ếch", "Con cá chép", "Con mèo", "Con chim sẻ"], "g": ""}, {"id": 250, "lop": 2, "mon": "tnxh", "muc": 1, "q": "Gia đình có ông bà, bố mẹ và con cháu là gia đình mấy thế hệ?", "a": ["3 thế hệ", "2 thế hệ", "1 thế hệ", "4 thế hệ"], "g": ""}, {"id": 251, "lop": 2, "mon": "tnxh", "muc": 1, "q": "Bác sĩ làm công việc gì?", "a": ["Khám, chữa bệnh", "Dạy học", "Lái máy bay", "Xây nhà"], "g": ""}, {"id": 252, "lop": 2, "mon": "tnxh", "muc": 1, "q": "Người nông dân làm công việc gì?", "a": ["Trồng lúa, trồng rau, chăn nuôi", "Chữa bệnh", "Dạy học", "Bán vé tàu"], "g": ""}, {"id": 253, "lop": 2, "mon": "tnxh", "muc": 1, "q": "Cây nào sống dưới nước?", "a": ["Cây sen", "Cây xoài", "Cây xương rồng", "Cây bàng"], "g": ""}, {"id": 254, "lop": 2, "mon": "tnxh", "muc": 1, "q": "Con vật nào sống dưới nước?", "a": ["Con cá", "Con gà", "Con thỏ", "Con ngựa"], "g": ""}, {"id": 255, "lop": 2, "mon": "tnxh", "muc": 1, "q": "Cơ quan nào giúp chúng ta thở?", "a": ["Cơ quan hô hấp", "Cơ quan vận động", "Cơ quan bài tiết nước tiểu", "Cơ quan tiêu hoá"], "g": ""}, {"id": 256, "lop": 2, "mon": "tnxh", "muc": 1, "q": "Không khí đi vào cơ thể qua bộ phận nào đầu tiên?", "a": ["Mũi", "Tai", "Mắt", "Tay"], "g": ""}, {"id": 257, "lop": 2, "mon": "tnxh", "muc": 1, "q": "Bộ phận nào giúp em thở và nằm trong lồng ngực?", "a": ["Phổi", "Thận", "Bóng đái", "Dạ dày"], "g": ""}, {"id": 258, "lop": 2, "mon": "tnxh", "muc": 1, "q": "Xương và cơ thuộc cơ quan nào?", "a": ["Cơ quan vận động", "Cơ quan hô hấp", "Cơ quan bài tiết nước tiểu", "Cơ quan thần kinh"], "g": ""}, {"id": 259, "lop": 2, "mon": "tnxh", "muc": 1, "q": "Ở miền Bắc nước ta, một năm có mấy mùa?", "a": ["4 mùa", "2 mùa", "3 mùa", "1 mùa"], "g": "Xuân, hạ, thu, đông."}, {"id": 260, "lop": 2, "mon": "tnxh", "muc": 1, "q": "Ở miền Nam nước ta, một năm có hai mùa nào?", "a": ["Mùa mưa và mùa khô", "Mùa xuân và mùa đông", "Mùa hạ và mùa thu", "Mùa lạnh và mùa tuyết"], "g": ""}, {"id": 261, "lop": 2, "mon": "tnxh", "muc": 1, "q": "Phương tiện nào đi trên đường sắt?", "a": ["Tàu hoả", "Thuyền", "Máy bay", "Xe đạp"], "g": ""}, {"id": 262, "lop": 2, "mon": "tnxh", "muc": 1, "q": "Máy bay là phương tiện giao thông đường gì?", "a": ["Đường hàng không", "Đường thuỷ", "Đường sắt", "Đường bộ"], "g": ""}, {"id": 263, "lop": 2, "mon": "tnxh", "muc": 2, "q": "Thận thuộc cơ quan nào?", "a": ["Cơ quan bài tiết nước tiểu", "Cơ quan hô hấp", "Cơ quan vận động", "Cơ quan tuần hoàn"], "g": ""}, {"id": 264, "lop": 2, "mon": "tnxh", "muc": 2, "q": "Nước tiểu được chứa ở đâu trước khi thải ra ngoài?", "a": ["Bóng đái", "Phổi", "Mũi", "Tim"], "g": "SGK gọi là bóng đái (còn gọi là bàng quang)."}, {"id": 265, "lop": 2, "mon": "tnxh", "muc": 2, "q": "Để bảo vệ cơ quan hô hấp, em nên làm gì?", "a": ["Đeo khẩu trang nơi bụi bẩn, giữ ấm cổ họng", "Hít khói bếp", "Chơi ở nơi nhiều bụi", "Không bao giờ ra ngoài trời"], "g": ""}, {"id": 266, "lop": 2, "mon": "tnxh", "muc": 2, "q": "Để xương phát triển tốt, em nên:", "a": ["Ngồi học đúng tư thế, ăn uống đủ chất, vận động", "Mang cặp quá nặng một bên vai", "Nằm xem ti vi cả ngày", "Ăn nhiều đồ ngọt"], "g": ""}, {"id": 267, "lop": 2, "mon": "tnxh", "muc": 2, "q": "Vì sao cần uống đủ nước mỗi ngày?", "a": ["Giúp cơ thể khoẻ, cơ quan bài tiết làm việc tốt", "Để không phải ăn cơm", "Để lớn nhanh gấp đôi", "Để không cần ngủ"], "g": ""}, {"id": 268, "lop": 2, "mon": "tnxh", "muc": 2, "q": "Thức ăn bị ôi thiu, có mùi lạ thì em nên làm gì?", "a": ["Không ăn, báo người lớn", "Ăn hết cho đỡ phí", "Cho bạn ăn", "Hâm nóng rồi ăn"], "g": ""}, {"id": 269, "lop": 2, "mon": "tnxh", "muc": 2, "q": "Thuốc men, chất tẩy rửa trong nhà nên để ở đâu?", "a": ["Nơi cao, xa tầm tay trẻ nhỏ", "Trên bàn ăn", "Trong tủ đồ chơi", "Cạnh nồi cơm"], "g": ""}, {"id": 270, "lop": 2, "mon": "tnxh", "muc": 2, "q": "Trong hoạt động mua bán, người bán hàng nhận gì từ người mua?", "a": ["Tiền", "Lời cảm ơn thôi", "Quà tặng", "Không nhận gì"], "g": ""}, {"id": 271, "lop": 2, "mon": "tnxh", "muc": 2, "q": "Biển báo hình tròn, viền đỏ thường là loại biển gì?", "a": ["Biển báo cấm", "Biển chỉ dẫn", "Biển nhà hàng", "Biển quảng cáo"], "g": ""}, {"id": 272, "lop": 2, "mon": "tnxh", "muc": 2, "q": "Khi ngồi sau xe máy, em cần làm gì?", "a": ["Đội mũ bảo hiểm, ngồi ngay ngắn, bám chắc", "Đứng lên ghế", "Bỏ hai tay ra", "Không cần đội mũ"], "g": ""}, {"id": 273, "lop": 2, "mon": "tnxh", "muc": 2, "q": "Con vật nào sống trên cạn?", "a": ["Con voi", "Con cá heo", "Con tôm", "Con sứa"], "g": ""}, {"id": 274, "lop": 2, "mon": "tnxh", "muc": 2, "q": "Bèo, rong, rau muống thường sống ở đâu?", "a": ["Dưới nước", "Trên sa mạc", "Trên núi tuyết", "Trong hang đá"], "g": ""}, {"id": 275, "lop": 2, "mon": "tnxh", "muc": 2, "q": "Khi có giông sét, em không nên làm gì?", "a": ["Trú dưới gốc cây to", "Vào trong nhà", "Tránh xa cột điện", "Tắt các đồ điện"], "g": ""}, {"id": 276, "lop": 2, "mon": "tnxh", "muc": 2, "q": "Một số thiên tai thường gặp ở nước ta là:", "a": ["Bão, lũ lụt, hạn hán", "Cầu vồng, nắng đẹp", "Gió nhẹ, mưa phùn", "Trăng tròn"], "g": ""}, {"id": 277, "lop": 2, "mon": "tnxh", "muc": 3, "q": "Việc làm nào giúp bảo vệ môi trường sống của động vật, thực vật?", "a": ["Trồng cây, không chặt phá rừng", "Săn bắt chim", "Đổ rác xuống sông", "Bẻ cành cây"], "g": ""}, {"id": 278, "lop": 2, "mon": "tnxh", "muc": 3, "q": "Khi đi học ở trường, việc làm nào là không an toàn?", "a": ["Trèo lên lan can", "Đi nhẹ nói khẽ", "Xếp hàng lên lớp", "Chơi trò chơi nhẹ nhàng"], "g": ""}, {"id": 279, "lop": 2, "mon": "tnxh", "muc": 3, "q": "Bộ phận nào nối từ bóng đái ra ngoài để thải nước tiểu?", "a": ["Ống đái", "Khí quản", "Phế quản", "Mũi"], "g": ""}, {"id": 280, "lop": 2, "mon": "tnxh", "muc": 3, "q": "Trước khi có bão, gia đình em nên chuẩn bị gì?", "a": ["Gia cố nhà cửa, dự trữ đồ ăn, nước uống, đèn pin", "Đi tắm biển", "Mở hết cửa sổ", "Ra đồng thả diều"], "g": ""}, {"id": 281, "lop": 1, "mon": "dd", "muc": 1, "q": "Em nên đánh răng ít nhất mấy lần mỗi ngày?", "a": ["2 lần: sáng và tối trước khi đi ngủ", "1 lần mỗi tuần", "Không cần đánh răng", "Chỉ khi răng đau"], "g": ""}, {"id": 282, "lop": 1, "mon": "dd", "muc": 1, "q": "Rửa tay đúng cách cần dùng gì?", "a": ["Nước sạch và xà phòng", "Chỉ dùng khăn khô", "Chỉ thổi tay", "Lau vào áo"], "g": ""}, {"id": 283, "lop": 1, "mon": "dd", "muc": 1, "q": "Khi ông bà, cha mẹ gọi, em nên làm gì?", "a": ["Vâng dạ và đến ngay", "Giả vờ không nghe", "Cãi lại", "Bỏ chạy đi chơi"], "g": ""}, {"id": 284, "lop": 1, "mon": "dd", "muc": 1, "q": "Đi học đúng giờ thể hiện điều gì?", "a": ["Em có ý thức, tôn trọng giờ giấc", "Em thích đi chơi", "Em không thích học", "Em đến cho vui"], "g": ""}, {"id": 285, "lop": 1, "mon": "dd", "muc": 1, "q": "Nhặt được của rơi, em nên làm gì?", "a": ["Tìm cách trả lại người đánh mất", "Giữ làm của mình", "Vứt đi", "Đem cho bạn"], "g": ""}, {"id": 286, "lop": 1, "mon": "dd", "muc": 1, "q": "Khi làm sai, em nên làm gì?", "a": ["Nhận lỗi và sửa lỗi", "Đổ lỗi cho bạn", "Im lặng giấu đi", "Khóc thật to"], "g": ""}, {"id": 287, "lop": 1, "mon": "dd", "muc": 1, "q": "Muốn dùng đồ của bạn, em cần làm gì?", "a": ["Hỏi mượn và được bạn đồng ý", "Tự ý lấy", "Lấy khi bạn đi vắng", "Giấu đi"], "g": ""}, {"id": 288, "lop": 1, "mon": "dd", "muc": 1, "q": "Giờ học trong lớp, em cần giữ điều gì?", "a": ["Trật tự, chú ý nghe giảng", "Nói chuyện riêng", "Đi lại tự do", "Ăn quà"], "g": ""}, {"id": 289, "lop": 1, "mon": "dd", "muc": 2, "q": "Để phòng tránh đuối nước, em cần làm gì?", "a": ["Không tự ý xuống ao, hồ, sông; đi bơi có người lớn", "Tắm sông một mình", "Rủ bạn ra ao chơi", "Chơi gần giếng không nắp"], "g": ""}, {"id": 290, "lop": 1, "mon": "dd", "muc": 2, "q": "Để phòng tránh điện giật, em không nên:", "a": ["Chạm tay ướt vào đồ điện", "Nhờ người lớn cắm điện", "Tránh xa dây điện đứt", "Báo người lớn khi thấy dây hở"], "g": ""}, {"id": 291, "lop": 1, "mon": "dd", "muc": 2, "q": "Để phòng tránh bỏng, em không nên:", "a": ["Nghịch lửa, chạm vào nồi đang nấu", "Tránh xa bếp đang đun", "Nhờ người lớn rót nước nóng", "Cẩn thận với phích nước"], "g": ""}, {"id": 292, "lop": 1, "mon": "dd", "muc": 2, "q": "Nếu có người chạm vào vùng riêng tư làm em sợ hãi, em cần làm gì?", "a": ["Nói \"Không!\", chạy đi và kể ngay với người lớn tin cậy", "Giữ bí mật", "Im lặng chịu đựng", "Tự xử lí một mình"], "g": ""}, {"id": 293, "lop": 1, "mon": "dd", "muc": 2, "q": "Việc làm nào thể hiện em quan tâm, chăm sóc ông bà?", "a": ["Lấy nước mời ông bà, hỏi thăm sức khoẻ", "Nói to làm ông bà giật mình", "Không chào khi ông bà đến", "Tranh đồ ăn của ông bà"], "g": ""}, {"id": 294, "lop": 1, "mon": "dd", "muc": 2, "q": "Việc nhà nào em có thể tự làm?", "a": ["Gấp quần áo, quét nhà, xếp dép", "Nấu nướng bằng bếp ga một mình", "Sửa ổ điện", "Leo mái nhà"], "g": ""}, {"id": 295, "lop": 1, "mon": "dd", "muc": 2, "q": "Gọn gàng, ngăn nắp là:", "a": ["Để đồ dùng đúng chỗ sau khi dùng", "Vứt đồ khắp nơi", "Để sách trên giường", "Để đồ chơi giữa lối đi"], "g": ""}, {"id": 296, "lop": 1, "mon": "dd", "muc": 3, "q": "Bạn rủ em nói dối cô giáo để khỏi bị nhắc nhở. Em làm gì?", "a": ["Không nói dối, khuyên bạn nói thật", "Đồng ý ngay", "Nói dối giúp bạn", "Mách sai sự thật"], "g": ""}, {"id": 297, "lop": 1, "mon": "dd", "muc": 3, "q": "Thức ăn ở hàng quán không rõ nguồn gốc, bày bán nơi bụi bẩn. Em nên:", "a": ["Không mua, không ăn", "Mua ăn thử", "Ăn nhanh cho kịp", "Mua cho cả lớp"], "g": ""}, {"id": 298, "lop": 2, "mon": "dd", "muc": 1, "q": "Để giữ tình bạn đẹp, em nên làm gì?", "a": ["Quan tâm, giúp đỡ bạn", "Tranh giành đồ với bạn", "Nói xấu bạn", "Trêu bạn khóc"], "g": ""}, {"id": 299, "lop": 2, "mon": "dd", "muc": 1, "q": "Ngày Nhà giáo Việt Nam là ngày nào?", "a": ["20 tháng 11", "1 tháng 6", "8 tháng 3", "2 tháng 9"], "g": ""}, {"id": 300, "lop": 2, "mon": "dd", "muc": 1, "q": "Quý trọng thời gian là:", "a": ["Làm việc đúng giờ, không lãng phí thời gian", "Ngủ dậy muộn", "Mải chơi quên học", "Để việc hôm nay sang ngày mai"], "g": ""}, {"id": 301, "lop": 2, "mon": "dd", "muc": 1, "q": "Em làm gì để bảo quản đồ dùng cá nhân?", "a": ["Giữ gìn cẩn thận, để đúng nơi", "Vẽ bậy lên cặp sách", "Ném đồ dùng", "Cho bạn mượn rồi không lấy lại"], "g": ""}, {"id": 302, "lop": 2, "mon": "dd", "muc": 2, "q": "Khi tức giận, em có thể làm gì để bình tĩnh?", "a": ["Hít thở sâu, đếm từ 1 đến 10", "Đập phá đồ đạc", "La hét với bạn", "Đánh bạn"], "g": ""}, {"id": 303, "lop": 2, "mon": "dd", "muc": 2, "q": "Khi bị lạc ở nơi đông người, em nên làm gì?", "a": ["Đứng yên chỗ dễ thấy, nhờ chú bảo vệ, công an giúp", "Đi theo người lạ", "Chạy lung tung tìm", "Khóc và bỏ đi chỗ khác"], "g": ""}, {"id": 304, "lop": 2, "mon": "dd", "muc": 2, "q": "Ở nơi công cộng như công viên, em cần làm gì?", "a": ["Giữ trật tự, bỏ rác đúng nơi quy định", "Hái hoa, bẻ cành", "Viết bậy lên ghế đá", "Chen lấn, xô đẩy"], "g": ""}, {"id": 305, "lop": 2, "mon": "dd", "muc": 2, "q": "Ở trường, khi bị bạn bắt nạt, em nên làm gì?", "a": ["Kể với thầy cô và bố mẹ", "Im lặng chịu đựng", "Đánh lại thật mạnh", "Nghỉ học luôn"], "g": ""}, {"id": 306, "lop": 2, "mon": "dd", "muc": 2, "q": "Việc làm nào thể hiện em yêu quê hương?", "a": ["Giữ gìn cảnh quan, tham gia trồng cây", "Vứt rác ra đường", "Bẻ cây ở công viên", "Viết bậy lên tường"], "g": ""}, {"id": 307, "lop": 2, "mon": "dd", "muc": 2, "q": "Gặp thầy cô giáo ở ngoài đường, em nên làm gì?", "a": ["Lễ phép chào thầy cô", "Quay mặt đi", "Chạy trốn", "Giả vờ không thấy"], "g": ""}, {"id": 308, "lop": 2, "mon": "dd", "muc": 2, "q": "Nếu có ai bắt nạt hoặc làm hại em, em có thể gọi tổng đài bảo vệ trẻ em số mấy?", "a": ["111", "113", "114", "115"], "g": "111 là Tổng đài điện thoại quốc gia bảo vệ trẻ em."}, {"id": 309, "lop": 2, "mon": "dd", "muc": 3, "q": "Gọi số điện thoại nào khi có cháy?", "a": ["114", "113", "115", "111"], "g": "113 công an, 114 cứu hoả, 115 cấp cứu."}, {"id": 310, "lop": 2, "mon": "dd", "muc": 3, "q": "Gọi số điện thoại nào khi cần xe cấp cứu?", "a": ["115", "113", "114", "116"], "g": ""}, {"id": 311, "lop": 2, "mon": "dd", "muc": 3, "q": "Gọi số điện thoại nào để báo công an?", "a": ["113", "114", "115", "119"], "g": ""}, {"id": 312, "lop": 2, "mon": "dd", "muc": 3, "q": "Đến thư viện, em cần thực hiện quy định nào?", "a": ["Giữ yên lặng, giữ gìn sách", "Nói chuyện to", "Xé trang sách", "Mang sách về không mượn"], "g": ""}, {"id": 313, "lop": 1, "mon": "hdtn", "muc": 1, "q": "Năm điều Bác Hồ dạy thiếu niên, nhi đồng: \"Yêu Tổ quốc, yêu …\"", "a": ["đồng bào", "bạn bè", "trò chơi", "kẹo bánh"], "g": ""}, {"id": 314, "lop": 1, "mon": "hdtn", "muc": 1, "q": "Năm điều Bác Hồ dạy: \"Học tập tốt, … tốt\"", "a": ["lao động", "ăn uống", "vui chơi", "ngủ nghỉ"], "g": ""}, {"id": 315, "lop": 1, "mon": "hdtn", "muc": 1, "q": "Năm điều Bác Hồ dạy: \"Giữ gìn … thật tốt\"", "a": ["vệ sinh", "đồ chơi", "tiền bạc", "quần áo mới"], "g": ""}, {"id": 316, "lop": 1, "mon": "hdtn", "muc": 1, "q": "Năm điều Bác Hồ dạy: \"Khiêm tốn, thật thà, …\"", "a": ["dũng cảm", "nhanh nhẹn", "xinh đẹp", "giàu có"], "g": ""}, {"id": 317, "lop": 1, "mon": "hdtn", "muc": 1, "q": "Năm điều Bác Hồ dạy: \"Đoàn kết tốt, … tốt\"", "a": ["kỉ luật", "học tập", "lao động", "ăn ngủ"], "g": ""}, {"id": 318, "lop": 1, "mon": "hdtn", "muc": 1, "q": "Tết Trung thu diễn ra vào ngày nào?", "a": ["Rằm tháng Tám âm lịch", "Mùng 1 tháng Giêng", "Ngày 1 tháng 6", "Ngày 20 tháng 11"], "g": ""}, {"id": 319, "lop": 1, "mon": "hdtn", "muc": 1, "q": "Ngày Tết, khi được người lớn mừng tuổi, em nên làm gì?", "a": ["Nhận bằng hai tay và nói lời cảm ơn", "Giật lấy", "Mở ngay ra đếm", "Chê ít"], "g": ""}, {"id": 320, "lop": 1, "mon": "hdtn", "muc": 1, "q": "Gặp bạn mới, em nên làm gì?", "a": ["Chào hỏi, giới thiệu tên mình", "Quay đi", "Trêu bạn", "Không nói chuyện"], "g": ""}, {"id": 321, "lop": 1, "mon": "hdtn", "muc": 1, "q": "Khi vui chơi, em cần tránh trò chơi nào?", "a": ["Trèo cây, leo rào", "Nhảy dây", "Ô ăn quan", "Kéo co"], "g": ""}, {"id": 322, "lop": 1, "mon": "hdtn", "muc": 2, "q": "Ăn uống hợp lí là:", "a": ["Ăn đủ các bữa, đủ chất, nhiều rau quả", "Chỉ ăn đồ chiên rán", "Bỏ bữa sáng", "Ăn thật nhiều kẹo"], "g": ""}, {"id": 323, "lop": 1, "mon": "hdtn", "muc": 2, "q": "Trước Tết, em có thể giúp gia đình việc gì?", "a": ["Lau dọn, sắp xếp nhà cửa gọn gàng", "Bày bừa đồ chơi", "Ngủ cả ngày", "Xem ti vi suốt"], "g": ""}, {"id": 324, "lop": 1, "mon": "hdtn", "muc": 2, "q": "Khi bị bạn bắt nạt, em không nên làm gì?", "a": ["Giữ kín, không kể với ai", "Nói với thầy cô", "Kể cho bố mẹ", "Nhờ bạn tốt giúp"], "g": ""}, {"id": 325, "lop": 2, "mon": "hdtn", "muc": 1, "q": "Góc học tập gọn gàng giúp em điều gì?", "a": ["Học tập thuận lợi, dễ tìm đồ", "Không cần học", "Có nhiều đồ chơi hơn", "Ngủ ngon hơn"], "g": ""}, {"id": 326, "lop": 2, "mon": "hdtn", "muc": 1, "q": "Quý trọng đồng tiền là:", "a": ["Tiết kiệm, không tiêu xài lãng phí", "Mua thật nhiều đồ chơi", "Xé tiền chơi", "Đòi bố mẹ tiền mỗi ngày"], "g": ""}, {"id": 327, "lop": 2, "mon": "hdtn", "muc": 1, "q": "Tự làm lấy việc của mình là:", "a": ["Tự chuẩn bị sách vở, tự gấp chăn", "Nhờ mẹ làm hết", "Chờ người khác nhắc", "Bỏ dở công việc"], "g": ""}, {"id": 328, "lop": 2, "mon": "hdtn", "muc": 2, "q": "Khi đi chơi xa, em cần chuẩn bị gì?", "a": ["Mũ, nước uống, đồ dùng cá nhân cần thiết", "Mang theo tất cả đồ chơi", "Không mang gì", "Mang theo nhiều tiền"], "g": ""}, {"id": 329, "lop": 2, "mon": "hdtn", "muc": 2, "q": "Khi bị lạc đường, em cần nhớ thông tin gì?", "a": ["Tên bố mẹ, địa chỉ nhà, số điện thoại của bố mẹ", "Tên bạn thân", "Tên con mèo", "Bài hát yêu thích"], "g": ""}, {"id": 330, "lop": 2, "mon": "hdtn", "muc": 2, "q": "Người khuyết tật cần được đối xử thế nào?", "a": ["Tôn trọng, giúp đỡ, chia sẻ", "Trêu chọc", "Xa lánh", "Bắt chước dáng đi"], "g": ""}, {"id": 331, "lop": 2, "mon": "hdtn", "muc": 2, "q": "Lựa chọn trang phục khi trời lạnh:", "a": ["Áo ấm, khăn quàng, tất", "Áo cộc tay", "Dép lê, quần đùi", "Áo mưa mỏng"], "g": ""}, {"id": 332, "lop": 2, "mon": "hdtn", "muc": 2, "q": "\"Lớp học xanh\" là lớp học thế nào?", "a": ["Sạch sẽ, có cây xanh, tiết kiệm điện nước", "Sơn tường màu xanh", "Chỉ có học sinh mặc áo xanh", "Học ngoài rừng"], "g": ""}, {"id": 333, "lop": 2, "mon": "hdtn", "muc": 2, "q": "Làm việc gì để phòng tránh bị bắt cóc?", "a": ["Không đi theo người lạ, không nhận quà người lạ", "Đi chơi một mình ở chỗ vắng", "Nói địa chỉ nhà cho người lạ", "Lên xe người lạ"], "g": ""}, {"id": 334, "lop": 2, "mon": "hdtn", "muc": 2, "q": "Ngày đáng nhớ của gia đình có thể là:", "a": ["Sinh nhật ông bà, bố mẹ", "Ngày đi chợ", "Ngày trời mưa", "Ngày xem ti vi"], "g": ""}, {"id": 335, "lop": 2, "mon": "hdtn", "muc": 3, "q": "\"Nghề nào tính nấy\" ý nói gì?", "a": ["Mỗi nghề cần những tính cách, phẩm chất phù hợp", "Nghề nào cũng giống nhau", "Không cần làm nghề", "Chỉ có một nghề tốt"], "g": ""}, {"id": 336, "lop": 2, "mon": "hdtn", "muc": 3, "q": "Khi lao động ở trường, để an toàn em cần:", "a": ["Dùng dụng cụ đúng cách, nghe theo hướng dẫn của thầy cô", "Dùng dao kéo đùa nghịch", "Trèo cao lau cửa kính", "Tự ý cầm hoá chất"], "g": ""}, {"id": 337, "lop": 2, "mon": "hdtn", "muc": 3, "q": "Vật dụng nào bảo vệ em khi đi xe đạp?", "a": ["Mũ bảo hiểm", "Kính áp tròng", "Vòng tay", "Khăn lụa"], "g": ""}, {"id": 338, "lop": 0, "mon": "an", "muc": 1, "q": "Đô, Rê, Mi, Pha, Son, La, Si là gì?", "a": ["Tên các nốt nhạc", "Tên các bạn nhỏ", "Tên các con vật", "Tên các màu"], "g": ""}, {"id": 339, "lop": 0, "mon": "an", "muc": 1, "q": "Có tất cả mấy nốt nhạc cơ bản?", "a": ["7", "5", "6", "8"], "g": ""}, {"id": 340, "lop": 0, "mon": "an", "muc": 1, "q": "Nhạc cụ nào dùng tay gõ để phát ra tiếng?", "a": ["Trống", "Sáo", "Kèn", "Đàn bầu"], "g": ""}, {"id": 341, "lop": 0, "mon": "an", "muc": 1, "q": "Bài hát Quốc ca Việt Nam có tên là gì?", "a": ["Tiến quân ca", "Kìa con bướm vàng", "Một con vịt", "Trống cơm"], "g": ""}, {"id": 342, "lop": 0, "mon": "an", "muc": 1, "q": "Khi chào cờ, hát Quốc ca, em cần đứng thế nào?", "a": ["Đứng nghiêm, mắt nhìn lá cờ", "Ngồi xuống", "Đi lại", "Nói chuyện"], "g": ""}, {"id": 343, "lop": 0, "mon": "an", "muc": 1, "q": "Sáo là nhạc cụ chơi bằng cách nào?", "a": ["Thổi", "Gõ", "Kéo", "Đập"], "g": ""}, {"id": 344, "lop": 0, "mon": "an", "muc": 2, "q": "Ai là tác giả bài Quốc ca \"Tiến quân ca\"?", "a": ["Nhạc sĩ Văn Cao", "Nhạc sĩ Trịnh Công Sơn", "Nhạc sĩ Phạm Tuyên", "Nhạc sĩ Hoàng Long"], "g": ""}, {"id": 345, "lop": 0, "mon": "an", "muc": 2, "q": "Thanh phách, song loan là những nhạc cụ thuộc loại nào?", "a": ["Nhạc cụ gõ", "Nhạc cụ thổi", "Nhạc cụ có dây", "Nhạc cụ điện tử"], "g": ""}, {"id": 346, "lop": 0, "mon": "an", "muc": 2, "q": "Âm thanh nào là âm thanh trong thiên nhiên?", "a": ["Tiếng chim hót", "Tiếng còi xe", "Tiếng chuông điện thoại", "Tiếng ti vi"], "g": ""}, {"id": 347, "lop": 0, "mon": "an", "muc": 2, "q": "Hát ru, quan họ, hò là những thể loại gì?", "a": ["Dân ca Việt Nam", "Nhạc nước ngoài", "Nhạc điện tử", "Nhạc phim hoạt hình"], "g": ""}, {"id": 348, "lop": 0, "mon": "an", "muc": 2, "q": "Đàn bầu có mấy dây?", "a": ["1 dây", "2 dây", "4 dây", "6 dây"], "g": ""}, {"id": 349, "lop": 0, "mon": "an", "muc": 2, "q": "Bài hát \"Một con vịt\" có câu \"cạp cạp cạp\" là tiếng kêu của con gì?", "a": ["Con vịt", "Con gà", "Con mèo", "Con ếch"], "g": ""}, {"id": 350, "lop": 0, "mon": "an", "muc": 3, "q": "Khi hát, cách đứng nào là đúng?", "a": ["Đứng thẳng, thoải mái, thở đều", "Cúi gập người", "Ngồi co chân", "Nằm nghiêng"], "g": ""}, {"id": 351, "lop": 0, "mon": "an", "muc": 3, "q": "Nhạc cụ nào có dây?", "a": ["Đàn ghi-ta", "Trống cơm", "Kèn", "Thanh phách"], "g": ""}, {"id": 352, "lop": 0, "mon": "an", "muc": 3, "q": "Năm dòng kẻ song song dùng để ghi nốt nhạc gọi là gì?", "a": ["Khuông nhạc", "Bảng chữ cái", "Thước kẻ", "Lịch"], "g": ""}, {"id": 353, "lop": 0, "mon": "mt", "muc": 1, "q": "Ba màu cơ bản trong mĩ thuật là:", "a": ["Đỏ, vàng, lam", "Đen, trắng, xám", "Xanh lá, cam, tím", "Hồng, nâu, be"], "g": ""}, {"id": 354, "lop": 0, "mon": "mt", "muc": 1, "q": "Pha màu vàng với màu lam ta được màu gì?", "a": ["Màu xanh lá (lục)", "Màu cam", "Màu tím", "Màu nâu"], "g": ""}, {"id": 355, "lop": 0, "mon": "mt", "muc": 1, "q": "Pha màu đỏ với màu vàng ta được màu gì?", "a": ["Màu cam", "Màu tím", "Màu xanh lá", "Màu đen"], "g": ""}, {"id": 356, "lop": 0, "mon": "mt", "muc": 1, "q": "Pha màu đỏ với màu lam ta được màu gì?", "a": ["Màu tím", "Màu cam", "Màu xanh lá", "Màu vàng"], "g": ""}, {"id": 357, "lop": 0, "mon": "mt", "muc": 1, "q": "Hình nào là hình cơ bản trong mĩ thuật?", "a": ["Hình tròn", "Hình con mèo", "Hình ngôi nhà", "Hình bông hoa"], "g": ""}, {"id": 358, "lop": 0, "mon": "mt", "muc": 1, "q": "Dụng cụ nào dùng để tô màu?", "a": ["Bút sáp màu", "Thước kẻ", "Cục tẩy", "Kéo"], "g": ""}, {"id": 359, "lop": 0, "mon": "mt", "muc": 2, "q": "Nét nào là nét cong?", "a": ["Nét như cầu vồng", "Nét như cây thước", "Nét như răng cưa", "Nét như dấu cộng"], "g": ""}, {"id": 360, "lop": 0, "mon": "mt", "muc": 2, "q": "Nét \"zíc zắc\" trông giống cái gì?", "a": ["Răng cưa", "Quả bóng", "Mặt trời tròn", "Sợi chỉ thẳng"], "g": ""}, {"id": 361, "lop": 0, "mon": "mt", "muc": 2, "q": "Màu nóng gồm những màu nào?", "a": ["Đỏ, cam, vàng", "Xanh lam, tím", "Xanh lá, xanh lam", "Trắng, xám"], "g": "Màu nóng gợi cảm giác ấm áp như lửa, mặt trời."}, {"id": 362, "lop": 0, "mon": "mt", "muc": 2, "q": "Màu lạnh gồm những màu nào?", "a": ["Xanh lam, xanh lá, tím", "Đỏ, cam", "Vàng, cam", "Đỏ, hồng"], "g": ""}, {"id": 363, "lop": 0, "mon": "mt", "muc": 2, "q": "Khối nào có dạng như quả bóng?", "a": ["Khối cầu", "Khối lập phương", "Khối trụ", "Khối hộp chữ nhật"], "g": ""}, {"id": 364, "lop": 0, "mon": "mt", "muc": 2, "q": "Khi dùng kéo cắt giấy, em cần chú ý gì?", "a": ["Cầm kéo cẩn thận, không chĩa vào bạn", "Vừa cắt vừa chạy", "Ném kéo cho bạn", "Cắt tóc bạn"], "g": ""}, {"id": 365, "lop": 0, "mon": "mt", "muc": 3, "q": "Tranh dân gian Đông Hồ nổi tiếng của nước ta thường in trên loại giấy gì?", "a": ["Giấy điệp", "Giấy báo", "Giấy ni lông", "Giấy bạc"], "g": ""}, {"id": 366, "lop": 0, "mon": "mt", "muc": 3, "q": "Đất nặn dùng để làm gì?", "a": ["Tạo hình các khối, đồ vật, con vật", "Viết chữ", "Đo độ dài", "Tô màu tranh"], "g": ""}, {"id": 367, "lop": 0, "mon": "mt", "muc": 3, "q": "Họa sĩ là người làm công việc gì?", "a": ["Vẽ tranh, sáng tác mĩ thuật", "Hát", "Chữa bệnh", "Lái xe"], "g": ""}, {"id": 368, "lop": 0, "mon": "gdtc", "muc": 1, "q": "Khi nghe khẩu lệnh \"Nghiêm!\", em cần làm gì?", "a": ["Đứng thẳng, hai gót chân chạm nhau, hai tay áp sát thân", "Ngồi xuống", "Chạy đi", "Vẫy tay"], "g": ""}, {"id": 369, "lop": 0, "mon": "gdtc", "muc": 1, "q": "Trước khi tập thể dục, chúng ta cần làm gì?", "a": ["Khởi động", "Ăn thật no", "Uống thật nhiều nước ngọt", "Ngủ một giấc"], "g": ""}, {"id": 370, "lop": 0, "mon": "gdtc", "muc": 1, "q": "Động tác đầu tiên của bài thể dục thường là:", "a": ["Động tác vươn thở", "Động tác nhảy", "Động tác điều hoà", "Động tác bụng"], "g": ""}, {"id": 371, "lop": 0, "mon": "gdtc", "muc": 1, "q": "Động tác cuối cùng để thả lỏng trong bài thể dục là:", "a": ["Động tác điều hoà", "Động tác vươn thở", "Động tác tay", "Động tác chân"], "g": ""}, {"id": 372, "lop": 0, "mon": "gdtc", "muc": 1, "q": "Khi tập luyện, trang phục phù hợp là:", "a": ["Quần áo thể thao, giày vừa chân", "Váy dài", "Dép cao gót", "Áo khoác dày"], "g": ""}, {"id": 373, "lop": 0, "mon": "gdtc", "muc": 2, "q": "Khi học bơi, em cần có ai đi cùng?", "a": ["Người lớn, thầy cô hướng dẫn", "Đi một mình", "Bạn nhỏ hơn", "Không cần ai"], "g": ""}, {"id": 374, "lop": 0, "mon": "gdtc", "muc": 2, "q": "Xếp hàng dọc là đứng thế nào?", "a": ["Bạn này đứng sau bạn kia thành một hàng", "Đứng cạnh nhau thành hàng ngang", "Đứng thành vòng tròn", "Đứng lộn xộn"], "g": ""}, {"id": 375, "lop": 0, "mon": "gdtc", "muc": 2, "q": "Khẩu lệnh \"Nghỉ!\" có nghĩa là:", "a": ["Đứng thoải mái tại chỗ, một chân hơi chùng", "Chạy về chỗ ngồi", "Ngồi xuống đất", "Đi về nhà"], "g": ""}, {"id": 376, "lop": 0, "mon": "gdtc", "muc": 2, "q": "Môn thể thao nào dùng tay ném bóng vào rổ?", "a": ["Bóng rổ", "Bóng đá", "Cầu lông", "Bơi lội"], "g": ""}, {"id": 377, "lop": 0, "mon": "gdtc", "muc": 2, "q": "Môn thể thao nào dùng chân đá bóng vào gôn?", "a": ["Bóng đá", "Bóng rổ", "Bóng bàn", "Cầu lông"], "g": ""}, {"id": 378, "lop": 0, "mon": "gdtc", "muc": 2, "q": "Sau khi tập luyện ra nhiều mồ hôi, em nên làm gì?", "a": ["Lau khô mồ hôi, nghỉ ngơi, uống nước từ từ", "Tắm nước lạnh ngay", "Ngồi trước quạt thật mạnh", "Ăn kem ngay lập tức"], "g": ""}, {"id": 379, "lop": 0, "mon": "gdtc", "muc": 3, "q": "Ném rổ hai tay trước ngực: bóng được cầm ở đâu trước khi ném?", "a": ["Trước ngực", "Trên đầu", "Sau lưng", "Dưới chân"], "g": ""}, {"id": 380, "lop": 0, "mon": "gdtc", "muc": 3, "q": "Khi chơi trò chơi vận động, điều quan trọng là:", "a": ["Chơi đúng luật, đoàn kết, an toàn", "Thắng bằng mọi cách", "Xô đẩy bạn", "Chơi một mình"], "g": ""}, {"id": 381, "lop": 0, "mon": "gdtc", "muc": 3, "q": "Ôm gối nổi người trong nước giúp em làm quen với điều gì?", "a": ["Nổi trên mặt nước", "Lặn sâu", "Nhảy cầu", "Chạy nhanh"], "g": ""}, {"id": 382, "lop": 0, "mon": "gdtc", "muc": 3, "q": "Vì sao nên tập thể dục đều đặn?", "a": ["Giúp cơ thể khoẻ mạnh, nhanh nhẹn", "Để không phải ăn", "Để không cần ngủ", "Để được nghỉ học"], "g": ""}, {"id": 383, "lop": 0, "mon": "ta", "muc": 1, "q": "\"Hello\" nghĩa là gì?", "a": ["Xin chào", "Tạm biệt", "Cảm ơn", "Xin lỗi"], "g": ""}, {"id": 384, "lop": 0, "mon": "ta", "muc": 1, "q": "\"Goodbye\" nghĩa là gì?", "a": ["Tạm biệt", "Xin chào", "Cảm ơn", "Chúc ngủ ngon"], "g": ""}, {"id": 385, "lop": 0, "mon": "ta", "muc": 1, "q": "\"Thank you\" nghĩa là gì?", "a": ["Cảm ơn", "Xin chào", "Xin lỗi", "Tạm biệt"], "g": ""}, {"id": 386, "lop": 0, "mon": "ta", "muc": 1, "q": "\"Red\" là màu gì?", "a": ["Màu đỏ", "Màu xanh", "Màu vàng", "Màu đen"], "g": ""}, {"id": 387, "lop": 0, "mon": "ta", "muc": 1, "q": "\"Yellow\" là màu gì?", "a": ["Màu vàng", "Màu đỏ", "Màu trắng", "Màu tím"], "g": ""}, {"id": 388, "lop": 0, "mon": "ta", "muc": 1, "q": "\"Blue\" là màu gì?", "a": ["Màu xanh dương", "Màu hồng", "Màu vàng", "Màu nâu"], "g": ""}, {"id": 389, "lop": 0, "mon": "ta", "muc": 1, "q": "\"Cat\" là con vật nào?", "a": ["Con mèo", "Con chó", "Con gà", "Con cá"], "g": ""}, {"id": 390, "lop": 0, "mon": "ta", "muc": 1, "q": "\"Dog\" là con vật nào?", "a": ["Con chó", "Con mèo", "Con vịt", "Con bò"], "g": ""}, {"id": 391, "lop": 0, "mon": "ta", "muc": 1, "q": "\"Fish\" là con vật nào?", "a": ["Con cá", "Con chim", "Con gà", "Con ếch"], "g": ""}, {"id": 392, "lop": 0, "mon": "ta", "muc": 1, "q": "\"Apple\" là quả gì?", "a": ["Quả táo", "Quả cam", "Quả chuối", "Quả nho"], "g": ""}, {"id": 393, "lop": 0, "mon": "ta", "muc": 1, "q": "\"Book\" là đồ vật gì?", "a": ["Quyển sách", "Cái bút", "Cái bàn", "Cái cặp"], "g": ""}, {"id": 394, "lop": 0, "mon": "ta", "muc": 1, "q": "\"Ball\" là đồ vật gì?", "a": ["Quả bóng", "Con diều", "Búp bê", "Ô tô"], "g": ""}, {"id": 395, "lop": 0, "mon": "ta", "muc": 1, "q": "\"One, two, three\" là các số nào?", "a": ["1, 2, 3", "3, 2, 1", "4, 5, 6", "7, 8, 9"], "g": ""}, {"id": 396, "lop": 0, "mon": "ta", "muc": 2, "q": "\"Five\" là số mấy?", "a": ["5", "4", "6", "9"], "g": ""}, {"id": 397, "lop": 0, "mon": "ta", "muc": 2, "q": "\"Ten\" là số mấy?", "a": ["10", "2", "12", "20"], "g": ""}, {"id": 398, "lop": 0, "mon": "ta", "muc": 2, "q": "\"Duck\" là con vật nào?", "a": ["Con vịt", "Con gà", "Con ngỗng", "Con chim"], "g": ""}, {"id": 399, "lop": 0, "mon": "ta", "muc": 2, "q": "\"Kite\" là đồ vật gì?", "a": ["Con diều", "Cái mũ", "Cái bánh", "Cái cây"], "g": ""}, {"id": 400, "lop": 0, "mon": "ta", "muc": 2, "q": "\"Milk\" là gì?", "a": ["Sữa", "Nước cam", "Cơm", "Bánh mì"], "g": ""}, {"id": 401, "lop": 0, "mon": "ta", "muc": 2, "q": "\"Bus\" là phương tiện nào?", "a": ["Xe buýt", "Xe đạp", "Máy bay", "Thuyền"], "g": ""}, {"id": 402, "lop": 0, "mon": "ta", "muc": 2, "q": "\"Green\" là màu gì?", "a": ["Màu xanh lá", "Màu đỏ", "Màu cam", "Màu tím"], "g": ""}, {"id": 403, "lop": 0, "mon": "ta", "muc": 2, "q": "\"Mother\" nghĩa là gì?", "a": ["Mẹ", "Bố", "Bà", "Chị"], "g": ""}, {"id": 404, "lop": 0, "mon": "ta", "muc": 2, "q": "\"Father\" nghĩa là gì?", "a": ["Bố", "Mẹ", "Ông", "Anh"], "g": ""}, {"id": 405, "lop": 0, "mon": "ta", "muc": 2, "q": "\"Sit down, please.\" nghĩa là gì?", "a": ["Mời ngồi xuống.", "Mời đứng lên.", "Mở sách ra.", "Đi ra ngoài."], "g": ""}, {"id": 406, "lop": 0, "mon": "ta", "muc": 3, "q": "\"Stand up, please.\" nghĩa là gì?", "a": ["Mời đứng lên.", "Mời ngồi xuống.", "Đóng sách lại.", "Im lặng nào."], "g": ""}, {"id": 407, "lop": 0, "mon": "ta", "muc": 3, "q": "\"How old are you?\" là câu hỏi về điều gì?", "a": ["Tuổi của em", "Tên của em", "Nhà của em", "Màu em thích"], "g": ""}, {"id": 408, "lop": 0, "mon": "ta", "muc": 3, "q": "\"What's your name?\" là câu hỏi về điều gì?", "a": ["Tên của em", "Tuổi của em", "Lớp của em", "Đồ chơi của em"], "g": ""}, {"id": 409, "lop": 0, "mon": "ta", "muc": 3, "q": "\"Zoo\" là nơi nào?", "a": ["Vườn thú", "Trường học", "Siêu thị", "Bệnh viện"], "g": ""}, {"id": 410, "lop": 0, "mon": "ta", "muc": 3, "q": "\"Bird\" là con vật nào?", "a": ["Con chim", "Con cá", "Con gấu", "Con khỉ"], "g": ""}, {"id": 411, "lop": 0, "mon": "ta", "muc": 3, "q": "\"Eight\" là số mấy?", "a": ["8", "3", "6", "18"], "g": ""}, {"id": 412, "lop": 0, "mon": "ta", "muc": 3, "q": "Từ nào là con vật trong tiếng Anh?", "a": ["monkey", "pencil", "table", "orange"], "g": "\"Monkey\" là con khỉ."}, {"id": 413, "lop": 0, "mon": "kp", "muc": 1, "q": "Thủ đô của nước Việt Nam là thành phố nào?", "a": ["Hà Nội", "Huế", "Đà Nẵng", "Cần Thơ"], "g": ""}, {"id": 414, "lop": 0, "mon": "kp", "muc": 1, "q": "Lá cờ Tổ quốc Việt Nam có màu gì?", "a": ["Nền đỏ, ngôi sao vàng năm cánh", "Nền xanh, sao trắng", "Nền vàng, sao đỏ", "Nền trắng, sao xanh"], "g": ""}, {"id": 415, "lop": 0, "mon": "kp", "muc": 1, "q": "Ngày Quốc tế Thiếu nhi là ngày nào?", "a": ["1 tháng 6", "20 tháng 11", "2 tháng 9", "8 tháng 3"], "g": ""}, {"id": 416, "lop": 0, "mon": "kp", "muc": 1, "q": "Ngày Quốc khánh nước Việt Nam là ngày nào?", "a": ["2 tháng 9", "1 tháng 6", "30 tháng 4", "20 tháng 10"], "g": ""}, {"id": 417, "lop": 0, "mon": "kp", "muc": 1, "q": "Ngày Phụ nữ Việt Nam là ngày nào?", "a": ["20 tháng 10", "8 tháng 3", "1 tháng 6", "20 tháng 11"], "g": ""}, {"id": 418, "lop": 0, "mon": "kp", "muc": 1, "q": "Ngày Quốc tế Phụ nữ là ngày nào?", "a": ["8 tháng 3", "20 tháng 10", "1 tháng 5", "2 tháng 9"], "g": ""}, {"id": 419, "lop": 0, "mon": "kp", "muc": 1, "q": "Con vật nào có chiếc vòi dài?", "a": ["Con voi", "Con hổ", "Con hươu", "Con gấu"], "g": ""}, {"id": 420, "lop": 0, "mon": "kp", "muc": 1, "q": "Con vật nào cao nhất thế giới?", "a": ["Hươu cao cổ", "Con voi", "Con lạc đà", "Con ngựa"], "g": ""}, {"id": 421, "lop": 0, "mon": "kp", "muc": 1, "q": "Con vật nào làm ra mật ngọt?", "a": ["Con ong", "Con bướm", "Con kiến", "Con ruồi"], "g": ""}, {"id": 422, "lop": 0, "mon": "kp", "muc": 1, "q": "Con gì kêu \"ò ó o\" mỗi sáng?", "a": ["Gà trống", "Con vịt", "Con bò", "Con mèo"], "g": ""}, {"id": 423, "lop": 0, "mon": "kp", "muc": 1, "q": "Gà con nở ra từ đâu?", "a": ["Quả trứng", "Hạt thóc", "Cái tổ rơm", "Chiếc lá"], "g": ""}, {"id": 424, "lop": 0, "mon": "kp", "muc": 1, "q": "Con vật nào thích ăn cà rốt và có đôi tai dài?", "a": ["Con thỏ", "Con chuột", "Con gà", "Con cá"], "g": ""}, {"id": 425, "lop": 0, "mon": "kp", "muc": 1, "q": "Con vật nào là \"chúa sơn lâm\" trong truyện?", "a": ["Con hổ", "Con thỏ", "Con sóc", "Con nai"], "g": ""}, {"id": 426, "lop": 0, "mon": "kp", "muc": 1, "q": "Gấu trúc thích ăn gì nhất?", "a": ["Lá tre, măng tre", "Thịt", "Cá", "Cà rốt"], "g": ""}, {"id": 427, "lop": 0, "mon": "kp", "muc": 1, "q": "Con vật nào không có chân?", "a": ["Con rắn", "Con gà", "Con chó", "Con ếch"], "g": ""}, {"id": 428, "lop": 0, "mon": "kp", "muc": 1, "q": "Mặt Trời mọc ở hướng nào?", "a": ["Hướng Đông", "Hướng Tây", "Hướng Nam", "Hướng Bắc"], "g": ""}, {"id": 429, "lop": 0, "mon": "kp", "muc": 1, "q": "Mặt Trời lặn ở hướng nào?", "a": ["Hướng Tây", "Hướng Đông", "Hướng Bắc", "Hướng Nam"], "g": ""}, {"id": 430, "lop": 0, "mon": "kp", "muc": 1, "q": "Hành tinh chúng ta đang sống tên là gì?", "a": ["Trái Đất", "Mặt Trăng", "Sao Hoả", "Mặt Trời"], "g": ""}, {"id": 431, "lop": 0, "mon": "kp", "muc": 1, "q": "Sau cơn mưa, đôi khi ta thấy dải nhiều màu trên trời gọi là gì?", "a": ["Cầu vồng", "Sấm sét", "Mây đen", "Sao băng"], "g": ""}, {"id": 432, "lop": 0, "mon": "kp", "muc": 1, "q": "Nước để trong ngăn đá tủ lạnh lâu sẽ thành gì?", "a": ["Đá (nước đá)", "Hơi nước", "Sữa", "Cát"], "g": ""}, {"id": 433, "lop": 0, "mon": "kp", "muc": 1, "q": "Hạt gạo là từ cây gì?", "a": ["Cây lúa", "Cây ngô", "Cây mía", "Cây chuối"], "g": ""}, {"id": 434, "lop": 0, "mon": "kp", "muc": 1, "q": "Đường ăn thường được làm từ cây gì?", "a": ["Cây mía", "Cây lúa", "Cây tre", "Cây bàng"], "g": ""}, {"id": 435, "lop": 0, "mon": "kp", "muc": 1, "q": "Bác sĩ thú y chữa bệnh cho ai?", "a": ["Con vật", "Người già", "Cây cối", "Ô tô"], "g": ""}, {"id": 436, "lop": 0, "mon": "kp", "muc": 1, "q": "Ai là người lái máy bay?", "a": ["Phi công", "Thuỷ thủ", "Lái tàu hoả", "Bác sĩ"], "g": ""}, {"id": 437, "lop": 0, "mon": "kp", "muc": 1, "q": "Người làm nghề đánh bắt cá trên biển gọi là gì?", "a": ["Ngư dân", "Nông dân", "Công nhân", "Thợ may"], "g": ""}, {"id": 438, "lop": 0, "mon": "kp", "muc": 1, "q": "Chú lính cứu hoả làm nhiệm vụ gì?", "a": ["Dập lửa, cứu người", "Dạy học", "Bán hàng", "Trồng cây"], "g": ""}, {"id": 439, "lop": 0, "mon": "kp", "muc": 1, "q": "Đêm Trung thu, các bạn nhỏ thường rước loại đèn nào?", "a": ["Đèn ông sao", "Đèn pin", "Đèn đường", "Đèn giao thông"], "g": ""}, {"id": 440, "lop": 0, "mon": "kp", "muc": 1, "q": "Trong truyện cổ, ai ngồi gốc cây đa trên Cung Trăng?", "a": ["Chú Cuội", "Thánh Gióng", "Ông Bụt", "Thạch Sanh"], "g": ""}, {"id": 441, "lop": 0, "mon": "kp", "muc": 1, "q": "Con vật nào có cái mai cứng, bò rất chậm?", "a": ["Con rùa", "Con thỏ", "Con ngựa", "Con báo"], "g": ""}, {"id": 442, "lop": 0, "mon": "kp", "muc": 1, "q": "Con vật nào có bộ lông vằn đen trắng?", "a": ["Ngựa vằn", "Con bò", "Con dê", "Con lợn"], "g": ""}, {"id": 443, "lop": 0, "mon": "kp", "muc": 2, "q": "Bác Hồ sinh ngày nào?", "a": ["19 tháng 5", "2 tháng 9", "1 tháng 6", "30 tháng 4"], "g": "Bác sinh ngày 19 tháng 5 năm 1890."}, {"id": 444, "lop": 0, "mon": "kp", "muc": 2, "q": "Đội Thiếu niên Tiền phong mang tên ai?", "a": ["Hồ Chí Minh", "Võ Thị Sáu", "Kim Đồng", "Lê Văn Tám"], "g": ""}, {"id": 445, "lop": 0, "mon": "kp", "muc": 2, "q": "Ngày thành lập Đội Thiếu niên Tiền phong Hồ Chí Minh là ngày nào?", "a": ["15 tháng 5", "1 tháng 6", "26 tháng 3", "20 tháng 11"], "g": ""}, {"id": 446, "lop": 0, "mon": "kp", "muc": 2, "q": "Nước Việt Nam có hình dáng giống chữ cái nào?", "a": ["Chữ S", "Chữ O", "Chữ L", "Chữ V"], "g": ""}, {"id": 447, "lop": 0, "mon": "kp", "muc": 2, "q": "Nước ta có bao nhiêu dân tộc anh em?", "a": ["54", "45", "64", "100"], "g": ""}, {"id": 448, "lop": 0, "mon": "kp", "muc": 2, "q": "Đỉnh núi cao nhất Việt Nam là:", "a": ["Phan-xi-păng", "Bà Đen", "Ngũ Hành Sơn", "Núi Ba Vì"], "g": ""}, {"id": 449, "lop": 0, "mon": "kp", "muc": 2, "q": "Vịnh Hạ Long nằm ở tỉnh nào?", "a": ["Quảng Ninh", "Khánh Hoà", "Kiên Giang", "Thanh Hoá"], "g": ""}, {"id": 450, "lop": 0, "mon": "kp", "muc": 2, "q": "Con vật nào chạy nhanh nhất trên cạn?", "a": ["Báo săn (báo gê-pa)", "Con rùa", "Con voi", "Con ốc sên"], "g": ""}, {"id": 451, "lop": 0, "mon": "kp", "muc": 2, "q": "Con vật nào lớn nhất trên Trái Đất?", "a": ["Cá voi xanh", "Con voi", "Hươu cao cổ", "Cá mập"], "g": ""}, {"id": 452, "lop": 0, "mon": "kp", "muc": 2, "q": "Con nhện có mấy chân?", "a": ["8 chân", "6 chân", "4 chân", "10 chân"], "g": "Nhện có 8 chân nên không phải côn trùng."}, {"id": 453, "lop": 0, "mon": "kp", "muc": 2, "q": "Các loài côn trùng như kiến, ong có mấy chân?", "a": ["6 chân", "8 chân", "4 chân", "2 chân"], "g": ""}, {"id": 454, "lop": 0, "mon": "kp", "muc": 2, "q": "Con bạch tuộc có bao nhiêu xúc tu?", "a": ["8", "6", "10", "4"], "g": ""}, {"id": 455, "lop": 0, "mon": "kp", "muc": 2, "q": "Con ếch khi còn nhỏ gọi là gì?", "a": ["Nòng nọc", "Sâu non", "Cá con", "Ấu trùng ong"], "g": ""}, {"id": 456, "lop": 0, "mon": "kp", "muc": 2, "q": "Con bướm được biến đổi từ con gì?", "a": ["Con sâu (sâu bướm)", "Con kiến", "Con giun", "Con nhện"], "g": ""}, {"id": 457, "lop": 0, "mon": "kp", "muc": 2, "q": "Con tằm cho chúng ta thứ gì?", "a": ["Tơ", "Mật", "Sữa", "Trứng"], "g": ""}, {"id": 458, "lop": 0, "mon": "kp", "muc": 2, "q": "Cá thở bằng bộ phận nào?", "a": ["Mang", "Phổi", "Mũi", "Da"], "g": ""}, {"id": 459, "lop": 0, "mon": "kp", "muc": 2, "q": "Loài chim nào không bay được nhưng chạy rất nhanh?", "a": ["Đà điểu", "Đại bàng", "Chim sẻ", "Bồ câu"], "g": ""}, {"id": 460, "lop": 0, "mon": "kp", "muc": 2, "q": "Chim cánh cụt sống ở nơi nào?", "a": ["Vùng băng giá ở Nam Cực", "Sa mạc nóng", "Rừng nhiệt đới", "Đồng lúa"], "g": ""}, {"id": 461, "lop": 0, "mon": "kp", "muc": 2, "q": "Con vật nào được gọi là \"con tàu của sa mạc\"?", "a": ["Lạc đà", "Con voi", "Con ngựa", "Con trâu"], "g": ""}, {"id": 462, "lop": 0, "mon": "kp", "muc": 2, "q": "Chuột túi (căng-gu-ru) mang con trong đâu?", "a": ["Túi ở bụng", "Trên lưng", "Trong miệng", "Trong tổ"], "g": ""}, {"id": 463, "lop": 0, "mon": "kp", "muc": 2, "q": "Cây xương rồng thường sống ở nơi nào?", "a": ["Nơi khô hạn, ít nước", "Dưới đáy hồ", "Trong ao bèo", "Trên tuyết"], "g": ""}, {"id": 464, "lop": 0, "mon": "kp", "muc": 2, "q": "Mặt Trăng quay quanh cái gì?", "a": ["Trái Đất", "Mặt Trời mọc", "Ngôi sao Bắc Đẩu", "Sao Hoả"], "g": ""}, {"id": 465, "lop": 0, "mon": "kp", "muc": 2, "q": "Trái Đất có hình dạng gì?", "a": ["Hình cầu (gần tròn như quả bóng)", "Hình vuông", "Hình tam giác", "Hình bẹt như cái đĩa"], "g": ""}, {"id": 466, "lop": 0, "mon": "kp", "muc": 2, "q": "Đại dương lớn nhất thế giới là:", "a": ["Thái Bình Dương", "Ấn Độ Dương", "Đại Tây Dương", "Bắc Băng Dương"], "g": ""}, {"id": 467, "lop": 0, "mon": "kp", "muc": 2, "q": "Dụng cụ nào dùng để đo nhiệt độ cơ thể?", "a": ["Nhiệt kế", "Thước kẻ", "Cân", "Đồng hồ"], "g": ""}, {"id": 468, "lop": 0, "mon": "kp", "muc": 2, "q": "Trẻ em có bao nhiêu chiếc răng sữa?", "a": ["20", "32", "10", "28"], "g": "Người lớn có khoảng 32 chiếc răng."}, {"id": 469, "lop": 0, "mon": "kp", "muc": 2, "q": "Bộ phận nào bơm máu đi khắp cơ thể?", "a": ["Tim", "Phổi", "Dạ dày", "Thận"], "g": ""}, {"id": 470, "lop": 0, "mon": "kp", "muc": 2, "q": "Vì sao phải ăn nhiều rau xanh, hoa quả?", "a": ["Cung cấp vi-ta-min, giúp cơ thể khoẻ", "Để răng sâu", "Để béo nhanh", "Để buồn ngủ"], "g": ""}, {"id": 471, "lop": 0, "mon": "kp", "muc": 2, "q": "Sự tích bánh chưng, bánh giầy gắn với nhân vật nào?", "a": ["Lang Liêu", "Thạch Sanh", "Sơn Tinh", "Chử Đồng Tử"], "g": ""}, {"id": 472, "lop": 0, "mon": "kp", "muc": 2, "q": "Thánh Gióng cưỡi con vật gì đi đánh giặc?", "a": ["Ngựa sắt", "Voi trắng", "Trâu vàng", "Rồng xanh"], "g": ""}, {"id": 473, "lop": 0, "mon": "kp", "muc": 2, "q": "Trong truyền thuyết, Sơn Tinh là vị thần cai quản đâu?", "a": ["Núi", "Biển", "Sông", "Mây"], "g": ""}, {"id": 474, "lop": 0, "mon": "kp", "muc": 2, "q": "Tết Nguyên đán là dịp đón năm mới theo lịch nào?", "a": ["Âm lịch", "Lịch học", "Lịch thi đấu", "Lịch tàu xe"], "g": ""}, {"id": 475, "lop": 0, "mon": "kp", "muc": 2, "q": "Muốn tiết kiệm nước, em nên làm gì?", "a": ["Khoá vòi nước khi không dùng", "Mở vòi chảy suốt", "Nghịch nước", "Tắm thật lâu"], "g": ""}, {"id": 476, "lop": 0, "mon": "kp", "muc": 2, "q": "Muốn tiết kiệm điện, em nên làm gì?", "a": ["Tắt đèn, quạt khi ra khỏi phòng", "Bật ti vi cả đêm", "Mở tủ lạnh liên tục", "Bật đèn ban ngày"], "g": ""}, {"id": 477, "lop": 0, "mon": "kp", "muc": 2, "q": "Vỏ chai nhựa, giấy vụn nên bỏ vào thùng rác nào?", "a": ["Thùng rác tái chế", "Thùng rác thức ăn thừa", "Vứt ra đường", "Thả xuống sông"], "g": ""}, {"id": 478, "lop": 0, "mon": "kp", "muc": 2, "q": "Cây xanh nhả ra khí gì giúp chúng ta thở?", "a": ["Khí ô-xi", "Khói bụi", "Khí độc", "Hơi nóng"], "g": ""}, {"id": 479, "lop": 0, "mon": "kp", "muc": 3, "q": "Mùa nào ở miền Bắc thường có hoa đào nở?", "a": ["Mùa xuân", "Mùa hạ", "Mùa thu", "Mùa đông"], "g": ""}, {"id": 480, "lop": 0, "mon": "kp", "muc": 3, "q": "Hoa phượng đỏ thường nở rộ vào mùa nào?", "a": ["Mùa hè", "Mùa đông", "Mùa xuân", "Mùa thu"], "g": ""}, {"id": 481, "lop": 0, "mon": "kp", "muc": 3, "q": "Sấm sét và chớp: ta thường thấy gì trước?", "a": ["Thấy chớp trước, nghe sấm sau", "Nghe sấm trước, thấy chớp sau", "Cùng lúc", "Không bao giờ thấy chớp"], "g": "Ánh sáng đi nhanh hơn âm thanh."}, {"id": 482, "lop": 0, "mon": "kp", "muc": 3, "q": "Khi bóng đèn sáng, nếu để tay lại gần ta cảm thấy thế nào?", "a": ["Ấm, nóng", "Lạnh buốt", "Ướt", "Không thấy gì"], "g": ""}, {"id": 483, "lop": 0, "mon": "kp", "muc": 3, "q": "Vật nào nổi trên mặt nước?", "a": ["Miếng xốp", "Hòn đá", "Chiếc đinh sắt", "Viên bi sắt"], "g": ""}, {"id": 484, "lop": 0, "mon": "kp", "muc": 3, "q": "Nam châm hút được vật nào?", "a": ["Cái đinh sắt", "Tờ giấy", "Miếng gỗ", "Chiếc lá"], "g": ""}, {"id": 485, "lop": 0, "mon": "kp", "muc": 3, "q": "Bóng của em ngắn nhất vào lúc nào trong ngày nắng?", "a": ["Buổi trưa", "Buổi sáng sớm", "Buổi chiều tà", "Ban đêm"], "g": "Buổi trưa Mặt Trời ở cao nhất."}, {"id": 486, "lop": 0, "mon": "kp", "muc": 3, "q": "Tháng Hai của năm nhuận có bao nhiêu ngày?", "a": ["29 ngày", "28 ngày", "30 ngày", "31 ngày"], "g": "Năm thường tháng Hai có 28 ngày."}, {"id": 487, "lop": 0, "mon": "kp", "muc": 3, "q": "Loài vật nào ngủ đông suốt mùa lạnh?", "a": ["Gấu", "Gà", "Bò", "Chó"], "g": ""}, {"id": 488, "lop": 0, "mon": "kp", "muc": 3, "q": "Con dơi thường đi kiếm ăn vào lúc nào?", "a": ["Ban đêm", "Buổi trưa", "Buổi sáng", "Không bao giờ"], "g": ""}, {"id": 489, "lop": 0, "mon": "kp", "muc": 3, "q": "Con vật nào có thể đổi màu da để lẩn trốn?", "a": ["Tắc kè hoa", "Con thỏ", "Con bò", "Con vịt"], "g": ""}, {"id": 490, "lop": 0, "mon": "kp", "muc": 3, "q": "Cá heo thở bằng gì?", "a": ["Phổi (ngoi lên mặt nước để thở)", "Mang như cá", "Da", "Vây"], "g": ""}, {"id": 491, "lop": 0, "mon": "kp", "muc": 3, "q": "Chim gõ kiến dùng mỏ để làm gì?", "a": ["Đục thân cây tìm sâu", "Hát", "Bơi", "Đào đất"], "g": ""}, {"id": 492, "lop": 0, "mon": "kp", "muc": 3, "q": "Lá cây thường có màu xanh vì sao?", "a": ["Vì lá có chất diệp lục", "Vì được sơn màu", "Vì mưa nhiều", "Vì trời xanh"], "g": ""}, {"id": 493, "lop": 0, "mon": "kp", "muc": 3, "q": "Quả dưa hấu bổ ra bên trong thường có màu gì?", "a": ["Đỏ", "Tím", "Xanh lam", "Đen"], "g": ""}, {"id": 494, "lop": 0, "mon": "kp", "muc": 3, "q": "Ở Việt Nam, Mũi Cà Mau nằm ở phía nào của đất nước?", "a": ["Cực Nam", "Cực Bắc", "Phía Tây", "Giữa đất nước"], "g": ""}, {"id": 495, "lop": 0, "mon": "kp", "muc": 3, "q": "Cầu Long Biên là cây cầu nổi tiếng bắc qua sông nào?", "a": ["Sông Hồng", "Sông Hương", "Sông Hàn", "Sông Sài Gòn"], "g": ""}, {"id": 496, "lop": 0, "mon": "kp", "muc": 3, "q": "Sông Hương là dòng sông nổi tiếng ở thành phố nào?", "a": ["Huế", "Hà Nội", "Hải Phòng", "Vũng Tàu"], "g": ""}, {"id": 497, "lop": 0, "mon": "kp", "muc": 3, "q": "Chợ nổi là nét đặc trưng của vùng nào?", "a": ["Miền Tây Nam Bộ", "Tây Bắc", "Thủ đô Hà Nội", "Tây Nguyên"], "g": ""}, {"id": 498, "lop": 0, "mon": "kp", "muc": 3, "q": "Cồng chiêng là nhạc cụ nổi tiếng của vùng nào?", "a": ["Tây Nguyên", "Đồng bằng Bắc Bộ", "Hà Nội", "Hải Phòng"], "g": ""}, {"id": 499, "lop": 0, "mon": "kp", "muc": 3, "q": "Áo dài là trang phục truyền thống của nước nào?", "a": ["Việt Nam", "Nhật Bản", "Hàn Quốc", "Pháp"], "g": ""}, {"id": 500, "lop": 0, "mon": "kp", "muc": 3, "q": "Nón lá là vật dụng dùng để làm gì?", "a": ["Che nắng, che mưa", "Đựng nước", "Nấu cơm", "Gõ nhịp"], "g": ""}];
+const O_CHU_GOC=[{"lop": 0, "tu": "CẦU VỒNG", "g": "Dải bảy màu trên bầu trời sau cơn mưa"}, {"lop": 0, "tu": "HÀ NỘI", "g": "Thủ đô của nước Việt Nam"}, {"lop": 0, "tu": "MẶT TRỜI", "g": "Mọc đằng Đông, lặn đằng Tây, sưởi ấm muôn loài"}, {"lop": 0, "tu": "TRUNG THU", "g": "Tết của thiếu nhi, có đèn ông sao và bánh nướng"}, {"lop": 0, "tu": "BÁNH CHƯNG", "g": "Bánh hình vuông gói lá dong ngày Tết"}, {"lop": 0, "tu": "THẦY CÔ", "g": "Người dạy em học ở trường"}, {"lop": 0, "tu": "CON VOI", "g": "Con vật to lớn, có chiếc vòi dài"}, {"lop": 0, "tu": "HƯƠU CAO CỔ", "g": "Con vật cao nhất thế giới"}, {"lop": 0, "tu": "HOA SEN", "g": "Loài hoa mọc dưới đầm, hồ, toả hương thơm"}, {"lop": 1, "tu": "CÂY LÚA", "g": "Cây cho ta hạt gạo"}, {"lop": 0, "tu": "NÒNG NỌC", "g": "Ếch con khi còn nhỏ, có đuôi, sống dưới nước"}, {"lop": 1, "tu": "GIA ĐÌNH", "g": "Ông bà, bố mẹ và các con sống cùng nhau"}, {"lop": 1, "tu": "TRƯỜNG HỌC", "g": "Nơi em đến học mỗi ngày"}, {"lop": 2, "tu": "THƯ VIỆN", "g": "Nơi có rất nhiều sách để đọc"}, {"lop": 1, "tu": "BẢNG CHỮ CÁI", "g": "Có 29 chữ cái, mở đầu bằng chữ A"}, {"lop": 2, "tu": "PHÉP NHÂN", "g": "Phép tính có dấu ×"}, {"lop": 2, "tu": "PHÉP CHIA", "g": "Phép tính có dấu :"}, {"lop": 1, "tu": "ĐỒNG HỒ", "g": "Đồ vật giúp em xem giờ"}, {"lop": 2, "tu": "KI-LÔ-GAM", "g": "Đơn vị đo khối lượng, viết tắt là kg"}, {"lop": 1, "tu": "XĂNG-TI-MÉT", "g": "Đơn vị đo độ dài, viết tắt là cm"}, {"lop": 1, "tu": "HÌNH TAM GIÁC", "g": "Hình có ba cạnh"}, {"lop": 2, "tu": "KHỐI CẦU", "g": "Khối có dạng như quả bóng"}, {"lop": 0, "tu": "MÙA XUÂN", "g": "Mùa cây cối đâm chồi nảy lộc"}, {"lop": 0, "tu": "MÙA HÈ", "g": "Mùa hoa phượng đỏ, ve kêu ra rả"}, {"lop": 1, "tu": "ĐÈN GIAO THÔNG", "g": "Có ba màu xanh, vàng, đỏ ở ngã tư"}, {"lop": 0, "tu": "MŨ BẢO HIỂM", "g": "Đội khi ngồi xe máy để bảo vệ đầu"}, {"lop": 1, "tu": "BÀN CHẢI", "g": "Dùng để đánh răng mỗi sáng và tối"}, {"lop": 1, "tu": "XÀ PHÒNG", "g": "Dùng để rửa tay sạch vi khuẩn"}, {"lop": 0, "tu": "RAU XANH", "g": "Món ăn cho cơ thể nhiều vi-ta-min"}, {"lop": 2, "tu": "CƠ QUAN HÔ HẤP", "g": "Gồm mũi, khí quản, phế quản và phổi"}, {"lop": 2, "tu": "TÀU HOẢ", "g": "Phương tiện chạy trên đường sắt"}, {"lop": 0, "tu": "MÁY BAY", "g": "Phương tiện bay trên bầu trời"}, {"lop": 0, "tu": "BÁC SĨ", "g": "Người khám, chữa bệnh"}, {"lop": 0, "tu": "LÍNH CỨU HOẢ", "g": "Người dập lửa, cứu người, gọi số 114"}, {"lop": 0, "tu": "ĐÀN BẦU", "g": "Nhạc cụ dân tộc chỉ có một dây"}, {"lop": 0, "tu": "TRỐNG TRƯỜNG", "g": "Báo giờ vào lớp, giờ ra chơi"}, {"lop": 0, "tu": "MÀU CƠ BẢN", "g": "Đỏ, vàng và lam"}, {"lop": 0, "tu": "CHÚ CUỘI", "g": "Ngồi gốc cây đa trên Cung Trăng"}, {"lop": 0, "tu": "THÁNH GIÓNG", "g": "Cưỡi ngựa sắt đi đánh giặc"}, {"lop": 2, "tu": "MAI AN TIÊM", "g": "Người trồng dưa hấu trên đảo hoang"}, {"lop": 2, "tu": "HỒ GƯƠM", "g": "Hồ đẹp giữa Thủ đô, có Tháp Rùa"}, {"lop": 0, "tu": "VỊNH HẠ LONG", "g": "Kì quan thiên nhiên ở Quảng Ninh"}, {"lop": 0, "tu": "ONG MẬT", "g": "Con vật chăm chỉ làm ra mật ngọt"}, {"lop": 0, "tu": "QUẢ DƯA HẤU", "g": "Vỏ xanh, ruột đỏ, hạt đen, ăn mát lành"}, {"lop": 0, "tu": "CHIM BỒ CÂU", "g": "Ngày xưa được dùng để đưa thư"}];
+// ================== DỮ LIỆU & TRẠNG THÁI ==================
+const MON = {
+  toan:{ten:"Toán",bieu:"🔢",mau:"#ffd23f"}, tv:{ten:"Tiếng Việt",bieu:"📖",mau:"#ff6b9d"},
+  tnxh:{ten:"Tự nhiên và Xã hội",bieu:"🌱",mau:"#18b26b"}, dd:{ten:"Đạo đức",bieu:"💗",mau:"#ff9ac1"},
+  hdtn:{ten:"Hoạt động trải nghiệm",bieu:"🎒",mau:"#ff9a76"}, an:{ten:"Âm nhạc",bieu:"🎵",mau:"#b48cff"},
+  mt:{ten:"Mĩ thuật",bieu:"🎨",mau:"#3ddcff"}, gdtc:{ten:"Giáo dục thể chất",bieu:"⚽",mau:"#7ee8a0"},
+  ta:{ten:"Tiếng Anh",bieu:"🔤",mau:"#5b8cff"}, kp:{ten:"Khám phá thế giới",bieu:"🌏",mau:"#ffb347"}
+};
+const MAU_DOI = ["#ef476f","#2f80ed","#f4b400","#18b26b","#9b5de5","#ff7f50"];
+const VAT_DOI = ["🦁","🐬","🐝","🐢","🦄","🦊"];
+const LOP_TEN = {0:"Chung",1:"Lớp 1",2:"Lớp 2"};
+const MUC_TEN = {1:"Dễ",2:"Vừa",3:"Khó"};
+const CHU = ["A","B","C","D"];
+const LS = "thitai-lop1-";
+function doc(k,md){try{const v=localStorage.getItem(LS+k);return v?JSON.parse(v):md}catch(e){return md}}
+function ghi(k,v){try{localStorage.setItem(LS+k,JSON.stringify(v))}catch(e){}}
+let kho = doc("kho", null) || JSON.parse(JSON.stringify(KHO_GOC));
+let oChu = doc("ochu", null) || JSON.parse(JSON.stringify(O_CHU_GOC));
+let cd = Object.assign({soDoi:4,lop:[0,1,2],mon:Object.keys(MON),giayTC:20,soTC:10,giayNS:25,siSo:30,giayBT:45,am:true,host:"Cô Diệu Thúy"}, doc("caidat",{}));
+if(!cd.gioV2){ if(cd.giayTC<=10) cd.giayTC=20; if(cd.giayNS<=15) cd.giayNS=25; if(cd.giayBT<=30) cd.giayBT=45; cd.gioV2=true; ghi("caidat",cd); }
+let doi = doc("doi", null) || taoDoi(cd.soDoi);
+function taoDoi(n){return Array.from({length:n},(_,i)=>({ten:"Đội "+(i+1),diem:0}))}
+function luuDoi(){ghi("doi",doi)}
+const $ = id=>document.getElementById(id);
+function tron(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function loc(){return kho.filter(c=>cd.lop.includes(c.lop)&&cd.mon.includes(c.mon))}
+function thongBao(t,ms=1800){const b=$("thong-bao");b.textContent=t;b.style.display="block";clearTimeout(b._t);b._t=setTimeout(()=>b.style.display="none",ms)}
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+
+// ================== ÂM THANH (WebAudio, không cần tệp) ==================
+let ac=null;
+function nhac(notes,kieu="triangle",vol=.18){ if(!cd.am) return; try{
+  ac=ac||new (window.AudioContext||window.webkitAudioContext)(); let t=ac.currentTime;
+  notes.forEach(([f,d])=>{const o=ac.createOscillator(),g=ac.createGain();o.type=kieu;o.frequency.value=f;g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(.001,t+d);o.connect(g).connect(ac.destination);o.start(t);o.stop(t+d);t+=d*.85});
+}catch(e){} }
+const amDung=()=>nhac([[660,.12],[880,.12],[1320,.3]]);
+const amSai=()=>nhac([[220,.18],[180,.3]],"sawtooth",.12);
+const amTich=()=>nhac([[1000,.05]],"square",.05);
+const amKen=()=>nhac([[523,.15],[659,.15],[784,.15],[1047,.45]]);
+const amBam=()=>nhac([[500,.06]],"square",.06);
+function doiAm(){cd.am=!cd.am;$("nut-am").textContent=cd.am?"🔊":"🔇";luuCaiDat(true)}
+
+// ================== PHÁO GIẤY ==================
+const phao=$("phao"),pc=phao.getContext("2d");let manh=[];
+function banPhao(n=140){phao.width=innerWidth;phao.height=innerHeight;
+  for(let i=0;i<n;i++)manh.push({x:innerWidth/2+(Math.random()-.5)*300,y:innerHeight*.35,vx:(Math.random()-.5)*16,vy:-Math.random()*14-4,r:Math.random()*360,c:MAU_DOI[i%6],s:6+Math.random()*8,t:0});
+  if(manh.length===n)requestAnimationFrame(vePhao)}
+function vePhao(){pc.clearRect(0,0,phao.width,phao.height);manh.forEach(m=>{m.vy+=.45;m.x+=m.vx;m.y+=m.vy;m.r+=8;m.t++;pc.save();pc.translate(m.x,m.y);pc.rotate(m.r*Math.PI/180);pc.fillStyle=m.c;pc.fillRect(-m.s/2,-m.s/4,m.s,m.s/2);pc.restore()});
+  manh=manh.filter(m=>m.y<phao.height+40&&m.t<200);if(manh.length)requestAnimationFrame(vePhao);else pc.clearRect(0,0,phao.width,phao.height)}
+
+// ================== NỀN SAO ==================
+(function(){const c=$("sao-nen"),x=c.getContext("2d");let s=[];function kt(){c.width=innerWidth;c.height=innerHeight;s=Array.from({length:90},()=>({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*1.6+.3,p:Math.random()*6}))}
+ kt();addEventListener("resize",kt);function v(t){x.clearRect(0,0,c.width,c.height);s.forEach(a=>{x.globalAlpha=.35+.35*Math.sin(t/900+a.p);x.fillStyle="#fff";x.beginPath();x.arc(a.x,a.y,a.r,0,7);x.fill()});if(!document.body.classList.contains("chup"))requestAnimationFrame(v)}requestAnimationFrame(v)})();
+
+// ================== ĐIỀU HƯỚNG ==================
+let manHien="menu";
+function diToi(m){
+  dungHanDongHo();
+  document.querySelectorAll(".man").forEach(s=>s.classList.remove("mo"));
+  const id = ["tia-chop","bac-thang","ngoi-sao"].includes(m) ? "hoi" : m;
+  $("man-"+id).classList.add("mo"); manHien=m; document.body.classList.toggle("thang",m==="bac-thang");
+  if(m==="menu") $("dem-kho").textContent = kho.length+" câu hỏi · "+oChu.length+" ô chữ";
+  if(m==="cai-dat") veCaiDat();
+  if(m==="kho") veKho();
+  if(m==="ket-qua") veKetQua();
+  veBangDiem();
+}
+function veBangDiem(){
+  const hien = ["tia-chop","banh-xe","bac-thang","ket-qua","menu"].includes(manHien);
+  $("bang-diem").innerHTML = hien ? doi.map((d,i)=>`<div class="doi-chip ${choDoi===i&&manHien!=="menu"?"dang":""} ${daSaiDoi.includes(i)&&manHien==="tia-chop"?"khoa":""}" style="border-color:${MAU_DOI[i]}"><span>${VAT_DOI[i]}</span><span>${esc(d.ten)}</span><span class="d" style="color:${MAU_DOI[i]}">${d.diem}</span></div>`).join("") : "";
+}
+function congDiem(i,n){ if(i==null||i<0) return; doi[i].diem+=n; luuDoi(); veBangDiem(); }
+
+// ================== CÂU HỎI DÙNG CHUNG ==================
+let cheDo=null, dsCau=[], soCau=0, cauNay=null, thuTu=[], daTraLoi=false, choDoi=null, daSaiDoi=[], tienTrinh=[];
+let gio=0, gioToi=0, hanGio=null, dungGio=false;
+function lấyCau(n, muc){ let p=loc(); if(muc) {const q=p.filter(c=>c.muc===muc); if(q.length) p=q;} return tron(p).slice(0,n); }
+function batDau(m){
+  const p=loc();
+  if(m!=="banh-xe" && p.length<5){ thongBao("Chưa đủ câu hỏi — sếp mở ⚙️ chọn thêm lớp/môn"); return; }
+  cheDo=m; tienTrinh=[]; choDoi=null; daSaiDoi=[];
+  if(m==="tia-chop"){ dsCau=lấyCau(cd.soTC); soCau=0; diToi(m); veCau(); }
+  else if(m==="bac-thang"){ batDauThang(); }
+  else if(m==="ngoi-sao"){ batDauSao(); }
+  else if(m==="banh-xe"){ diToi("banh-xe"); batDauXe(); }
+}
+function veCau(){
+  cauNay=dsCau[soCau]; if(!cauNay){ ketThucLuot(); return; }
+  daTraLoi=false; daSaiDoi=[]; choDoi=(cheDo==="bac-thang")?doiThang:null;
+  const m=MON[cauNay.mon]||{ten:cauNay.mon,bieu:"❔",mau:"#fff"};
+  $("nhan-mon").textContent=m.bieu+" "+m.ten; $("nhan-mon").style.background=m.mau+"44";
+  $("nhan-lop").textContent=LOP_TEN[cauNay.lop]; $("nhan-muc").textContent="Mức: "+MUC_TEN[cauNay.muc];
+  $("bieu-cau").textContent=m.bieu; $("chu-cau").textContent=cauNay.q;
+  thuTu=tron([0,1,2,3]);
+  $("luoi-dap").innerHTML=thuTu.map((k,i)=>`<button class="dap" id="dap-${i}" onclick="chonDap(${i})"><span class="chu-cai" style="background:var(--${CHU[i]})">${CHU[i]}</span><span>${esc(cauNay.a[k])}</span></button>`).join("");
+  $("giai").style.display="none";
+  $("nut-tiep").disabled = true;
+  if(cheDo==="tia-chop"){ $("nhan-so").textContent=`Câu ${soCau+1}/${dsCau.length}`; vePhaiTiaChop(); loiCu("Đội nào giơ tay trước nào? ✋"); batDongHo(cd.giayTC); }
+  if(cheDo==="bac-thang"){ $("nhan-so").textContent=`Bậc ${bac+1}/10`; vePhaiThang(); loiCu(["Bình tĩnh suy nghĩ nhé!","Con làm được mà!","Đọc kĩ cả 4 đáp án nha!"][bac%3]); batDongHo(cd.giayBT); }
+  if(cheDo==="ngoi-sao"){ $("nhan-so").textContent=`Câu ${soCau+1}`; vePhaiSao(); loiCu("Cả lớp giơ thẻ A, B, C hoặc D nào!"); batDongHo(cd.giayNS); $("nut-tiep").disabled=false; $("nut-tiep").textContent="Lật đáp án 👁"; }
+  else $("nut-tiep").textContent="Câu tiếp ▶";
+  veTienTrinh(); veBangDiem();
+}
+function veTienTrinh(){ const n = cheDo==="bac-thang"?10:(cheDo==="tia-chop"?dsCau.length:0);
+  $("tien-trinh").innerHTML = n? Array.from({length:n},(_,i)=>`<i class="${tienTrinh[i]||(i===(cheDo==="bac-thang"?bac:soCau)?"h":"")}"></i>`).join(""):""; }
+function loiCu(t){ $("loi-cu").textContent=t; }
+function dapDungIdx(){ return thuTu.indexOf(0); }
+function chonDap(i){
+  if(daTraLoi) return;
+  if(cheDo==="tia-chop" && choDoi==null){ thongBao("Cô bấm chọn đội giơ tay trước đã nhé 👉"); return; }
+  if(cheDo==="ngoi-sao"){ hienDapAn(); return; }
+  const dung = i===dapDungIdx();
+  const nut=$("dap-"+i);
+  if(dung){ nut.classList.add("dung"); amDung(); banPhao(); daTraLoi=true; dungHanDongHo(); hienGiai();
+    if(cheDo==="tia-chop"){ congDiem(choDoi,10); tienTrinh[soCau]="d"; loiCu(`Giỏi quá! ${doi[choDoi].ten} được +10 điểm 🎉`); $("nut-tiep").disabled=false; }
+    if(cheDo==="bac-thang"){ thangDung(); }
+  } else { nut.classList.add("sai"); amSai();
+    if(cheDo==="tia-chop"){ daSaiDoi.push(choDoi); loiCu(`Chưa đúng rồi! Đội khác giành quyền nào!`); choDoi=null; dungGio=false; vePhaiTiaChop(); veBangDiem();
+      nut.classList.add("an");
+      if(daSaiDoi.length>=doi.length){ hienDapAn(); } }
+    if(cheDo==="bac-thang"){ daTraLoi=true; dungHanDongHo(); $("dap-"+dapDungIdx()).classList.add("dung"); hienGiai(); thangSai(); }
+  }
+  veTienTrinh();
+}
+function hienGiai(){ const t=`✅ Đáp án: ${CHU[dapDungIdx()]}. ${cauNay.a[0]}` + (cauNay.g?` — ${cauNay.g}`:""); $("giai").textContent=t; $("giai").style.display="block"; }
+function hienDapAn(){
+  if(!cauNay) return; dungHanDongHo();
+  if(cheDo==="ngoi-sao"){ if(!daTraLoi){ daTraLoi=true; thuTu.forEach((k,i)=>$("dap-"+i).classList.add(k===0?"dung":"an")); amDung(); hienGiai(); loiCu("Bạn nào giơ sai thẻ thì tạm ngồi nghỉ nhé. Cô bấm − để tắt sao."); $("nut-tiep").textContent="Câu tiếp ▶"; } else { cauTiep(); } return; }
+  if(daTraLoi) return; daTraLoi=true;
+  thuTu.forEach((k,i)=>$("dap-"+i).classList.add(k===0?"dung":"an")); hienGiai();
+  if(cheDo==="tia-chop"){ tienTrinh[soCau]="s"; loiCu("Cùng nhớ đáp án đúng nhé!"); $("nut-tiep").disabled=false; }
+  if(cheDo==="bac-thang"){ thangSai(); }
+  veTienTrinh();
+}
+function cauTiep(){
+  if(cheDo==="ngoi-sao" && !daTraLoi){ hienDapAn(); return; }
+  if(cheDo==="bac-thang"){ if(thangChoTiep){ thangChoTiep=false; soCau++; veCau(); } return; }
+  soCau++; veCau();
+}
+function docCau(){ if(!cauNay) return; const t = cauNay.q+". "+thuTu.map((k,i)=>CHU[i]+": "+cauNay.a[k]).join(". ");
+  if(typeof docGiongViet==="function") docGiongViet(t); else thongBao("Máy chưa có giọng đọc tiếng Việt — cô đọc giúp các con nhé"); }
+
+// Đồng hồ
+function batDongHo(s){ dungHanDongHo(); gio=s; gioToi=s; dungGio=false; veDongHo(); hanGio=setInterval(()=>{ if(dungGio) return; gio--; veDongHo(); if(gio<=5&&gio>0) amTich(); if(gio<=0){ dungHanDongHo(); hetGio(); } },1000); }
+function dungHanDongHo(){ clearInterval(hanGio); hanGio=null; }
+function dungDongHo(){ if(!hanGio){ if(gio>0&&!daTraLoi){ batDongHoTiep(); } return;} dungGio=!dungGio; thongBao(dungGio?"⏸ Tạm dừng":"▶ Chạy tiếp",900); }
+function batDongHoTiep(){ hanGio=setInterval(()=>{ if(dungGio) return; gio--; veDongHo(); if(gio<=5&&gio>0) amTich(); if(gio<=0){ dungHanDongHo(); hetGio(); } },1000); }
+function veDongHo(){ $("so-giay").textContent=Math.max(0,gio); $("vong-gio").style.strokeDashoffset = 276.5*(1-Math.max(0,gio)/gioToi); $("dong-ho").classList.toggle("gap",gio<=5); }
+function hetGio(){ nhac([[300,.2],[200,.4]],"square",.1); loiCu("Hết giờ rồi! ⏰");
+  if(cheDo==="ngoi-sao"){ hienDapAn(); return; }
+  if(!daTraLoi) hienDapAn(); }
+
+// ---------- TIA CHỚP ----------
+function vePhaiTiaChop(){
+  $("phai-rieng").innerHTML = `<div class="kinh" style="padding:12px"><div class="chu-nho" style="margin-bottom:6px">Đội giơ tay trước (phím 1–${doi.length}):</div><div class="chon-doi">`+
+   doi.map((d,i)=>`<button style="background:${MAU_DOI[i]}" class="${choDoi===i?"dang":""}" ${daSaiDoi.includes(i)||daTraLoi?"disabled":""} onclick="chonDoi(${i})">${VAT_DOI[i]} ${esc(d.ten)}</button>`).join("")+`</div></div>`;
+}
+function chonDoi(i){ if(daTraLoi||daSaiDoi.includes(i)) return; choDoi=i; amBam(); dungGio=true; loiCu(`${doi[i].ten} trả lời! Chọn A, B, C hay D?`); vePhaiTiaChop(); veBangDiem(); }
+function ketThucLuot(){ amKen(); banPhao(220); diToi("ket-qua"); }
+
+// ---------- BẬC THANG ----------
+const SAO_BAC=[1,2,3,4,5,6,7,8,9,10], MOC=[2,5]; // chỉ số bậc là trạm an toàn (bậc 3, bậc 6)
+let thangChoTiep=false, bac=0, doiThang=0, troGiup={nua:true,lop:true,doi:true}, saoGiu=0;
+function batDauThang(){
+  bac=0; saoGiu=0; troGiup={nua:true,lop:true,doi:true}; tienTrinh=[];
+  // Chọn đội chơi
+  $("noi-dung-sua").innerHTML = `<h2>🪜 Đội nào leo Bậc Thang Trí Tuệ?</h2><div class="chon-doi" style="margin-top:14px">`+
+    doi.map((d,i)=>`<button style="background:${MAU_DOI[i]}" onclick="doiThang=${i};dongHop('hop-sua');vaoThang()">${VAT_DOI[i]} ${esc(d.ten)}</button>`).join("")+
+    `<button style="background:#7b5cff" onclick="doiThang=-1;dongHop('hop-sua');vaoThang()">👨‍👩‍👧 Cả lớp cùng chơi</button></div>`;
+  $("hop-sua").classList.add("mo");
+}
+function vaoThang(){ cheDo="bac-thang"; dsCau=[]; const p=loc();
+  const theoMuc=m=>tron(p.filter(c=>c.muc===m));
+  const d1=theoMuc(1), d2=theoMuc(2), d3=theoMuc(3), conLai=tron(p);
+  const lay=(ds)=>ds.shift()||conLai.shift();
+  for(let i=0;i<10;i++) dsCau.push(i<3?lay(d1):(i<7?lay(d2):lay(d3)));
+  dsDuPhong={1:d1,2:d2,3:d3,all:conLai};
+  soCau=0; diToi("bac-thang"); veCau(); }
+let dsDuPhong={};
+function vePhaiThang(){
+  $("phai-rieng").innerHTML = `<div class="kinh"><div class="thang">`+
+   SAO_BAC.map((s,i)=>`<div class="bac ${i===bac?"dang":""} ${i<bac?"qua":""} ${MOC.includes(i)?"moc":""}"><span class="sb">${i+1}</span>${MOC.includes(i)?"🛟":""}<span class="sao">${s} ⭐</span></div>`).join("")+
+   `</div></div><div class="tro-giup"><button ${troGiup.nua&&!daTraLoi?"":"disabled"} onclick="tg5050()" title="Bỏ 2 đáp án sai">50:50</button><button ${troGiup.lop&&!daTraLoi?"":"disabled"} onclick="tgLop()" title="Hỏi ý kiến cả lớp">👥 Lớp</button><button ${troGiup.doi&&!daTraLoi?"":"disabled"} onclick="tgDoi()" title="Đổi sang câu khác cùng mức">🔄 Đổi</button></div>
+   <div class="hang-nut"><button class="nut-nho" onclick="dungThang()">🛑 Dừng, giữ ${bac} ⭐</button></div>`;
+}
+function tg5050(){ troGiup.nua=false; const sai=thuTu.map((k,i)=>k!==0?i:-1).filter(i=>i>=0); tron(sai).slice(0,2).forEach(i=>$("dap-"+i).classList.add("an")); amBam(); vePhaiThang(); }
+function tgLop(){ troGiup.lop=false; dungGio=true; vePhaiThang(); loiCu("Cả lớp giơ thẻ góp ý trong 20 giây nhé! 👥"); let t=20; thongBao("👥 Cả lớp giơ thẻ: 20 giây",2000);
+  const h=setInterval(()=>{t--; amTich(); thongBao("👥 Cả lớp giơ thẻ: "+t+" giây",1100); if(t<=0){clearInterval(h); dungGio=false; loiCu("Đội chơi chọn đáp án nào?");}},1000); }
+function tgDoi(){ troGiup.doi=false; const m=dsCau[soCau].muc; const moi=(dsDuPhong[m]&&dsDuPhong[m].shift())||dsDuPhong.all.shift(); if(moi){ dsCau[soCau]=moi; veCau(); thongBao("🔄 Đã đổi câu"); } }
+function thangDung(){ tienTrinh[bac]="d"; bac++; saoGiu=bac;
+  if(bac>=10){ loiCu("TUYỆT VỜI! Lên đỉnh 10 ⭐ rồi! 🏆"); amKen(); banPhao(260); ketThang(10); return; }
+  loiCu(MOC.includes(bac-1)?`Qua trạm an toàn 🛟 — chắc chắn giữ ${bac} ⭐!`:`Đúng rồi! Lên bậc ${bac+1} nào!`);
+  vePhaiThang(); thangChoTiep=true; $("nut-tiep").disabled=false;
+}
+function thangSai(){ tienTrinh[bac]="s"; const giu = bac>MOC[1]?MOC[1]+1:(bac>MOC[0]?MOC[0]+1:0); loiCu(`Tiếc quá! Vẫn giữ được ${giu} ⭐ — giỏi lắm!`); vePhaiThang(); setTimeout(()=>ketThang(giu),2600); }
+function dungThang(){ if(!confirm(`Dừng cuộc chơi và giữ ${bac} ⭐?`)) return; dungHanDongHo(); ketThang(bac); }
+function ketThang(s){ if(doiThang>=0) congDiem(doiThang,s*10);
+  $("noi-dung-sua").innerHTML=`<div style="text-align:center"><svg width="110" height="120"><use href="#cu"/></svg><h2>${doiThang>=0?esc(doi[doiThang].ten):"Cả lớp"} đạt</h2><div style="font-size:64px;font-weight:900;color:var(--chinh)">${s} ⭐</div>${doiThang>=0?`<p>+${s*10} điểm cho đội</p>`:""}<div class="chan-menu"><button class="nut" onclick="dongHop('hop-sua');batDauThang()">Đội khác leo tiếp</button><button class="nut phu" onclick="dongHop('hop-sua');diToi('menu')">Về trang chính</button></div></div>`;
+  $("hop-sua").classList.add("mo"); if(s>=5) banPhao(); }
+
+// ---------- NGÔI SAO CUỐI CÙNG ----------
+let conSao=30, cuuTro=true;
+function batDauSao(){ cheDo="ngoi-sao"; conSao=cd.siSo; cuuTro=true; dsCau=tron(loc()); soCau=0; diToi("ngoi-sao"); veCau(); }
+function vePhaiSao(){
+  $("phai-rieng").innerHTML=`<div class="kinh" style="padding:12px"><div class="bau-troi">${Array.from({length:cd.siSo},(_,i)=>`<span class="${i>=conSao?"tat":""}">⭐</span>`).join("")}</div>
+   <div class="dem-so"><button class="nut-nho" onclick="doiSao(-1)">−</button><b>${conSao}</b><button class="nut-nho" onclick="doiSao(1)">+</button></div>
+   <div class="chu-nho" style="text-align:center">số bạn còn trên sân</div>
+   <div class="hang-nut" style="margin-top:8px"><button class="nut hong" ${cuuTro?"":"disabled"} onclick="cuuBan()">🛟 Cứu trợ</button><button class="nut-nho" onclick="ketSao()">🏁 Kết thúc</button></div></div>`;
+}
+function doiSao(n){ conSao=Math.max(0,Math.min(cd.siSo,conSao+n)); amBam(); vePhaiSao(); if(conSao<=3&&conSao>0) loiCu(`Chỉ còn ${conSao} ngôi sao sáng! Cố lên!`); }
+function cuuBan(){ if(!cuuTro) return; cuuTro=false; conSao=cd.siSo; amKen(); banPhao(); loiCu("🛟 Cứu trợ thành công! Tất cả các bạn vào lại sân!"); vePhaiSao(); }
+function ketSao(){ amKen(); banPhao(260);
+  $("noi-dung-sua").innerHTML=`<div style="text-align:center"><div style="font-size:90px">🌟</div><h2>Những ngôi sao cuối cùng!</h2><p style="font-size:22px">Còn <b style="color:var(--chinh)">${conSao}</b> bạn trên sân sau ${soCau+1} câu hỏi. Cả lớp cùng vỗ tay nào! 👏</p><div class="chan-menu"><button class="nut" onclick="dongHop('hop-sua');batDauSao()">Chơi ván mới</button><button class="nut phu" onclick="dongHop('hop-sua');diToi('menu')">Về trang chính</button></div></div>`;
+  $("hop-sua").classList.add("mo"); }
+
+// ================== BÁNH XE Ô CHỮ ==================
+const O_XE=[{t:"10",v:10},{t:"20",v:20},{t:"30",v:30},{t:"MẤT LƯỢT",v:0},{t:"40",v:40},{t:"50",v:50},{t:"×2",v:-2},{t:"20",v:20},{t:"60",v:60},{t:"MẤT LƯỢT",v:0},{t:"100",v:100},{t:"30",v:30}];
+const MAU_XE=["#ef476f","#ffd23f","#18b26b","#24124d","#2f80ed","#ff9a76","#ffb000","#9b5de5","#3ddcff","#24124d","#ff6b9d","#7ee8a0"];
+const BAN_PHIM="A Ă Â B C D Đ E Ê G H I K L M N O Ô Ơ P Q R S T U Ư V X Y".split(" ");
+let goc=0, oNay=null, daDoan=[], giaTri=null, dangQuay=false, dsOChu=[];
+function veXe(){ const n=O_XE.length, g=$("xe-quay"); let h="";
+  O_XE.forEach((o,i)=>{ const a0=(i/n)*2*Math.PI-Math.PI/2-Math.PI/n, a1=a0+2*Math.PI/n, r=200;
+    const x0=r*Math.cos(a0),y0=r*Math.sin(a0),x1=r*Math.cos(a1),y1=r*Math.sin(a1), am=(a0+a1)/2;
+    h+=`<path d="M0 0L${x0} ${y0}A${r} ${r} 0 0 1 ${x1} ${y1}z" fill="${MAU_XE[i]}" stroke="#fff" stroke-width="3"/>`;
+    const deg=am*180/Math.PI, lat=Math.cos(am)<-0.01?" rotate(180)":""; h+=`<text transform="rotate(${deg}) translate(${o.t.length>4?118:135} 0)${lat}" text-anchor="middle" dy="${o.t.length>4?6:10}" font-size="${o.t.length>4?17:30}" font-weight="900" fill="${MAU_XE[i]==="#ffd23f"||MAU_XE[i]==="#7ee8a0"||MAU_XE[i]==="#3ddcff"||MAU_XE[i]==="#ffb000"?"#24124d":"#fff"}">${o.t}</text>`; });
+  for(let i=0;i<n;i++){ const a=(i/n)*2*Math.PI-Math.PI/2-Math.PI/n; h+=`<circle cx="${192*Math.cos(a)}" cy="${192*Math.sin(a)}" r="5" fill="#fff"/>`; }
+  g.innerHTML=h+`<circle r="204" fill="none" stroke="#ffd23f" stroke-width="8"/>`; }
+function boDau(ch){ return ch.normalize("NFD").replace(/[̣̀́̃̉]/g,"").normalize("NFC").toUpperCase(); }
+function batDauXe(){ veXe(); if(choDoi==null) choDoi=0; dsOChu=tron(oChu.filter(o=>cd.lop.includes(o.lop))); if(!dsOChu.length) dsOChu=tron(oChu); oChuMoi(); }
+function oChuMoi(){ oNay=dsOChu.shift(); if(!oNay){ dsOChu=tron(oChu); oNay=dsOChu.shift(); } daDoan=[]; giaTri=null;
+  $("goi-y-xe").innerHTML=`💡 <b>Gợi ý:</b> ${esc(oNay.g)} <span class="chu-nho">(${[...oNay.tu].filter(c=>/\p{L}/u.test(c)).length} chữ cái)</span>`;
+  veOChu(); veBanPhim(); veLuotXe(); $("ket-qua-xe").textContent="Bấm bánh xe để quay!"; }
+function veOChu(lat){ $("o-chu").innerHTML = oNay.tu.split(" ").map(w=>`<div class="tu">${[...w].map(c=>{ if(!/\p{L}/u.test(c)) return `<div class="o gach">${c}</div>`;
+  const mo=daDoan.includes(boDau(c)); return `<div class="o ${mo?"":"an"} ${mo&&lat===boDau(c)?"lat":""}">${mo?c:"?"}</div>`; }).join("")}</div>`).join(""); }
+function veBanPhim(){ const co=new Set([...oNay.tu].map(boDau));
+  $("ban-phim").innerHTML = BAN_PHIM.map(k=>{ const da=daDoan.includes(k); return `<button class="${da?(co.has(k)?"co":"khong"):""}" ${da?"disabled":""} onclick="doanChu('${k}')">${k}</button>`; }).join(""); }
+function veLuotXe(){ $("luot-xe").innerHTML = `Lượt của: <b style="color:${MAU_DOI[choDoi]}">${VAT_DOI[choDoi]} ${esc(doi[choDoi].ten)}</b>`; veBangDiem(); }
+function quayXe(){ if(dangQuay) return; if(giaTri!==null&&giaTri!==0){ thongBao("Đội chọn một chữ cái trước đã nhé!"); return; }
+  dangQuay=true; const n=O_XE.length, k=Math.floor(Math.random()*n);
+  goc += 360*5 + ((360 - (k*360/n) - (goc%360)) % 360 + 360) % 360;
+  $("xe-quay").style.transform=`rotate(${goc}deg)`; $("ket-qua-xe").textContent="Đang quay… 🎡";
+  let tic=0; const ht=setInterval(()=>{ amTich(); if(++tic>24) clearInterval(ht); },160);
+  setTimeout(()=>{ dangQuay=false; const o=O_XE[k];
+    if(o.v===0){ giaTri=null; $("ket-qua-xe").innerHTML=`😮 <span style="color:var(--sai)">Mất lượt!</span>`; amSai(); setTimeout(doiLuot,1200); }
+    else { giaTri=o.v; $("ket-qua-xe").innerHTML = o.v===-2?`⭐ Nhân đôi điểm của đội!<br><span class="chu-nho">Chọn chữ cái đúng để nhân đôi</span>`:`Được <span style="color:var(--chinh)">${o.v}</span> điểm mỗi ô — chọn chữ cái!`; amDung(); }
+  }, document.body.classList.contains("chup")?0:4300);
+}
+function doanChu(k){ if(dangQuay) return; if(giaTri===null){ thongBao("Quay bánh xe trước nhé! 🎡"); return; }
+  daDoan.push(k); const so=[...oNay.tu].filter(c=>boDau(c)===k).length;
+  if(so>0){ amDung(); if(giaTri===-2){ congDiem(choDoi, Math.max(doi[choDoi].diem,10)); $("ket-qua-xe").innerHTML=`Có ${so} chữ ${k}! ⭐ Nhân đôi điểm!`; }
+    else { congDiem(choDoi, giaTri*so); $("ket-qua-xe").innerHTML=`Có <b style="color:var(--dung)">${so}</b> chữ ${k}! +${giaTri*so} điểm 🎉`; }
+    giaTri=null; veOChu(k); veBanPhim();
+    const het=[...oNay.tu].filter(c=>/\p{L}/u.test(c)).every(c=>daDoan.includes(boDau(c)));
+    if(het){ amKen(); banPhao(); $("ket-qua-xe").innerHTML="🎉 Đã mở hết ô chữ!"; } }
+  else { amSai(); $("ket-qua-xe").innerHTML=`Không có chữ ${k} 😢`; giaTri=null; veBanPhim(); setTimeout(doiLuot,1100); }
+}
+function doiLuot(){ choDoi=(choDoi+1)%doi.length; giaTri=null; veLuotXe(); $("ket-qua-xe").textContent="Bấm bánh xe để quay!"; }
+function giaiOChu(){ if(!confirm(`${doi[choDoi].ten} đọc đúng cả ô chữ?`)) return;
+  [...oNay.tu].forEach(c=>{ if(/\p{L}/u.test(c)&&!daDoan.includes(boDau(c))) daDoan.push(boDau(c)); }); veOChu(); veBanPhim();
+  congDiem(choDoi,100); amKen(); banPhao(220); $("ket-qua-xe").innerHTML=`🎉 ${esc(doi[choDoi].ten)} +100 điểm!`; }
+function docGoiY(){ if(typeof docGiongViet==="function") docGiongViet("Gợi ý: "+oNay.g); }
+
+// ================== CÀI ĐẶT ==================
+function veCaiDat(){
+  $("so-doi").innerHTML=[2,3,4,5,6].map(n=>`<option ${n===doi.length?"selected":""}>${n}</option>`).join("");
+  $("ds-doi").innerHTML=doi.map((d,i)=>`<div class="ten-doi"><span class="mau" style="background:${MAU_DOI[i]}">${VAT_DOI[i]}</span><input type="text" value="${esc(d.ten)}" maxlength="18" oninput="doi[${i}].ten=this.value;luuDoi();veBangDiem()"><span class="chu-nho">${d.diem} điểm</span></div>`).join("");
+  $("chon-lop").innerHTML=[1,2,0].map(l=>`<label class="hop-chon"><input type="checkbox" ${cd.lop.includes(l)?"checked":""} onchange="batTat('lop',${l},this.checked)">${l?LOP_TEN[l]:"Kiến thức chung"}</label>`).join("");
+  $("chon-mon").innerHTML=Object.entries(MON).map(([k,m])=>`<label class="hop-chon"><input type="checkbox" ${cd.mon.includes(k)?"checked":""} onchange="batTat('mon','${k}',this.checked)">${m.bieu} ${m.ten}</label>`).join("");
+  $("ten-host").value=cd.host||""; $("giay-tc").value=cd.giayTC; $("so-tc").value=cd.soTC; $("giay-ns").value=cd.giayNS; $("si-so").value=cd.siSo; $("giay-bt").value=cd.giayBT;
+  $("dem-loc").textContent=`→ Đang chọn ${loc().length} câu hỏi`;
+}
+function batTat(k,v,on){ const a=cd[k]; const i=a.indexOf(v); if(on&&i<0)a.push(v); if(!on&&i>=0)a.splice(i,1); luuCaiDat(true); $("dem-loc").textContent=`→ Đang chọn ${loc().length} câu hỏi`; }
+function doiSoDoi(n){ n=+n; while(doi.length<n) doi.push({ten:"Đội "+(doi.length+1),diem:0}); doi=doi.slice(0,n); luuDoi(); veCaiDat(); veBangDiem(); }
+function xoaDiem(){ doi.forEach(d=>d.diem=0); luuDoi(); veBangDiem(); if(manHien==="cai-dat") veCaiDat(); thongBao("Đã đưa điểm về 0"); }
+function luuCaiDat(im){ if(!im&&$("giay-tc")){ const v=(id,a,b,md)=>{const x=parseInt($(id).value);return isNaN(x)?md:Math.max(a,Math.min(b,x))};
+  cd.giayTC=v("giay-tc",5,90,20); cd.soTC=v("so-tc",5,50,10); cd.giayNS=v("giay-ns",5,90,25); cd.siSo=v("si-so",2,60,30); cd.giayBT=v("giay-bt",10,120,45); } ghi("caidat",cd); }
+
+// ================== KHO CÂU HỎI ==================
+let tab="cau";
+function tabKho(t){ tab=t; veKho(); }
+function veKho(){
+  $("tab-cau").style.outline=tab==="cau"?"3px solid var(--chinh)":""; $("tab-o").style.outline=tab==="o"?"3px solid var(--chinh)":"";
+  if(!$("loc-mon-kho").options.length) $("loc-mon-kho").innerHTML=`<option value="">Mọi môn</option>`+Object.entries(MON).map(([k,m])=>`<option value="${k}">${m.bieu} ${m.ten}</option>`).join("");
+  const tim=boDau($("tim-kho").value.trim()), mon=$("loc-mon-kho").value, lop=$("loc-lop-kho").value;
+  $("loc-mon-kho").style.display=tab==="cau"?"":"none";
+  if(tab==="o"){ const ds=oChu.map((o,i)=>[o,i]).filter(([o])=>(!lop||o.lop==lop)&&(!tim||boDau(o.tu+" "+o.g).includes(tim)));
+    $("dem-kho-loc").textContent=`${ds.length}/${oChu.length} ô chữ`;
+    $("bang-kho").innerHTML=`<tr><th>#</th><th>Lớp</th><th>Ô chữ</th><th>Gợi ý</th><th></th></tr>`+ds.map(([o,i])=>`<tr><td>${i+1}</td><td>${LOP_TEN[o.lop]}</td><td class="dung-chu">${esc(o.tu)}</td><td>${esc(o.g)}</td><td style="white-space:nowrap"><button class="nut-nho" onclick="moSuaO(${i})">✏️</button> <button class="nut-nho" onclick="xoaO(${i})">🗑</button></td></tr>`).join(""); return; }
+  const ds=kho.map((c,i)=>[c,i]).filter(([c])=>(!mon||c.mon===mon)&&(!lop||c.lop==lop)&&(!tim||boDau(c.q+" "+c.a.join(" ")).includes(tim)));
+  $("dem-kho-loc").textContent=`${ds.length}/${kho.length} câu · đáp án đúng tô màu xanh`;
+  $("bang-kho").innerHTML=`<tr><th>#</th><th>Môn</th><th>Lớp</th><th>Mức</th><th>Câu hỏi</th><th>Đáp án</th><th></th></tr>`+ds.map(([c,i])=>`<tr><td>${i+1}</td><td>${(MON[c.mon]||{}).bieu||""} ${(MON[c.mon]||{ten:c.mon}).ten}</td><td>${LOP_TEN[c.lop]}</td><td>${MUC_TEN[c.muc]}</td><td>${esc(c.q)}</td><td><span class="dung-chu">${esc(c.a[0])}</span> · ${c.a.slice(1).map(esc).join(" · ")}</td><td style="white-space:nowrap"><button class="nut-nho" onclick="moSua(${i})">✏️</button> <button class="nut-nho" onclick="xoaCau(${i})">🗑</button></td></tr>`).join("");
+}
+function luuKho(){ ghi("kho",kho); ghi("ochu",oChu); }
+function moSua(i){ const c = i==null?{lop:1,mon:"toan",muc:1,q:"",a:["","","",""],g:""}:kho[i];
+  $("noi-dung-sua").innerHTML=`<h2>${i==null?"➕ Thêm câu hỏi":"✏️ Sửa câu "+(i+1)}</h2>
+   <div class="hang"><select id="s-mon">${Object.entries(MON).map(([k,m])=>`<option value="${k}" ${k===c.mon?"selected":""}>${m.bieu} ${m.ten}</option>`).join("")}</select>
+   <select id="s-lop">${[1,2,0].map(l=>`<option value="${l}" ${l===c.lop?"selected":""}>${LOP_TEN[l]}</option>`).join("")}</select>
+   <select id="s-muc">${[1,2,3].map(l=>`<option value="${l}" ${l===c.muc?"selected":""}>${MUC_TEN[l]}</option>`).join("")}</select></div>
+   <label>Câu hỏi</label><textarea id="s-q" rows="2" style="width:100%">${esc(c.q)}</textarea>
+   <label>✅ Đáp án ĐÚNG</label><input type="text" id="s-a0" value="${esc(c.a[0])}">
+   <label>Đáp án sai 1</label><input type="text" id="s-a1" value="${esc(c.a[1])}"><label>Đáp án sai 2</label><input type="text" id="s-a2" value="${esc(c.a[2])}"><label>Đáp án sai 3</label><input type="text" id="s-a3" value="${esc(c.a[3])}">
+   <label>Giải thích ngắn (không bắt buộc)</label><input type="text" id="s-g" value="${esc(c.g||"")}">
+   <p class="chu-nho">Khi chơi, máy tự xáo thứ tự A, B, C, D.</p>
+   <div class="chan-menu"><button class="nut" onclick="luuCau(${i})">💾 Lưu</button><button class="nut phu" onclick="dongHop('hop-sua')">Huỷ</button></div>`;
+  $("hop-sua").classList.add("mo"); }
+function luuCau(i){ const a=[0,1,2,3].map(k=>$("s-a"+k).value.trim()); const q=$("s-q").value.trim();
+  if(!q||a.some(x=>!x)){ thongBao("Cần đủ câu hỏi và 4 đáp án"); return; }
+  if(new Set(a).size<4){ thongBao("4 đáp án phải khác nhau"); return; }
+  const c={lop:+$("s-lop").value,mon:$("s-mon").value,muc:+$("s-muc").value,q,a,g:$("s-g").value.trim()};
+  if(i==null){ c.id=Date.now(); kho.unshift(c); } else { c.id=kho[i].id; kho[i]=c; }
+  luuKho(); dongHop("hop-sua"); veKho(); thongBao("Đã lưu ✔"); }
+function xoaCau(i){ if(confirm("Xoá câu: "+kho[i].q+" ?")){ kho.splice(i,1); luuKho(); veKho(); } }
+function moSuaO(i){ const o=i==null?{lop:0,tu:"",g:""}:oChu[i];
+  $("noi-dung-sua").innerHTML=`<h2>${i==null?"➕ Thêm ô chữ":"✏️ Sửa ô chữ"}</h2><label>Lớp</label><select id="o-lop">${[1,2,0].map(l=>`<option value="${l}" ${l===o.lop?"selected":""}>${LOP_TEN[l]}</option>`).join("")}</select>
+   <label>Ô chữ (viết có dấu, VD: CẦU VỒNG)</label><input type="text" id="o-tu" value="${esc(o.tu)}"><label>Gợi ý</label><input type="text" id="o-g" value="${esc(o.g)}">
+   <div class="chan-menu"><button class="nut" onclick="luuO(${i})">💾 Lưu</button><button class="nut phu" onclick="dongHop('hop-sua')">Huỷ</button></div>`; $("hop-sua").classList.add("mo"); }
+function luuO(i){ const o={lop:+$("o-lop").value,tu:$("o-tu").value.trim().toUpperCase(),g:$("o-g").value.trim()}; if(!o.tu||!o.g){thongBao("Cần đủ ô chữ và gợi ý");return;}
+  if(i==null) oChu.unshift(o); else oChu[i]=o; luuKho(); dongHop("hop-sua"); veKho(); }
+function xoaO(i){ if(confirm("Xoá ô chữ "+oChu[i].tu+" ?")){ oChu.splice(i,1); luuKho(); veKho(); } }
+function xuatKho(){ const b=new Blob([JSON.stringify({ten:"Thi tài cùng lớp Một",ngay:new Date().toLocaleDateString("vi-VN"),cau_hoi:kho,o_chu:oChu},null,1)],{type:"application/json"});
+  const a=document.createElement("a"); a.href=URL.createObjectURL(b); a.download="kho-thi-tai-lop-mot.json"; a.click(); thongBao("Đã xuất kho — cất tệp này vào USB nhé"); }
+function nhapKho(inp){ const f=inp.files[0]; if(!f) return; const r=new FileReader(); r.onload=()=>{ try{ const d=JSON.parse(r.result);
+  if(!Array.isArray(d.cau_hoi)) throw 0; if(!confirm(`Thay kho hiện tại bằng ${d.cau_hoi.length} câu trong tệp?`)) return; kho=d.cau_hoi; if(Array.isArray(d.o_chu)) oChu=d.o_chu; luuKho(); veKho(); thongBao("Đã nhập kho ✔"); }catch(e){ thongBao("Tệp không đúng định dạng kho"); } }; r.readAsText(f); inp.value=""; }
+function khoiPhuc(){ if(confirm("Đưa kho về bản gốc "+KHO_GOC.length+" câu? Câu cô tự thêm sẽ mất (nên Xuất kho trước).")){ kho=JSON.parse(JSON.stringify(KHO_GOC)); oChu=JSON.parse(JSON.stringify(O_CHU_GOC)); luuKho(); veKho(); } }
+
+// ================== KẾT QUẢ ==================
+function veKetQua(){ const xep=doi.map((d,i)=>({...d,i})).sort((a,b)=>b.diem-a.diem); const max=Math.max(10,...xep.map(d=>d.diem));
+  const thu=[1,0,2,3,4,5].filter(k=>k<xep.length).map(k=>xep[k]);
+  $("buc").innerHTML=thu.map((d,j)=>`<div class="cot-buc"><div style="font-size:44px">${xep.indexOf(d)===0&&d.diem>0?"👑":VAT_DOI[d.i]}</div><b style="font-size:20px">${esc(d.ten)}</b><div class="than" style="height:${60+260*d.diem/max}px;background:linear-gradient(180deg,${MAU_DOI[d.i]},${MAU_DOI[d.i]}99);animation-delay:${j*.12}s">${d.diem}</div></div>`).join("");
+  if(xep[0].diem>0) banPhao(); }
+
+// ================== CHUNG ==================
+function dongHop(id){ $(id).classList.remove("mo"); }
+const LUAT={
+ "tia-chop":{ten:"⚡ Tia Chớp Nhí",y:["Câu hỏi hiện ra, đồng hồ bắt đầu chạy.","Đội nào giơ tay trước, cô bấm tên đội (hoặc phím 1–6).","Cô bấm đáp án đội chọn. Đúng: <b>+10 điểm</b>.","Sai: đội đó tạm dừng, đội khác được giành quyền trả lời."]},
+ "banh-xe":{ten:"🎡 Bánh Xe Ô Chữ",y:["Đội đang chơi quay bánh xe (bấm bánh xe hoặc phím Space).","Chọn một chữ cái. Có chữ đó: được <b>điểm × số ô mở</b>, quay tiếp.","Không có chữ đó hoặc vào ô <b>Mất lượt</b>: sang đội khác. Ô <b>×2</b>: đoán đúng thì nhân đôi điểm.","Đội đọc đúng cả ô chữ: cô bấm nút hồng, <b>+100 điểm</b>."]},
+ "bac-thang":{ten:"🪜 Bậc Thang Trí Tuệ",y:["Một đội (hoặc cả lớp) leo <b>10 bậc</b> từ dễ đến khó, mỗi bậc 1 sao.","Bậc 3 và bậc 6 là <b>trạm an toàn</b>: trả lời sai vẫn giữ sao của trạm.","3 quyền trợ giúp: <b>50:50</b> (bỏ 2 đáp án sai) · <b>Lớp</b> (cả lớp giơ thẻ góp ý) · <b>Đổi</b> (đổi câu khác).","Được dừng giữa chừng để giữ sao. Mỗi sao = 10 điểm cho đội."]},
+ "ngoi-sao":{ten:"🌟 Ngôi Sao Cuối Cùng",y:["Cả lớp đứng, giơ thẻ <b style='color:var(--A)'>A</b> <b style='color:var(--B)'>B</b> <b style='color:var(--C)'>C</b> <b style='color:var(--D)'>D</b>.","Hết giờ, cô bấm <b>Lật đáp án</b>. Bạn nào giơ sai thì tạm ngồi nghỉ, cô bấm − để tắt bớt sao.","Mỗi ván có một lần <b>Cứu trợ</b>: mời tất cả các bạn vào lại.","Bấm <b>Kết thúc</b> để cả lớp vỗ tay cho những ngôi sao cuối cùng."]}
+};
+let hdCheDo=null;
+function huongDan(m){ hdCheDo=m||null; const h=$("noi-dung-hd");
+  if(m && LUAT[m]){ const L=LUAT[m];
+    h.innerHTML=`<h2 style="font-size:34px">${L.ten}</h2><ol class="luat-ds">${L.y.map(x=>`<li>${x}</li>`).join("")}</ol>
+    <div class="chan-menu"><button class="nut" style="font-size:24px" onclick="dongHop('hop-hd');batDau('${m}')">▶ Chơi ngay</button><button class="nut phu" onclick="dongHop('hop-hd')">← Chọn phần khác</button></div>
+    <p class="chu-nho" style="text-align:center">Phím <b>Enter</b>: chơi ngay · <b>Esc</b>: đóng</p>`;
+  } else {
+    h.innerHTML=`<h2>❓ Cách chơi</h2><p class="mo-ta">Sếp bấm vào phần chơi muốn xem luật:</p>
+    <div class="luat-chon">${Object.keys(LUAT).map(k=>`<button class="nut phu" onclick="huongDan('${k}')">${LUAT[k].ten}</button>`).join("")}</div>
+    <p class="chu-nho">Phím tắt: <b>Space</b> câu tiếp · <b>A B C D</b> chọn đáp án · <b>1–6</b> chọn đội · <b>H</b> hiện đáp án · <b>P</b> dừng đồng hồ · <b>F</b> toàn màn hình · <b>Esc</b> về trang chính.</p>
+    <p class="chu-nho">Cô sửa, thêm câu ở 📚 Kho câu hỏi; nhớ bấm 💾 Xuất kho để sao lưu.</p>
+    <div class="chan-menu"><button class="nut" onclick="dongHop('hop-hd')">Đóng</button></div>`;
+  }
+  $("hop-hd").classList.add("mo"); }
+function toanManHinh(){ if(!document.fullscreenElement) document.documentElement.requestFullscreen?.(); else document.exitFullscreen?.(); }
+addEventListener("keydown",e=>{ if(/INPUT|TEXTAREA|SELECT/.test(e.target.tagName)) return; const k=e.key.toUpperCase();
+  if($("hop-hd").classList.contains("mo")){ if(k==="ENTER"&&hdCheDo){e.preventDefault();dongHop("hop-hd");batDau(hdCheDo);} if(k==="ESCAPE") dongHop("hop-hd"); return; }
+  if(k==="F") toanManHinh();
+  if(k==="ESCAPE"){ document.querySelectorAll(".hop-thoai").forEach(h=>h.classList.remove("mo")); diToi("menu"); }
+  if(manHien==="banh-xe"){ if(k===" "){e.preventDefault();quayXe()} return; }
+  if(!["tia-chop","bac-thang","ngoi-sao"].includes(manHien)) return;
+  if(CHU.includes(k)) chonDap(CHU.indexOf(k));
+  if(/^[1-6]$/.test(k)&&manHien==="tia-chop"&&+k<=doi.length) chonDoi(+k-1);
+  if(k==="H") hienDapAn(); if(k==="P") dungDongHo();
+  if(k===" "){ e.preventDefault(); if(!$("nut-tiep").disabled) $("nut-tiep").click(); }
+});
+
+// ================== CHẾ ĐỘ CHỤP (#man&demo) ==================
+function moTheoHash(){ const h=location.hash.slice(1).split("&"), m=h[0]||"menu", demo=h.includes("demo");
+  if(demo){ document.body.classList.add("chup"); $("nhan-thu").style.display="block"; doi=[{ten:"Sao Mai",diem:40},{ten:"Hoa Sen",diem:30},{ten:"Măng Non",diem:50},{ten:"Chồi Xanh",diem:20}]; }
+  if(m==="tia-chop"){ batDau("tia-chop"); if(demo){ chonDoi(2); chonDap(dapDungIdx()); dungHanDongHo(); } }
+  else if(m==="bac-thang"){ doiThang=1; vaoThang(); if(demo){ bac=4; soCau=4; tienTrinh=["d","d","d","d"]; veCau(); dungHanDongHo(); tg5050(); } }
+  else if(m==="ngoi-sao"){ batDauSao(); if(demo){ conSao=21; soCau=6; veCau(); dungHanDongHo(); hienDapAn(); vePhaiSao(); } }
+  else if(m==="banh-xe"){ batDau("banh-xe"); if(demo){ oNay={lop:0,tu:"CẦU VỒNG",g:"Dải bảy màu trên bầu trời sau cơn mưa"}; daDoan=["C","V","N"]; $("goi-y-xe").innerHTML='💡 <b>Gợi ý:</b> Dải bảy màu trên bầu trời sau cơn mưa <span class="chu-nho">(7 chữ cái)</span>'; veOChu(); veBanPhim(); choDoi=2; veLuotXe(); goc=0; $("ket-qua-xe").innerHTML='Có <b style="color:var(--dung)">1</b> chữ N! +30 điểm 🎉'; } }
+  else diToi(m);
+}
+function veHost(){ const t=(cd.host||"").trim(); document.querySelectorAll(".host").forEach(h=>h.style.display=t?"":"none"); document.querySelectorAll(".ten-host").forEach(e=>e.textContent=t); }
+$("nut-am").textContent=cd.am?"🔊":"🔇";
+veHost();
+moTheoHash();
+</script>
+</body>
+</html>
