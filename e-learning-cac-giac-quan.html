@@ -1075,19 +1075,19 @@ function phat(id, tu = 0){
     if (vco.dataset.id !== id){ vco.src = m.s; vco.dataset.id = id; }
     const me = {id, a: vco}; dangNoi = me;
     try { vco.currentTime = Math.max(0, tu); } catch(e){}
-    vco.playbackRate = P.toc; vco.onended = () => { if (dangNoi === me) dangNoi = null; };
+    vco.playbackRate = P.toc * TDK(); vco.onended = () => { if (dangNoi === me) dangNoi = null; };
     vco.play().catch(() => { if (dangNoi === me) dangNoi = null; }); return me; }
   if (m.loai === "am"){
     if (!kho[id]){ kho[id] = new Audio(m.s); kho[id].preload = "auto"; }
     const a = kho[id], me = {id, a}; dangNoi = me;
     try { a.currentTime = Math.max(0, tu); } catch(e){}
-    a.playbackRate = P.toc; a.onended = () => { if (dangNoi === me) dangNoi = null; };
+    a.playbackRate = P.toc * TDK(); a.onended = () => { if (dangNoi === me) dangNoi = null; };
     a.play().catch(() => { if (dangNoi === me) dangNoi = null; }); return me; }
   // chưa có tệp tiếng: chỉ đọc bằng giọng tiếng Việt của máy, không bao giờ dùng giọng tiếng Anh
   if (tu > .3 || !giongViet || !window.speechSynthesis) return null;
   const nghe = new EventTarget(); const gia = {paused: false, pause(){ this.paused = true; try { speechSynthesis.cancel(); } catch(e){} nghe.dispatchEvent(new Event("pause")); },
     addEventListener: (k, f, o) => nghe.addEventListener(k, f, o)};
-  const u = new SpeechSynthesisUtterance(m.doc || m.chu); u.voice = giongViet; u.lang = giongViet.lang; u.rate = .95 * P.toc;
+  const u = new SpeechSynthesisUtterance(m.doc || m.chu); u.voice = giongViet; u.lang = giongViet.lang; u.rate = .95 * P.toc * TDK();
   const me = {id, a: gia}; dangNoi = me;
   u.onend = () => { gia.paused = true; if (dangNoi === me) dangNoi = null; nghe.dispatchEvent(new Event("ended")); };
   try { speechSynthesis.cancel(); speechSynthesis.speak(u); } catch(e){ dangNoi = null; return null; }
@@ -1099,7 +1099,7 @@ function noi(id){ return new Promise(res => { if (/^khen/.test(id || "")) P.vuiD
   if (!me){ // không có tiếng: hiện phụ đề đủ lâu để đọc; im() vẫn dừng được như khi có tiếng
     const d = (MEDIA[id] && MEDIA[id].d) || 1.5; let hen = null;
     const gia = {paused: false, pause(){ if (this.paused) return; this.paused = true; clearTimeout(hen); if (dangNoi && dangNoi.a === gia) dangNoi = null; if (pdHt === (LOI[id] || "")) datPhuDe(""); res(); }};
-    im(); dangNoi = {id, a: gia}; hen = setTimeout(() => gia.pause(), d * 1000 / P.toc); return; }
+    im(); dangNoi = {id, a: gia}; hen = setTimeout(() => gia.pause(), d * 1000 / (P.toc * TDK())); return; }
   const xong = () => { if (!dangNoi || dangNoi === me) datPhuDe(""); res(); };
   me.a.addEventListener("ended", xong, {once: true}); me.a.addEventListener("pause", () => res(), {once: true}); }); }
 let pdHt = null;
@@ -1804,7 +1804,7 @@ let truoc = performance.now(), nhipN = 0, nhipT = 0;   // nhịp khung hình: ch
 function khung(now){
   const dt = Math.min(.1, (now - truoc) / 1000); truoc = now; const c = CANH[P.i], rt = P.rt;
   if (c && rt && CANH_XEM[c.loai]){
-    if (P.chay){ P.t += dt * P.toc; if (P.t >= rt.tong){ P.t = rt.tong; P.chay = false; im(); capNut();
+    if (P.chay){ P.t += dt * P.toc * TDK(); if (P.t >= rt.tong){ P.t = rt.tong; P.chay = false; im(); capNut();
         if (!P.xong.has(P.i)) xongCanh(); else nutTiep.hidden = P.i >= CANH.length - 1;
         clearTimeout(P.hen); const i0 = P.i; P.hen = setTimeout(() => { if (P.i === i0 && !P.chay && P.t >= rt.tong && P.i < CANH.length - 1) moCanh(P.i + 1); }, 1500); } }
     dongBo(); rt.ve(P.t);
@@ -1837,6 +1837,8 @@ function veMenu(){ const ds = $("#ds"); ds.innerHTML = "";
 function veCham(){ const ch = $("#cham"); ch.innerHTML = ""; CANH.forEach((c, i) => { const b = H("b", P.xong.has(i) ? "xong" : "", ch); if (i === P.i) b.className = "nay"; b.title = c.ten; }); }
 
 /* ---------- màn mở ---------- */
+/* Phần mở đầu (Trang bìa, Cô chào các con) đọc nhanh hơn 1,25 lần cho đỡ chậm; đồng bộ hình, chữ, tiếng vì cùng nhân vào tốc độ */
+function TDK(){ return (P.i === 0 || P.i === 1) ? 1.25 : 1; }
 function coPhu(e){ const n = (BAI.tieu_de_phu || "").length; if (n > 30) e.style.fontSize = n > 42 ? "2.2cqw" : "2.5cqw"; }   // tiêu đề phụ dài: một dòng, không chồng nhãn bên dưới
 function manMo(){
   P.i = -1; nen.innerHTML = ""; lop.innerHTML = ""; tren.innerHTML = ""; DONG = []; stage.dataset.bc = ""; const rt = {tt: []}; P.rt = rt;
@@ -1868,7 +1870,7 @@ $("#b-lui").onclick = () => { if (P.i > 0) moCanh(P.i - 1); };
 $("#b-toi").onclick = () => { if (P.i < CANH.length - 1 && (P.xong.has(P.i) || P.coXem)) moCanh(P.i + 1); };
 nutTiep.onclick = () => { if (P.i < CANH.length - 1) moCanh(P.i + 1); };
 $("#b-cc").onclick = e => { P.cc = !P.cc; e.currentTarget.classList.toggle("bat", P.cc); e.currentTarget.setAttribute("aria-pressed", P.cc); phude.hidden = !pdHt || !P.cc; };
-$("#b-toc").onclick = e => { const ds = [1, 1.25, .75]; P.toc = ds[(ds.indexOf(P.toc) + 1) % ds.length]; e.currentTarget.textContent = P.toc + "×"; if (dangNoi && dangNoi.a.playbackRate != null) dangNoi.a.playbackRate = P.toc; if (P.rt && P.rt.phim) P.rt.phim.playbackRate = P.toc; };
+$("#b-toc").onclick = e => { const ds = [1, 1.25, .75]; P.toc = ds[(ds.indexOf(P.toc) + 1) % ds.length]; e.currentTarget.textContent = P.toc + "×"; if (dangNoi && dangNoi.a.playbackRate != null) dangNoi.a.playbackRate = P.toc * TDK(); if (P.rt && P.rt.phim) P.rt.phim.playbackRate = P.toc; };
 $("#b-man").onclick = () => { try { if (document.fullscreenElement) document.exitFullscreen(); else $("#khung").requestFullscreen().catch(() => {}); } catch(e){} };
 $("#co-xem").onchange = e => { P.coXem = e.target.checked; veMenu(); capNut(); };
 const th = $("#thanh");
