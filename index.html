@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Nguyễn Thị Diệu Thúy — Giáo viên Tiểu học</title>
+<meta name="description" content="Trang giới thiệu, hồ sơ năng lực, sản phẩm số và học liệu của cô Nguyễn Thị Diệu Thúy, Trường Tiểu học chất lượng cao Hoàng Mai.">
+<style>
+:root{--xanh:#1e6fd9;--xanh2:#0f4aa3;--cam:#ff8a3d;--ngoc:#13a89e;--chu:#1c2b45;--chu2:#51607a;--nen:#f6faff;--vien:rgba(30,64,120,.14);--bong:0 10px 28px rgba(30,64,120,.13)}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;color:var(--chu);line-height:1.6;background:var(--nen)}
+a{color:var(--xanh2)}
+.rong{max-width:1060px;margin:0 auto;padding:0 18px}
+header.menu{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.88);backdrop-filter:blur(8px);border-bottom:1px solid var(--vien)}
+header.menu .rong{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:8px 18px}
+.thuonghieu{font-weight:800;font-size:18px;background:linear-gradient(90deg,var(--xanh2),var(--cam));-webkit-background-clip:text;background-clip:text;color:transparent;margin-right:auto}
+nav a{display:inline-block;text-decoration:none;color:var(--chu);font-weight:600;padding:8px 12px;border-radius:10px;font-size:15px}
+nav a:hover{background:#e6f1ff}
+.hero{background:radial-gradient(700px 360px at 90% 0,#ffe0c2 0,transparent 60%),radial-gradient(800px 420px at 0 10%,#cfe8ff 0,transparent 60%),linear-gradient(160deg,#eef7ff,#fff6ea);padding:44px 0 36px}
+.hero .rong{display:grid;grid-template-columns:1.15fr .85fr;gap:26px;align-items:center}
+.hero h1{margin:0 0 8px;font-size:clamp(30px,5vw,46px);line-height:1.12;background:linear-gradient(90deg,var(--xanh2),#e8651a);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p.vt{font-size:19px;color:var(--chu2);margin:6px 0 16px}
+.chip{display:inline-block;background:#fff;border:1px solid var(--vien);border-radius:999px;padding:6px 14px;font-weight:600;font-size:14px;margin:0 6px 8px 0;box-shadow:0 3px 8px rgba(30,64,120,.08)}
+.nut{display:inline-block;text-decoration:none;color:#fff;font-weight:700;padding:12px 22px;border-radius:14px;background:linear-gradient(135deg,var(--xanh),var(--xanh2));box-shadow:0 6px 16px rgba(30,111,217,.32);transition:transform .15s;margin:6px 8px 0 0}
+.nut:hover{transform:translateY(-2px)}
+.nut.phu{background:#fff;color:var(--xanh2);border:1.5px solid var(--xanh);box-shadow:none}
+.tranh{width:100%;height:auto;display:block}
+section{padding:46px 0}
+section:nth-of-type(even){background:#fff}
+h2.tieude{margin:0 0 6px;font-size:30px}
+h2.tieude::after{content:"";display:block;width:64px;height:5px;border-radius:9px;background:linear-gradient(90deg,var(--cam),var(--xanh));margin-top:8px}
+.mota{color:var(--chu2);margin:10px 0 22px;max-width:700px}
+.luoi{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.the{background:#fff;border:1px solid var(--vien);border-radius:20px;padding:18px;box-shadow:var(--bong);transition:transform .2s}
+.the:hover{transform:translateY(-4px)}
+.the .bieu{width:54px;height:54px;border-radius:16px;display:grid;place-items:center;font-size:28px;color:#fff;margin-bottom:10px}
+.b1{background:linear-gradient(135deg,var(--xanh),var(--xanh2))}.b2{background:linear-gradient(135deg,#ffb347,#ff7a2f)}.b3{background:linear-gradient(135deg,#3cc8bd,#0e8f86)}.b4{background:linear-gradient(135deg,#9b7af0,#6a49cf)}
+.the h3{margin:0 0 6px;font-size:19px}
+.the p{margin:0;color:var(--chu2);font-size:15px}
+.moc{position:relative;margin-left:14px;border-left:4px solid #cfe0f7;padding-left:22px}
+.moc .m{position:relative;margin-bottom:20px}
+.moc .m::before{content:"";position:absolute;left:-33px;top:5px;width:16px;height:16px;border-radius:50%;background:var(--cam);border:3px solid #fff;box-shadow:0 0 0 3px #cfe0f7}
+.moc b{display:block}
+.lienhe{display:grid;gap:10px}
+.lienhe div{background:#fff;border:1px solid var(--vien);border-radius:14px;padding:12px 16px}
+footer{background:#10213d;color:#c9d6ee;padding:26px 0;font-size:14px;text-align:center}
+footer b{color:#fff}
+@media(max-width:760px){.hero .rong{grid-template-columns:1fr}.tranh{max-width:380px;margin:0 auto}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<header class="menu"><div class="rong">
+  <span class="thuonghieu">Diệu Thúy · Giáo viên Tiểu học</span>
+  <nav><a href="#gioi-thieu">Giới thiệu</a><a href="#ho-so">Hồ sơ & thành tích</a><a href="#san-pham">Sản phẩm số</a><a href="#bai-giang">Kho bài giảng</a><a href="#lien-he">Liên hệ</a></nav>
+</div></header>
+
+<div class="hero"><div class="rong">
+  <div>
+    <h1>Nguyễn Thị Diệu Thúy</h1>
+    <p class="vt">Giáo viên lớp 1A5 · Trường Tiểu học chất lượng cao Hoàng Mai, Hà Nội</p>
+    <span class="chip">🍎 Giáo viên chủ nhiệm lớp 1</span><span class="chip">🤝 Chủ tịch công đoàn</span><span class="chip">💻 Làm sản phẩm số cho lớp học</span>
+    <div><a class="nut" href="#san-pham">Xem sản phẩm số</a><a class="nut phu" href="#bai-giang">Kho bài giảng</a></div>
+  </div>
+  <svg class="tranh" viewBox="0 0 420 340" role="img" aria-label="Minh hoạ lớp học: cuốn sách mở, bút chì, mặt trời và các ngôi sao">
+    <defs>
+      <linearGradient id="s1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffd27a"/><stop offset="1" stop-color="#ff8a3d"/></linearGradient>
+      <linearGradient id="s2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4f9bff"/><stop offset="1" stop-color="#0f4aa3"/></linearGradient>
+      <linearGradient id="s3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe9a8"/><stop offset="1" stop-color="#ffc24d"/></linearGradient>
+    </defs>
+    <circle cx="210" cy="175" r="150" fill="#ffffff" opacity=".6"/>
+    <circle cx="340" cy="70" r="40" fill="url(#s1)"/>
+    <g stroke="#ffb347" stroke-width="5" stroke-linecap="round"><path d="M340 12v-8M340 128v8M282 70h-8M398 70h8M299 29l-6-6M381 111l6 6M299 111l-6 6M381 29l6-6"/></g>
+    <path d="M60 230c0-14 12-24 26-24 40 0 80 6 124 26 44-20 84-26 124-26 14 0 26 10 26 24v62c0 8-8 14-16 12-44-8-86-4-134 18-48-22-90-26-134-18-8 2-16-4-16-12z" fill="url(#s2)"/>
+    <path d="M210 232v96" stroke="#fff" stroke-width="4"/>
+    <path d="M82 226c36 2 78 8 120 28v58c-42-18-84-22-120-18z" fill="#fff"/>
+    <path d="M338 226c-36 2-78 8-120 28v58c42-18 84-22 120-18z" fill="#fff"/>
+    <g stroke="#bcd3f0" stroke-width="4" stroke-linecap="round"><path d="M100 256c24 2 54 8 86 22M100 276c24 2 54 8 86 22M320 256c-24 2-54 8-86 22M320 276c-24 2-54 8-86 22"/></g>
+    <g transform="translate(300 120) rotate(30)"><rect x="-10" y="0" width="20" height="120" rx="4" fill="url(#s3)"/><polygon points="-10,120 10,120 0,146" fill="#f4d7b0"/><polygon points="-3,136 3,136 0,146" fill="#3a3a3a"/><rect x="-10" y="-14" width="20" height="14" rx="4" fill="#ff7a8a"/></g>
+    <g fill="#ffc24d"><path d="M80 90l6 14 15 2-11 10 3 15-13-8-13 8 3-15-11-10 15-2z"/><path d="M150 40l4 9 10 1-7 7 2 10-9-5-9 5 2-10-7-7 10-1z" fill="#ff8a3d"/><path d="M40 160l4 9 10 1-7 7 2 10-9-5-9 5 2-10-7-7 10-1z" fill="#13a89e"/></g>
+    <circle cx="210" cy="160" r="30" fill="#ffd9b8"/><path d="M180 156c0-22 14-34 30-34s30 12 30 34c-10-12-22-16-30-16s-20 4-30 16z" fill="#3b2a24"/>
+    <circle cx="200" cy="163" r="3.2" fill="#3b2a24"/><circle cx="220" cy="163" r="3.2" fill="#3b2a24"/><path d="M202 174q8 8 16 0" stroke="#c4553a" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <path d="M185 196c4-10 14-14 25-14s21 4 25 14l6 30h-62z" fill="#13a89e"/>
+  </svg>
+</div></div>
+
+<section id="gioi-thieu"><div class="rong">
+  <h2 class="tieude">Giới thiệu</h2>
+  <p class="mota">Em xin chào thầy cô, các bậc phụ huynh và các bạn đồng nghiệp. Đây là nơi em lưu giữ và chia sẻ những gì em làm cho lớp học của mình.</p>
+  <div class="luoi">
+    <div class="the"><div class="bieu b1">🎓</div><h3>Công việc hiện tại</h3><p>Giáo viên chủ nhiệm lớp 1A5, dạy đủ các môn. Bộ sách Kết nối tri thức với cuộc sống.</p></div>
+    <div class="the"><div class="bieu b2">🤝</div><h3>Kiêm nhiệm</h3><p>Chủ tịch công đoàn Trường Tiểu học chất lượng cao Hoàng Mai.</p></div>
+  </div>
+</div></section>
+
+<section id="ho-so"><div class="rong">
+  <h2 class="tieude">Hồ sơ năng lực & thành tích</h2>
+  <p class="mota">Thông tin về trình độ, danh hiệu và sáng kiến sẽ được cập nhật tại đây khi có đủ minh chứng.</p>
+  <h3 style="margin-top:30px">Quá trình công tác</h3>
+  <div class="moc">
+    <div class="m"><b>Năm học 2026–2027</b>Giáo viên chủ nhiệm lớp 1A5, Chủ tịch công đoàn — Trường Tiểu học chất lượng cao Hoàng Mai.</div>
+  </div>
+</div></section>
+
+<section id="san-pham"><div class="rong">
+  <h2 class="tieude">Sản phẩm số</h2>
+  <p class="mota">Những công cụ em tự làm từ vấn đề thật của lớp mình, có sự hỗ trợ của trí tuệ nhân tạo. Em là người kiểm tra nội dung trước khi dùng. Sản phẩm sẽ được giới thiệu tại đây.</p>
+</div></section>
+
+<section id="bai-giang"><div class="rong">
+  <h2 class="tieude">Kho bài giảng & học liệu</h2>
+  <p class="mota">Học liệu em tự soạn cho lớp 1, chia sẻ để đồng nghiệp và phụ huynh tham khảo. Học liệu sẽ được đăng tại đây. Tài liệu chỉ gồm nội dung do em tự soạn, không dùng ảnh hay tên học sinh.</p>
+</div></section>
+
+<section id="lien-he"><div class="rong">
+  <h2 class="tieude">Liên hệ</h2>
+  <p class="mota">Thầy cô và phụ huynh cần trao đổi chuyên môn, xin tài liệu, xin liên hệ trực tiếp tại trường:</p>
+  <div class="lienhe">
+    <div>🏫 Trường Tiểu học chất lượng cao Hoàng Mai, Hoàng Mai, Hà Nội</div>
+  </div>
+</div></section>
+
+<footer><div class="rong">
+  <b>Nguyễn Thị Diệu Thúy</b> · Giáo viên Tiểu học · Hoàng Mai, Hà Nội<br>
+  Trang không lưu dữ liệu người xem và không chứa thông tin học sinh.
+</div></footer>
+</body>
+</html>
