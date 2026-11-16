@@ -1,0 +1,1346 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TÍ TOÁN — Phòng luyện Toán tư duy của cô Diệu Thúy</title>
+<style>
+:root{--nen1:#e0f2fe;--nen2:#fef3c7;--chu:#1e1b4b;--chinh:#4f46e5;--chinh2:#7c3aed;--nhan:#f59e0b;--nhan2:#14b8a6;--dung:#16a34a;--sai:#dc2626;--kinh:rgba(255,255,255,.82);--vien:rgba(79,70,229,.18);
+--A:#ef4444;--B:#3b82f6;--C:#f59e0b;--D:#22c55e}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{font-family:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;color:var(--chu);
+background:radial-gradient(circle at 12% 8%,#bae6fd 0,transparent 42%),radial-gradient(circle at 92% 18%,#fde68a 0,transparent 40%),linear-gradient(160deg,var(--nen1),var(--nen2));background-attachment:fixed}
+.top{display:flex;align-items:center;gap:14px;padding:10px 22px;position:sticky;top:0;z-index:5;background:var(--kinh);backdrop-filter:blur(8px);border-bottom:1px solid var(--vien)}
+.logo{display:flex;align-items:center;gap:10px;font-weight:900;font-size:26px;letter-spacing:.5px;cursor:pointer}
+.logo b{background:linear-gradient(90deg,var(--chinh),var(--nhan));-webkit-background-clip:text;background-clip:text;color:transparent}
+.top .sp{flex:1}
+.nav{border:2px solid var(--chinh);background:#fff;color:var(--chinh);border-radius:12px;padding:8px 14px;font-weight:700;font-size:16px;cursor:pointer}
+.nav:hover{transform:translateY(-2px)}
+.man{display:none;padding:20px 22px 70px;max-width:1180px;margin:0 auto;animation:hien .3s}
+.man.on{display:block}
+@keyframes hien{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.the{background:var(--kinh);border:1px solid var(--vien);border-radius:22px;box-shadow:0 10px 28px rgba(79,70,229,.14);padding:18px 22px;margin-bottom:16px}
+h1{font-size:34px;margin:6px 0}
+h2{font-size:22px;margin:0 0 10px}
+.hero{display:flex;gap:18px;align-items:center}
+.hero p{font-size:20px;margin:4px 0}
+.pill{display:inline-block;border:2px solid var(--chinh);background:#fff;color:var(--chinh);border-radius:999px;padding:8px 18px;margin:4px 6px 4px 0;font-size:19px;font-weight:700;cursor:pointer}
+.pill.on{background:linear-gradient(90deg,var(--chinh),var(--chinh2));color:#fff;border-color:transparent}
+.luoi{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px}
+.dang{border:3px solid transparent;background:#fff;border-radius:18px;padding:12px;cursor:pointer;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,.08);transition:.15s}
+.dang:hover{transform:translateY(-3px)}
+.dang.on{border-color:var(--chinh);background:#eef2ff}
+.dang .ic{font-size:40px;line-height:1.1}
+.dang .tn{font-weight:800;font-size:18px;margin-top:4px}
+.dang small{display:block;color:#475569}
+button,input,select,textarea{font-family:inherit}
+.btn{font-family:inherit;border:0;border-radius:16px;padding:14px 26px;font-size:21px;font-weight:800;color:#fff;cursor:pointer;background:linear-gradient(90deg,var(--chinh),var(--chinh2));box-shadow:0 6px 0 #3730a3;margin:6px 10px 10px 0;min-height:48px}
+.btn:hover{transform:translateY(-2px)}
+.btn:active{transform:translateY(3px);box-shadow:0 2px 0 #3730a3}
+.btn.cam{background:linear-gradient(90deg,#f59e0b,#f97316);box-shadow:0 6px 0 #c2410c}
+.btn.xanh{background:linear-gradient(90deg,#14b8a6,#16a34a);box-shadow:0 6px 0 #166534}
+.btn.phu{background:#fff;color:var(--chinh);border:2px solid var(--chinh);box-shadow:none}
+.btn[disabled]{opacity:.45;pointer-events:none}
+input.ma{font-size:20px;padding:10px 14px;border-radius:12px;border:2px solid var(--vien);width:190px;font-weight:700;text-transform:uppercase}
+.canh{color:#b45309;font-weight:700;margin:4px 0}
+/* câu hỏi */
+.bar{display:flex;align-items:center;gap:12px;margin-bottom:10px;flex-wrap:wrap}
+.cham{display:flex;gap:6px;flex-wrap:wrap}
+.cham i{width:18px;height:18px;border-radius:50%;background:#cbd5e1;display:inline-block}
+.cham i.d{background:var(--dung)}.cham i.s{background:var(--sai)}.cham i.n{background:var(--nhan);transform:scale(1.25)}
+.dong{font-size:24px;font-weight:900;background:#fff;border-radius:12px;padding:4px 14px;border:2px solid var(--vien)}
+.cauwrap{display:grid;grid-template-columns:1fr 150px;gap:14px;align-items:start}
+.hinh{background:#fff;border-radius:20px;border:2px solid var(--vien);padding:8px;text-align:center;min-height:130px;overflow:hidden}
+.hinh svg{max-width:100%;height:auto}
+.hoi{font-size:30px;font-weight:800;margin:14px 4px;line-height:1.35}
+.lc{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.o{display:flex;align-items:center;gap:14px;border:0;border-radius:20px;padding:12px 18px;font-size:34px;font-weight:900;cursor:pointer;color:#fff;min-height:84px;text-align:left;box-shadow:0 6px 0 rgba(0,0,0,.22);transition:.12s;position:relative}
+.o .ch{background:rgba(255,255,255,.95);color:#111;border-radius:50%;width:48px;height:48px;display:flex;align-items:center;justify-content:center;font-size:28px;flex:none}
+.o .nd{flex:1}
+.o[data-k="0"]{background:var(--A)}.o[data-k="1"]{background:var(--B)}.o[data-k="2"]{background:var(--C);color:#1f2937}.o[data-k="3"]{background:var(--D)}.o[data-k="4"]{background:#8b5cf6}
+.o:hover{transform:translateY(-3px)}
+.o.dungx{outline:6px solid var(--dung);animation:nay .5s}
+.o.saix{outline:6px solid #111;filter:grayscale(.55);animation:rung .45s}
+.o.mo{opacity:.45}
+@keyframes rung{20%{transform:translateX(-9px)}40%{transform:translateX(9px)}60%{transform:translateX(-6px)}80%{transform:translateX(6px)}}
+@keyframes nay{0%{transform:scale(1)}40%{transform:scale(1.07)}100%{transform:scale(1)}}
+.thongbao{font-size:23px;font-weight:700;border-radius:16px;padding:12px 16px;margin:12px 0;display:none}
+.thongbao.dung{display:block;background:#dcfce7;border:2px solid var(--dung)}
+.thongbao.sai{display:block;background:#fee2e2;border:2px solid var(--sai)}
+.thongbao.gt{display:block;background:#fef9c3;border:2px solid #eab308}
+.tay{display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin:10px 0}
+.tay .ct{display:flex;align-items:center;gap:6px;background:#fff;border:3px solid;border-radius:14px;padding:4px 8px;font-size:22px;font-weight:900}
+.tay .ct button{border:0;background:#e2e8f0;border-radius:8px;width:34px;height:34px;font-size:22px;font-weight:900;cursor:pointer}
+.cot{display:flex;gap:16px;align-items:flex-end;height:170px;margin:10px 0;padding:6px 10px;background:#fff;border-radius:16px;border:2px solid var(--vien)}
+.cot div{flex:1;border-radius:10px 10px 0 0;text-align:center;font-weight:900;color:#fff;font-size:22px;min-height:24px;display:flex;align-items:flex-start;justify-content:center;padding-top:2px;transition:height .6s}
+.kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:10px 0}
+.kpi div{background:#fff;border-radius:16px;padding:12px;text-align:center;border:2px solid var(--vien)}
+.kpi b{display:block;font-size:34px;color:var(--chinh)}
+.thanh{height:22px;background:#e2e8f0;border-radius:11px;overflow:hidden;flex:1}
+.thanh i{display:block;height:100%;border-radius:11px}
+.hang{display:flex;align-items:center;gap:10px;margin:6px 0;font-size:18px}
+.hang .nh{width:210px;font-weight:700}
+.hang .so{width:80px;text-align:right;font-weight:800}
+table{border-collapse:collapse;width:100%;background:#fff;border-radius:14px;overflow:hidden;font-size:16px}
+th,td{padding:7px 10px;border-bottom:1px solid #e2e8f0;text-align:left}th{background:#eef2ff}
+.saiitem{background:#fff;border-radius:14px;border:2px solid #fecaca;padding:10px 14px;margin:8px 0;font-size:18px}
+.dai{position:sticky;left:0;right:0;top:66px;background:#7c3aed;color:#fff;text-align:center;font-weight:900;padding:4px;z-index:4;letter-spacing:1px}
+.en{display:block;font-size:.62em;font-weight:700;color:#4338ca;margin-top:2px;font-style:italic;line-height:1.25}
+.o .en{color:rgba(255,255,255,.95)}.o[data-k="2"] .en{color:#374151}
+.en2{font-size:.72em;font-weight:700;color:#4338ca;font-style:italic;margin-top:4px}
+.nguon{font-size:.45em;color:#64748b;font-weight:700;margin-bottom:2px}
+.shared{font-family:Consolas,monospace;font-size:.8em;margin-top:4px}
+.gloss{font-size:.6em;color:#475569;font-weight:600;margin-top:6px}
+#khuDien{margin:12px 0}#inDien{font-size:30px;font-weight:800;padding:10px 16px;border-radius:14px;border:3px solid var(--chinh);width:300px;max-width:100%}
+.tacgia{background:linear-gradient(90deg,#fde68a,#fbcfe8);border:2px solid #f59e0b;color:#7c2d12;border-radius:999px;padding:6px 16px;font-weight:900;font-size:17px;white-space:nowrap}
+.tgline{font-size:21px;font-weight:800;color:#be185d;margin:6px 0 2px}
+.btn.sm{padding:8px 18px;font-size:18px;min-height:42px;box-shadow:0 4px 0 rgba(0,0,0,.22);margin:6px 8px 4px 0}
+.chan{position:fixed;left:0;right:0;bottom:0;background:var(--kinh);border-top:1px solid var(--vien);text-align:center;padding:6px;font-size:15px;font-weight:700;z-index:4}
+#pk{position:fixed;inset:0;pointer-events:none;z-index:50}
+.robot{animation:noi 3s ease-in-out infinite}
+@keyframes noi{50%{transform:translateY(-6px)}}
+body.chup *{animation:none!important;transition:none!important}
+@media(max-width:600px){.top{flex-wrap:wrap;padding:6px 10px;gap:6px}.logo{font-size:20px}.logo small{display:none}.nav{padding:6px 10px;font-size:14px}.the{padding:14px}.hoi{font-size:24px}.o{font-size:26px;min-height:70px}.pill{font-size:16px;padding:6px 12px;white-space:normal}h1{font-size:26px}#inDien{width:100%}}
+@media(max-width:820px){.cauwrap{grid-template-columns:1fr}.lc{grid-template-columns:1fr}.hero{flex-direction:column}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute"><defs>
+<linearGradient id="gMa" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#818cf8"/><stop offset="1" stop-color="#4f46e5"/></linearGradient>
+<linearGradient id="gVang" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fde68a"/><stop offset="1" stop-color="#f59e0b"/></linearGradient>
+<linearGradient id="gRb" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c7d2fe"/><stop offset="1" stop-color="#6366f1"/></linearGradient>
+</defs></svg>
+<canvas id="pk"></canvas>
+
+<div class="top">
+  <div class="logo" onclick="di('home')" id="logo"></div>
+  <div class="tacgia" id="tacGia"></div>
+  <div class="sp"></div>
+  <button class="nav" id="nnBtn" title="Ngôn ngữ đề: Việt–Anh / Tiếng Việt / English">🌐 Việt–Anh</button>
+  <button class="nav" id="amBtn" title="Bật/tắt âm thanh">🔊</button>
+  <button class="nav" onclick="di('baocao')">📊 Cô xem báo cáo</button>
+</div>
+<div id="dai" class="dai" style="display:none">DỮ LIỆU THỬ — không phải số liệu thật</div>
+
+<!-- TRANG CHỦ -->
+<section class="man" id="m-home">
+  <div class="the hero">
+    <div id="heroRb"></div>
+    <div>
+      <h1>Chào các bạn nhỏ! Cùng luyện <b style="color:var(--chinh)">Toán tư duy</b> nào 🚀</h1>
+      <p>Mỗi câu hỏi có hình để nhìn, để đếm, để nghĩ. Sai cũng không sao — Tí Toán sẽ chỉ ra mình nhầm ở đâu.</p>
+      <p class="tgline" id="heroTG"></p>
+    </div>
+  </div>
+  <div class="the">
+    <h2>1. Chọn lớp · phạm vi số · mức</h2>
+    <div>Cấp đề: <span id="pTier"></span></div>
+    <div id="rowLop">Lớp: <span id="pLop"></span></div>
+    <div id="rowNguon" style="display:none">Bộ đề: <span id="pNguon"></span></div>
+    <div id="rowP">Phạm vi số: <span id="pP"></span> <small>(lớp 1 mới học tới 10 thì chọn 10)</small></div>
+    <div id="rowMuc">Mức: <span id="pMuc"></span></div>
+    <div id="ghiThat" class="canh" style="display:none">📚 Câu hỏi lấy từ đề thật cô đã nạp (TIMO…), kèm đáp án của đề. Chỉ dùng dạy học trong lớp; không đăng công khai, không nộp kèm hồ sơ dự thi.</div>
+    <div id="ghiDau" class="canh" style="display:none">🏆 Đấu trường dùng số và dạng bài theo kiểu đề thi quốc tế (TIMO, ITMC…), khó hơn sách giáo khoa. Mức 🔥 Quốc gia và thẻ “Vòng quốc gia” khó nhất, tự điền đáp án. Câu hỏi do app tự sinh, không chép đề thật.</div>
+  </div>
+  <div class="the">
+    <h2>2. Chọn dạng bài</h2>
+    <div class="luoi" id="luoiDang"></div>
+  </div>
+  <div class="the">
+    <h2>3. Chọn cách chơi</h2>
+    <div style="margin-bottom:8px">Mã của em (VD <b>HS01</b>) — chỉ cần khi luyện hoặc thi thử: <input class="ma" id="ma" maxlength="8" placeholder="HS01" autocomplete="off"> <span id="canhMa" class="canh"></span></div>
+    <button class="btn cam" id="bLop">📺 Cô chiếu TV — cả lớp giơ thẻ</button>
+    <button class="btn xanh" id="bLuyen">🏠 Em luyện (cùng bố mẹ)</button>
+    <button class="btn" id="bThi">⏱️ Thi thử 10 câu</button>
+    <button class="btn cam" id="bTimo" style="display:none">🏅 Thi thử TIMO vòng loại: 25 câu · 60 phút</button>
+    <div style="font-size:16px;color:#475569">Thẻ giơ tay: <b style="color:var(--A)">A đỏ</b> · <b style="color:var(--B)">B xanh dương</b> · <b style="color:#b45309">C vàng</b> · <b style="color:var(--D)">D xanh lá</b> · <b style="color:#8b5cf6">E tím</b> (đề ITMC). Dữ liệu chỉ nằm trong trình duyệt máy này — thứ Sáu cô bấm Sao lưu.</div>
+  </div>
+</section>
+
+<!-- CÂU HỎI -->
+<section class="man" id="m-cau">
+  <div class="bar"><div class="cham" id="cham"></div><div class="dong" id="cauSo"></div><div class="dong" id="dongHo" style="display:none">15:00</div><div style="flex:1"></div><button class="btn phu" id="bThoat" style="margin:0;padding:8px 16px;font-size:17px;box-shadow:none">✖ Thoát</button></div>
+  <div class="cauwrap">
+    <div>
+      <div class="hinh" id="hinh"></div>
+      <div style="text-align:right"><button class="nav" id="bGiong" title="Đổi giọng đọc tiếng Việt" style="margin-right:8px">🎙 Đổi giọng</button><button class="nav" id="bDoc" title="Nghe đọc đề bài và các đáp án">🔊 Nghe đề / Listen</button></div>
+      <div class="hoi" id="hoi"></div>
+      <div class="lc" id="lc"></div>
+      <div id="khuDien" style="display:none"><input id="inDien" inputmode="numeric" autocomplete="off" placeholder="Đáp án / Answer"> <button class="btn" id="bDien">Trả lời</button></div>
+      <div class="thongbao" id="tb"></div>
+      <div class="thongbao gt" id="tbDA" style="display:none"></div>
+      <div class="thongbao gt" id="tbGiai" style="display:none"></div>
+      <div id="khuLop" style="display:none">
+        <div class="the" style="margin:12px 0 0">
+          <b>Số bạn giơ thẻ</b> (cô đếm nhanh rồi bấm + ):
+          <div class="tay" id="tay"></div>
+        </div>
+      </div>
+      <div id="cotLop" class="cot" style="display:none"></div>
+      <div id="dkn"></div>
+    </div>
+    <div style="text-align:center"><div id="rbCau" class="robot"></div><div id="loiRb" style="font-size:17px;font-weight:700;color:#4338ca"></div></div>
+  </div>
+</section>
+
+<!-- KẾT QUẢ -->
+<section class="man" id="m-ketqua">
+  <div class="the">
+    <div class="hero"><div id="rbKq"></div><div><h1 id="kqTit"></h1><p id="kqSao" style="font-size:44px;margin:0"></p><p id="kqSub"></p><p id="kqTG" class="tgline"></p></div></div>
+    <div class="kpi" id="kqKpi"></div>
+  </div>
+  <div class="the"><h2>Kết quả theo từng dạng</h2><div id="kqDang"></div><p id="kqLuyen" style="font-size:20px;font-weight:700"></p></div>
+  <div class="the"><h2>Những câu cần xem lại</h2><div id="kqSai"></div></div>
+  <button class="btn" onclick="di('home')">🏠 Về trang chủ</button>
+  <button class="btn cam" onclick="lamLai()">🔁 Làm bộ khác</button>
+</section>
+
+<!-- BÁO CÁO -->
+<section class="man" id="m-baocao">
+  <div class="the"><h1>📊 Báo cáo cho cô</h1><p>Số liệu chỉ theo <b>mã</b> (HS01…) và nằm trong trình duyệt máy này.</p>
+    <button class="btn xanh" id="bCsv">⬇ Xuất CSV</button>
+    <button class="btn" id="bSaoLuu">💾 Sao lưu (JSON)</button>
+    <button class="btn phu" id="bNhap">📂 Nhập lại</button><input type="file" id="fNhap" accept=".json" style="display:none">
+    <button class="btn phu" id="bXoa" style="color:var(--sai);border-color:var(--sai)">🗑 Xoá hết</button>
+  </div>
+  <div class="the"><h2>Tổng quan</h2><div class="kpi" id="bcKpi"></div></div>
+  <div class="the"><h2>Dạng nào cả nhóm hay sai?</h2><div id="bcDang"></div></div>
+  <div class="the"><h2>Các lần làm gần đây</h2><div style="overflow:auto"><table id="bcBang"></table></div></div>
+</section>
+
+<div class="chan" id="chan"></div>
+
+<script>/*GIONG-VIET-BAT*/
+const GIONG_VIET = {};
+let __amDang = null, __giongMay = null;
+function __chuanGiong(t){ return String(t).normalize("NFC").replace(/\s+/g, " ").trim(); }
+function __choDeNghe(t){
+  const doi = [["π"," pi "],["cm³"," xăng-ti-mét khối"],["cm²"," xăng-ti-mét vuông"],["dm³"," đề-xi-mét khối"],["m³"," mét khối"],
+    ["m²"," mét vuông"],["×"," nhân "],["÷"," chia "],["−"," trừ "],["≈"," xấp xỉ "],["="," bằng "],["+"," cộng "]];
+  t = String(t).replace(/<[^>]+>/g, "");
+  for (const [a, b] of doi) t = t.split(a).join(b);
+  return __chuanGiong(t.replace(/(\d)\s*cm\b/g, "$1 xăng-ti-mét").replace(/(\d)\s*m\b/g, "$1 mét"));
+}
+function __timGiongMay(){ try { const ds = speechSynthesis.getVoices().filter(v => /^vi/i.test(v.lang));
+  __giongMay = ds.find(v => /Natural|Online|HoaiMy|Hoài/i.test(v.name)) || ds[0] || null; } catch(e){} return __giongMay; }
+try { if (window.speechSynthesis){ __timGiongMay(); speechSynthesis.addEventListener("voiceschanged", __timGiongMay); } } catch(e){}
+function coGiongViet(chu){ return !!(GIONG_VIET[__chuanGiong(chu)] || __giongMay || __timGiongMay()); }
+function dungGiong(){ try { if (__amDang){ __amDang.pause(); __amDang = null; } if (window.speechSynthesis) speechSynthesis.cancel(); } catch(e){} }
+function __baoChuaCoGiong(){ try { if (document.getElementById("__baoGiong")) return; const d = document.createElement("div"); d.id = "__baoGiong";
+  d.setAttribute("role", "status");
+  d.textContent = "Máy chưa có giọng đọc tiếng Việt cho câu này. Mở bằng Microsoft Edge (có mạng) để nghe giọng Việt, hoặc cài thêm giọng Tiếng Việt: Cài đặt Windows → Thời gian và ngôn ngữ → Giọng nói.";
+  d.style.cssText = "position:fixed;left:50%;bottom:18px;transform:translateX(-50%);max-width:92vw;background:#1f2937;color:#fff;padding:12px 16px;border-radius:12px;font:15px/1.4 system-ui,sans-serif;z-index:99999;box-shadow:0 6px 20px rgba(0,0,0,.3)";
+  document.body.appendChild(d); setTimeout(() => d.remove(), 7000); } catch(e){} }
+function __docMay(chu, toc){
+  if (!__giongMay){ __baoChuaCoGiong(); return; }   // KHÔNG có giọng Việt → báo, không đọc bằng giọng Anh
+  const u = new SpeechSynthesisUtterance(chu); u.voice = __giongMay; u.lang = __giongMay.lang; u.rate = toc || 0.9; speechSynthesis.speak(u);
+}
+function docGiongViet(goc, chuMay, toc){
+  dungGiong(); const k = __chuanGiong(goc);
+  if (GIONG_VIET[k]){ try { __amDang = new Audio(GIONG_VIET[k]); const h = __amDang.play(); if (h && h.catch) h.catch(() => {}); return; } catch(e){} }
+  try { if (!window.speechSynthesis){ __baoChuaCoGiong(); return; }
+    const chu = chuMay || __choDeNghe(goc);
+    if (!__giongMay && !__timGiongMay() && !speechSynthesis.getVoices().length){   // Chrome nạp danh sách giọng chậm
+      setTimeout(() => { __timGiongMay(); __docMay(chu, toc); }, 700); return; }
+    __docMay(chu, toc); } catch(e){}
+}
+/*GIONG-VIET-HET*/</script>
+<script id="gen">
+/* ======= BỘ SINH CÂU HỎI (không dùng DOM — có thể kiểm bằng node) ======= */
+let _st=(Date.now()>>>0)||1;
+function setSeed(s){_st=(s>>>0)||1}
+function rnd(){_st=(_st+0x6D2B79F5)>>>0;let t=_st;t=Math.imul(t^t>>>15,t|1);t^=t+Math.imul(t^t>>>7,t|61);return((t^t>>>14)>>>0)/4294967296}
+function ri(a,b){return a+Math.floor(rnd()*(b-a+1))}
+function pick(a){return a[ri(0,a.length-1)]}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=ri(0,i);[a[i],a[j]]=[a[j],a[i]]}return a}
+const DANG={
+ daySo:{ten:'Dãy số quy luật',ic:'🔢',tom:'Tìm số tiếp theo / còn thiếu'},
+ demHinh:{ten:'Đếm hình',ic:'🔺',tom:'Đếm đúng, không sót không lặp'},
+ soSanh:{ten:'So sánh số',ic:'🎈',tom:'Lớn nhất, bé nhất, ở giữa'},
+ canBang:{ten:'Cân thăng bằng',ic:'⚖️',tom:'Hai bên nặng bằng nhau'},
+ soThieu:{ten:'Tìm số còn thiếu',ic:'❓',tom:'a + ? = c, ? − b = d'},
+ loiVan:{ten:'Bài toán có lời văn',ic:'📖',tom:'Thêm, bớt, nhiều hơn, ít hơn'},
+ viTri:{ten:'Xếp hàng – thứ tự',ic:'🚸',tom:'Đứng thứ mấy, mấy bạn'},
+ quyLuat:{ten:'Quy luật hình',ic:'🔷',tom:'Hình nào đi tiếp?'},
+ lich:{ten:'Ngày trong tuần',ic:'📅',tom:'Hôm qua, ngày mai, mấy ngày nữa'}
+};
+const DS_DANG=Object.keys(DANG);
+const MAU_LOI='Chưa đúng rồi. Mình thử làm lại từng bước nhé.';
+function svg(w,h,inner){return '<svg viewBox="0 0 '+w+' '+h+'" width="'+w+'" height="'+h+'" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI,Arial,sans-serif">'+inner+'</svg>'}
+/* chọn đáp án số: đúng + lỗi có tên + gần đúng */
+function numOpts(c,tag,lo,hi){
+  hi=Math.max(hi,c+8);const L=[{v:c,loi:null}],used=new Set([c]);
+  for(const [v,m] of tag){if(v>=lo&&v<=hi&&!used.has(v)&&L.length<4){used.add(v);L.push({v,loi:m})}}
+  for(const d of shuffle([1,-1,2,-2,3,-3,10,-10,5,-5])){if(L.length>=4)break;const v=c+d;if(v>=lo&&v<=hi&&!used.has(v)){used.add(v);L.push({v,loi:null})}}
+  let g=0;while(L.length<4&&g++<200){const v=ri(lo,hi);if(!used.has(v)){used.add(v);L.push({v,loi:null})}}
+  return shuffle(L);
+}
+function mk(dang,hoi,hinh,opts,c,gt,fmt){
+  const o=opts.map(x=>({h:fmt?fmt(x.v):String(x.v),v:x.v,loi:x.loi||MAU_LOI}));
+  return {dang,hoi,hinh,opts:o,dung:o.findIndex(x=>x.v===c),gt};
+}
+const COL={do:'#ef4444',xd:'#3b82f6',vang:'#f59e0b',xl:'#22c55e',cam:'#f97316',tim:'#8b5cf6'};
+const TENMAU={do:'đỏ',xd:'xanh dương',vang:'vàng',xl:'xanh lá',cam:'cam',tim:'tím'};
+function hinhShape(s,c,x,y,r){
+  if(s==='tron')return '<circle cx="'+x+'" cy="'+y+'" r="'+r+'" fill="'+c+'" stroke="#0003" stroke-width="2"/>';
+  if(s==='vuong')return '<rect x="'+(x-r)+'" y="'+(y-r)+'" width="'+(2*r)+'" height="'+(2*r)+'" rx="5" fill="'+c+'" stroke="#0003" stroke-width="2"/>';
+  if(s==='tam')return '<polygon points="'+x+','+(y-r-2)+' '+(x+r+3)+','+(y+r)+' '+(x-r-3)+','+(y+r)+'" fill="'+c+'" stroke="#0003" stroke-width="2"/>';
+  let p=[];for(let i=0;i<10;i++){const a=-Math.PI/2+i*Math.PI/5,rr=i%2?r*.5:r*1.15;p.push((x+rr*Math.cos(a)).toFixed(1)+','+(y+rr*Math.sin(a)).toFixed(1))}
+  return '<polygon points="'+p.join(' ')+'" fill="'+c+'" stroke="#0003" stroke-width="2"/>';
+}
+const TENHINH={tron:'hình tròn',vuong:'hình vuông',tam:'hình tam giác',sao:'ngôi sao'};
+
+/* 1. DÃY SỐ */
+function gDaySo(P,muc){
+  let seq,step,blank,tag=[];
+  for(let t=0;t<100;t++){
+    const steps=P<=10?[1,2]:P<=20?[1,2,3,5]:[2,3,5,10];
+    step=pick(steps);const n=muc===1?5:6;
+    const kieu=muc===3?pick(['xen','giam','tang']):muc===2?pick(['giam','tang']):'tang';
+    if(kieu==='tang'){const s=ri(0,Math.max(0,P-step*n));seq=[...Array(n)].map((_,i)=>s+i*step)}
+    else if(kieu==='giam'){const s=ri(Math.min(P,step*n),P);seq=[...Array(n)].map((_,i)=>s-i*step)}
+    else{const b=pick(steps.filter(x=>x!==step))||1;const s=ri(0,Math.max(0,P-(step+b)*3));seq=[s];for(let i=1;i<n;i++)seq.push(seq[i-1]+(i%2?step:b));step=step+' và '+b}
+    if(seq.every(v=>v>=0&&v<=P)&&new Set(seq).size===n)break;
+  }
+  blank=muc===1?seq.length-1:ri(1,seq.length-1);
+  const c=seq[blank];
+  const prev=seq[blank-1],ds=Math.abs(seq[1]-seq[0]);
+  tag=[[prev,'Em chọn lại số đứng trước rồi. Số cần tìm khác số đó.'],[c+ds,'Em cộng thêm sai khoảng cách. Nhìn hai số cạnh nhau xem hơn kém bao nhiêu.'],[c-ds,'Em đi ngược chiều rồi. Dãy này đi lên hay đi xuống?']];
+  const W=620,H=130,m=50;let ps=[],cs='';
+  seq.forEach((v,i)=>{const x=m+i*(W-2*m)/(seq.length-1),y=65+Math.sin(i*1.3)*26;ps.push([x,y,v,i])});
+  let d='M'+ps.map(p=>p[0].toFixed(0)+','+p[1].toFixed(0)).join(' L');
+  cs+='<path d="'+d+'" stroke="#c7d2fe" stroke-width="8" fill="none" stroke-linecap="round" stroke-dasharray="2 12"/>';
+  ps.forEach(p=>{const q=p[3]===blank;cs+='<circle cx="'+p[0]+'" cy="'+p[1]+'" r="31" fill="'+(q?'url(#gVang)':'url(#gMa)')+'" stroke="#fff" stroke-width="4"/><text x="'+p[0]+'" y="'+(p[1]+11)+'" text-anchor="middle" font-size="'+(q?38:30)+'" font-weight="900" fill="#fff">'+(q?'?':p[2])+'</text>'});
+  const gt='Nhìn hai số cạnh nhau: mỗi bước '+(String(step).indexOf('và')>0?'lần lượt thêm '+step:(seq[1]>seq[0]?'thêm ':'bớt ')+ds)+'. Số cần tìm là '+c+'.';
+  return mk('daySo','Số nào điền vào dấu ? để dãy số đúng quy luật?',svg(W,H,cs),numOpts(c,tag,0,P),c,gt);
+}
+/* 2. ĐẾM HÌNH */
+function gDemHinh(P,muc){
+  const shapes=muc===1?['tron','tam','vuong']:['tron','tam','vuong','sao'];
+  const cols=muc===1?['xd']:muc===2?['do','xd']:['do','xd','vang'];
+  const cap=Math.min(P,9);
+  let items,target,cntT,cntS,cntC;
+  for(let t=0;t<200;t++){
+    const N=Math.min(muc===1?ri(6,9):muc===2?ri(9,13):ri(12,16),Math.max(P+4,8));
+    items=[];for(let i=0;i<N;i++)items.push({s:pick(shapes),c:pick(cols)});
+    target={s:pick(shapes),c:pick(cols)};
+    cntT=items.filter(x=>x.s===target.s&&x.c===target.c).length;
+    cntS=items.filter(x=>x.s===target.s).length;cntC=items.filter(x=>x.c===target.c).length;
+    if(cntT>=2&&cntT<=cap&&cntT!==cntS)break;
+    if(muc===1&&cntT>=2&&cntT<=cap)break;
+  }
+  const cells=[...Array(24)].map((_,i)=>i),pos=shuffle(cells).slice(0,items.length);
+  let cs='';items.forEach((it,i)=>{const cx=pos[i]%8,cy=Math.floor(pos[i]/8);cs+=hinhShape(it.s,COL[it.c],42+cx*68+ri(-6,6),38+cy*62+ri(-6,6),20)});
+  const mauTxt=muc===1?'':' màu '+TENMAU[target.c];
+  const hoi='Có bao nhiêu '+TENHINH[target.s]+mauTxt+'?';
+  const tag=[[cntS,'Em đếm cả '+TENHINH[target.s]+' khác màu. Chỉ đếm hình đúng màu thôi.'],[cntC,'Em đếm cả hình khác dạng nhưng cùng màu. Chỉ đếm đúng '+TENHINH[target.s]+'.'],[cntT+1,'Em đếm thừa 1 hình. Chấm nhẹ từng hình khi đếm nhé.'],[cntT-1,'Em đếm sót 1 hình. Chấm nhẹ từng hình khi đếm nhé.']];
+  return mk('demHinh',hoi,svg(560,200,cs),numOpts(cntT,tag.filter(t=>t[0]!==cntT),0,Math.max(P,cntT+3)),cntT,'Đếm từng hình, chấm lên hình đã đếm để không sót, không lặp. Có '+cntT+' '+TENHINH[target.s]+mauTxt+'.');
+}
+/* 3. SO SÁNH */
+function gSoSanh(P,muc){
+  const kieu=muc===1?pick(['lon','be']):pick(['lon','be','giua','khoang']);
+  let a,c,hoi,gt;
+  const mxn=Math.min(P,P<=10?10:P<=20?20:99);
+  if(kieu==='khoang'){
+    const lo=ri(0,Math.max(0,mxn-6)),hi=lo+ri(3,5);c=ri(lo+1,hi-1);
+    const set=new Set([c]);while(set.size<4){const v=ri(0,mxn);if(!(v>lo&&v<hi))set.add(v)}
+    a=shuffle([...set]);hoi='Số nào lớn hơn '+lo+' và bé hơn '+hi+'?';gt='Số cần tìm nằm sau '+lo+' và trước '+hi+': đó là '+c+'.';
+  }else{
+    const set=new Set();while(set.size<4)set.add(ri(0,mxn));a=shuffle([...set]);const s=[...a].sort((x,y)=>x-y);
+    if(kieu==='lon'){c=s[3];hoi='Số nào lớn nhất?';gt='So sánh các số, số xa 0 nhất là '+c+'.'}
+    else if(kieu==='be'){c=s[0];hoi='Số nào bé nhất?';gt='Xếp các số từ bé đến lớn: '+s.join(', ')+'. Số bé nhất là '+c+'.'}
+    else{c=s[1];hoi='Xếp các số từ bé đến lớn, số nào đứng thứ hai?';gt='Xếp từ bé đến lớn: '+s.join(', ')+'. Số đứng thứ hai là '+c+'.'}
+    hoi='Cho các số: '+a.join(', ')+'. '+hoi;
+  }
+  const u=P<=10?10:P<=20?20:100,st=u<=20?1:10;let cs='<line x1="30" y1="60" x2="530" y2="60" stroke="#6366f1" stroke-width="6" stroke-linecap="round"/>';
+  const nm=u<=20?u:10;for(let i=0;i<=nm;i++){const x=30+i*500/nm;cs+='<line x1="'+x+'" y1="48" x2="'+x+'" y2="72" stroke="#6366f1" stroke-width="3"/><text x="'+x+'" y="98" text-anchor="middle" font-size="'+(u<=20?18:20)+'" font-weight="700" fill="#334155">'+(i*(u/nm))+'</text>'}
+  if(kieu!=='khoang'){const mc=['#ef4444','#3b82f6','#f59e0b','#22c55e'];a.forEach((v,i)=>{const x=30+v/u*500;cs+='<circle cx="'+x+'" cy="60" r="9" fill="'+mc[i]+'" stroke="#fff" stroke-width="3"/><text x="'+x+'" y="40" text-anchor="middle" font-size="20" font-weight="800" fill="'+mc[i]+'">'+v+'</text>'})}
+  cs+='<text x="280" y="20" text-anchor="middle" font-size="16" fill="#64748b" font-weight="700">tia số'+(kieu!=='khoang'?' (chấm màu là 4 số đề cho)':'')+'</text>';
+  const L=a.map(v=>({v,loi:v===c?null:(kieu==='lon'?'Số '+v+' bé hơn '+c+'.':kieu==='be'?'Số '+v+' lớn hơn '+c+'.':'Chưa đúng. Xếp lại các số từ bé đến lớn nhé.')}));
+  const o=L.map(x=>({h:String(x.v),v:x.v,loi:x.loi||MAU_LOI}));
+  return {dang:'soSanh',hoi,hinh:svg(560,110,cs),opts:o,dung:o.findIndex(x=>x.v===c),gt};
+}
+/* 4. CÂN THĂNG BẰNG */
+function gCanBang(P,muc){
+  const T=['🍎','🍊','🍓','🍐'],B=['🍌','🍇','🍋','🥕'];const qa=pick(T),qb=pick(B);
+  let S,a,b,c,hoi,gt,tag,left,chip='';
+  const cap=Math.min(P,P<=10?10:P<=20?20:60);
+  if(muc===1){a=ri(1,Math.floor(cap/2));S=a*2;c=a;left=qa+qa;hoi='Hai bên nặng bằng nhau. Mỗi quả '+qa+' nặng mấy?';gt='Hai quả '+qa+' nặng '+S+'. Hai số giống nhau cộng lại bằng '+S+' thì mỗi số là '+a+'.';tag=[[S,'Hai quả cùng nặng '+S+', chứ không phải một quả.'],[a+1,null],[a-1,null]]}
+  else if(muc===2){a=ri(1,cap-2);b=ri(1,cap-a);S=a+b;c=b;left=qa+qb;chip=qa+' nặng '+a;hoi='Hai bên nặng bằng nhau. '+qa+' nặng '+a+'. Quả '+qb+' nặng mấy?';gt=qa+' + '+qb+' = '+S+', mà '+qa+' = '+a+' nên '+qb+' = '+S+' − '+a+' = '+b+'.';tag=[[S+a,'Em đã cộng. Muốn tìm phần còn lại phải lấy '+S+' bớt '+a+'.'],[a,'Số '+a+' là cân nặng của '+qa+' rồi. Quả '+qb+' phải khác.']]}
+  else{
+    for(let t=0;t<200;t++){a=ri(1,Math.floor(cap/3));b=ri(1,Math.floor(cap/3));S=2*a+b;if(S<=cap)break}
+    c=a;left=qa+qa+qb;chip=qb+' nặng '+b;hoi='Hai bên nặng bằng nhau. '+qb+' nặng '+b+'. Mỗi quả '+qa+' nặng mấy?';gt='Hai quả '+qa+' nặng '+S+' − '+b+' = '+(S-b)+'. Mỗi quả '+qa+' nặng '+(S-b)+' : 2 = '+a+'.';tag=[[S-b,'Đó là cân nặng của cả hai quả '+qa+'. Mỗi quả chỉ bằng một nửa.'],[S-b-1,null]]
+  }
+  let cs='<polygon points="270,200 330,200 310,190 290,190" fill="#818cf8"/><rect x="292" y="62" width="16" height="130" rx="6" fill="#6366f1"/><rect x="60" y="56" width="440" height="12" rx="6" fill="#4f46e5"/><circle cx="300" cy="56" r="11" fill="#f59e0b"/>';
+  cs+='<line x1="100" y1="62" x2="70" y2="130" stroke="#6366f1" stroke-width="4"/><line x1="100" y1="62" x2="130" y2="130" stroke="#6366f1" stroke-width="4"/><ellipse cx="100" cy="134" rx="62" ry="10" fill="url(#gRb)"/>';
+  cs+='<line x1="460" y1="62" x2="430" y2="130" stroke="#6366f1" stroke-width="4"/><line x1="460" y1="62" x2="490" y2="130" stroke="#6366f1" stroke-width="4"/><ellipse cx="460" cy="134" rx="62" ry="10" fill="url(#gRb)"/>';
+  const em=Array.from(left);const nL=em.length;em.forEach((e,i)=>{cs+='<text x="'+(100+(i-(nL-1)/2)*44)+'" y="122" text-anchor="middle" font-size="44">'+e+'</text>'});
+  cs+='<rect x="425" y="84" width="70" height="40" rx="10" fill="#fef3c7" stroke="#f59e0b" stroke-width="3"/><text x="460" y="114" text-anchor="middle" font-size="30" font-weight="900" fill="#92400e">'+S+'</text>';
+  cs+='<text x="300" y="30" text-anchor="middle" font-size="19" font-weight="800" fill="#16a34a">⚖ cân thăng bằng</text>';
+  if(chip)cs+='<rect x="190" y="206" width="180" height="32" rx="16" fill="#e0e7ff"/><text x="280" y="229" text-anchor="middle" font-size="19" font-weight="800" fill="#3730a3">'+chip+'</text>';
+  return mk('canBang',hoi,svg(560,chip?244:212,cs),numOpts(c,tag.filter(t=>t[0]!==c),0,Math.max(P,S+2)),c,gt);
+}
+/* 5. SỐ CÒN THIẾU */
+function gSoThieu(P,muc){
+  const cap=Math.min(P,P<=10?10:P<=20?20:99);let hoi,c,gt,tag,eq;
+  if(muc===3){
+    const a=ri(1,Math.floor(cap/2)),b=ri(1,Math.floor(cap/2)),e=ri(0,Math.max(0,a+b-1));c=a+b-e;
+    if(c<0||c>cap)return gSoThieu(P,2);
+    eq=[a+'',' + ',b+'',' = ','?',' + ',e+''];hoi='Điền số vào dấu ? để hai bên bằng nhau.';
+    gt='Bên trái '+a+' + '+b+' = '+(a+b)+'. Bên phải ? + '+e+' cũng phải bằng '+(a+b)+', nên ? = '+(a+b)+' − '+e+' = '+c+'.';tag=[[a+b+e,'Em cộng thêm. Cần tìm số, cộng với '+e+' để ra '+(a+b)+'.'],[a+b,'Đó là kết quả bên trái, chưa phải số cần điền.']];
+  }else{
+    const t=muc===1?pick(['cong1','cong2','tru1']):pick(['cong1','cong2','tru1','tru2']);const C=ri(2,cap),a=ri(0,C);
+    if(t==='cong1'){c=C-a;eq=[a+'',' + ','?',' = ',C+''];gt=a+' + ? = '+C+' nên ? = '+C+' − '+a+' = '+c+'.';tag=[[C+a,'Em đã cộng. Số còn thiếu là phần bù: lấy '+C+' bớt '+a+'.'],[C,'Em điền luôn tổng. Hãy lấy '+C+' bớt '+a+'.']]}
+    else if(t==='cong2'){c=C-a;eq=['?',' + ',a+'',' = ',C+''];gt='? + '+a+' = '+C+' nên ? = '+C+' − '+a+' = '+c+'.';tag=[[C+a,'Em đã cộng. Phải lấy '+C+' bớt '+a+'.'],[a,'Số '+a+' đã có sẵn rồi. Số cần điền khác.']]}
+    else if(t==='tru1'){c=a;const x=C;eq=[x+'',' − ','?',' = ',(x-a)+''];gt=x+' − ? = '+(x-a)+' nên ? = '+x+' − '+(x-a)+' = '+c+'.';tag=[[x+(x-a),'Em đã cộng. Phải lấy '+x+' bớt '+(x-a)+'.'],[x-a,'Đó là kết quả rồi. Số cần điền là số bị bớt đi.']]}
+    else{const d=ri(0,C-1);c=C+d;if(c>cap)return gSoThieu(P,1);eq=['?',' − ',d+'',' = ',C+''];gt='? − '+d+' = '+C+' nên ? = '+C+' + '+d+' = '+c+'.';tag=[[C-d,'Em đã bớt. Muốn tìm số bị trừ phải cộng '+C+' với '+d+'.'],[C,'Số '+C+' là kết quả rồi. Số cần điền lớn hơn nó.']]}
+    hoi='Điền số thích hợp vào dấu ?';
+  }
+  let x=20,cs='';eq.forEach(s=>{const num=/^\d+$/.test(s),q=s==='?';if(num||q){cs+='<rect x="'+x+'" y="20" width="78" height="76" rx="16" fill="'+(q?'url(#gVang)':'#eef2ff')+'" stroke="'+(q?'#d97706':'#6366f1')+'" stroke-width="4"/><text x="'+(x+39)+'" y="72" text-anchor="middle" font-size="46" font-weight="900" fill="'+(q?'#fff':'#3730a3')+'">'+s+'</text>';x+=90}else{cs+='<text x="'+(x+14)+'" y="72" text-anchor="middle" font-size="48" font-weight="900" fill="#7c3aed">'+s.trim()+'</text>';x+=44}});
+  return mk('soThieu',hoi,svg(Math.max(x+10,300),116,cs),numOpts(c,tag.filter(t=>t[0]!==c),0,cap+1),c,gt);
+}
+/* 6. LỜI VĂN */
+function gLoiVan(P,muc){
+  const dv=pick([['Thỏ','🐰','củ cà rốt','🥕'],['Gấu','🐻','hũ mật','🍯'],['Mèo','🐱','con cá','🐟'],['Vịt','🦆','quả trứng','🥚']]);
+  const dv2=pick([['Chó','🐶'],['Cáo','🦊'],['Ếch','🐸']]);
+  const cap=Math.min(P,P<=10?10:P<=20?20:60);let t,hoi,c,gt,tag,a,b,k,bubbles;
+  const tp=muc===1?pick(['them','bot']):muc===2?pick(['nhieu','it','them','bot']):pick(['hai','tong','chenh']);
+  if(tp==='them'){a=ri(1,cap-1);b=ri(1,cap-a);c=a+b;hoi=dv[0]+' có '+a+' '+dv[2]+'. Mẹ cho thêm '+b+' '+dv[2]+'. '+dv[0]+' có tất cả mấy '+dv[2]+'?';gt='Thêm vào thì cộng: '+a+' + '+b+' = '+c+'.';tag=[[Math.abs(a-b),'Em đã trừ. "Cho thêm" nghĩa là cộng.']];bubbles=[[dv[1],a],[dv[3],'+'+b]]}
+  else if(tp==='bot'){a=ri(2,cap);b=ri(1,a-1);c=a-b;hoi=dv[0]+' có '+a+' '+dv[2]+'. '+dv[0]+' ăn '+b+' '+dv[2]+'. Còn lại mấy '+dv[2]+'?';gt='Ăn đi là bớt: '+a+' − '+b+' = '+c+'.';tag=[[a+b,'Em đã cộng. "Ăn" nghĩa là bớt đi.']];bubbles=[[dv[1],a],[dv[3],'−'+b]]}
+  else if(tp==='nhieu'){a=ri(1,cap-2);b=ri(1,cap-a);c=a+b;hoi=dv[0]+' có '+a+' '+dv[2]+'. '+dv2[0]+' có nhiều hơn '+dv[0]+' '+b+' '+dv[2]+'. '+dv2[0]+' có mấy '+dv[2]+'?';gt='Nhiều hơn '+b+' thì cộng: '+a+' + '+b+' = '+c+'.';tag=[[Math.abs(a-b),'Em đã trừ. "Nhiều hơn" thì phải cộng thêm.'],[b,'Đó chỉ là phần nhiều hơn. Cộng với số của '+dv[0]+' nữa.']];bubbles=[[dv[1],a],[dv2[1],'nhiều hơn '+b]]}
+  else if(tp==='it'){a=ri(3,cap);b=ri(1,a-1);c=a-b;hoi=dv[0]+' có '+a+' '+dv[2]+'. '+dv2[0]+' có ít hơn '+dv[0]+' '+b+' '+dv[2]+'. '+dv2[0]+' có mấy '+dv[2]+'?';gt='Ít hơn '+b+' thì bớt: '+a+' − '+b+' = '+c+'.';tag=[[a+b,'Em đã cộng. "Ít hơn" thì phải bớt đi.'],[b,'Đó là phần ít hơn. Hãy lấy '+a+' bớt '+b+'.']];bubbles=[[dv[1],a],[dv2[1],'ít hơn '+b]]}
+  else if(tp==='hai'){a=ri(3,Math.floor(cap*.6));b=ri(1,a-1);k=ri(1,cap-a+b);while(a-b+k>cap){k=ri(1,Math.max(1,cap-a+b))}c=a-b+k;hoi=dv[0]+' có '+a+' '+dv[2]+', cho '+dv2[0]+' '+b+' '+dv[2]+', rồi mẹ cho thêm '+k+' '+dv[2]+'. Bây giờ '+dv[0]+' có mấy '+dv[2]+'?';gt='Cho đi: '+a+' − '+b+' = '+(a-b)+'. Mẹ cho thêm: '+(a-b)+' + '+k+' = '+c+'.';tag=[[a+b+k,'Em cộng cả ba số. Cho đi thì phải bớt.'],[a-b,'Mới làm một bước. Mẹ còn cho thêm '+k+' nữa.'],[a-b-k,'Mẹ cho thêm thì cộng chứ không trừ.']];bubbles=[[dv[1],a],['➖',b],['➕',k]]}
+  else if(tp==='tong'){a=ri(1,Math.floor(cap/2)-1||1);b=ri(1,Math.max(1,Math.floor(cap/2)));const y=a+b;c=a+y;if(c>cap)return gLoiVan(P,1);hoi=dv[0]+' có '+a+' '+dv[2]+'. '+dv2[0]+' có nhiều hơn '+dv[0]+' '+b+' '+dv[2]+'. Cả hai bạn có tất cả mấy '+dv[2]+'?';gt=dv2[0]+' có '+a+' + '+b+' = '+y+'. Cả hai bạn: '+a+' + '+y+' = '+c+'.';tag=[[y,'Đó mới là số của '+dv2[0]+'. Hỏi cả hai bạn nên phải cộng thêm.'],[a+b,'Đó là số của '+dv2[0]+'. Cộng thêm số của '+dv[0]+' nữa.']];bubbles=[[dv[1],a],[dv2[1],'nhiều hơn '+b]]}
+  else{a=ri(1,Math.floor(cap/2)-1||1);const d=ri(1,Math.max(1,Math.floor(cap/2)-a||1));const tot=a+(a+d);c=d;if(tot>cap)return gLoiVan(P,1);hoi=dv[0]+' và '+dv2[0]+' có tất cả '+tot+' '+dv[2]+'. '+dv[0]+' có '+a+' '+dv[2]+'. '+dv2[0]+' có nhiều hơn '+dv[0]+' mấy '+dv[2]+'?';gt=dv2[0]+' có '+tot+' − '+a+' = '+(tot-a)+'. Nhiều hơn: '+(tot-a)+' − '+a+' = '+d+'.';tag=[[tot-a,'Đó là số của '+dv2[0]+'. Hỏi "nhiều hơn" nên còn phải trừ số của '+dv[0]+'.'],[a,'Đó là số của '+dv[0]+'.']];bubbles=[[dv[1],a],[dv2[1],'?']]}
+  let cs='',x=16;
+  bubbles.forEach(bu=>{const s=String(bu[1]);const w=Math.max(84,40+s.length*22);cs+='<rect x="'+x+'" y="14" width="'+w+'" height="92" rx="20" fill="#fff" stroke="#c7d2fe" stroke-width="3"/><text x="'+(x+w/2)+'" y="62" text-anchor="middle" font-size="44">'+bu[0]+'</text><text x="'+(x+w/2)+'" y="94" text-anchor="middle" font-size="'+(s.length>3?17:26)+'" font-weight="900" fill="#4f46e5">'+s+'</text>';x+=w+14});
+  return mk('loiVan',hoi,svg(Math.max(x,300),120,cs),numOpts(c,tag.filter(t=>t[0]!==c),0,Math.max(cap,c+3)),c,gt);
+}
+/* 7. XẾP HÀNG */
+function gViTri(P,muc){
+  const n=ri(muc===1?5:6,muc===3?12:10);let hoi,c,gt,tag,k,m,p,q;
+  const kinds=muc===1?['sau','truoc']:muc===2?['tong']:['giua'];const kd=pick(kinds);
+  const mk1='🐰',mk2='🐻';let hl1=-1,hl2=-1;
+  if(kd==='sau'){k=ri(2,n-2);c=n-k;hl1=k;hoi='Hàng có '+n+' bạn. 🐰 đứng thứ '+k+' tính từ đầu hàng. Có mấy bạn đứng sau 🐰?';gt='Hàng có '+n+' bạn, 🐰 đứng thứ '+k+' nên phía sau còn '+n+' − '+k+' = '+c+' bạn.';tag=[[n-k+1,'Em tính cả 🐰. Chỉ đếm những bạn đứng sau 🐰.'],[k-1,'Đó là số bạn đứng trước 🐰, còn câu hỏi là đứng sau.']]}
+  else if(kd==='truoc'){k=ri(3,n-1);c=k-1;hl1=k;hoi='Hàng có '+n+' bạn. 🐰 đứng thứ '+k+' tính từ đầu hàng. Có mấy bạn đứng trước 🐰?';gt='🐰 đứng thứ '+k+' nên trước 🐰 có '+k+' − 1 = '+c+' bạn.';tag=[[k,'Em tính cả 🐰. Chỉ đếm những bạn đứng trước 🐰.'],[n-k,'Đó là số bạn đứng sau 🐰.']]}
+  else if(kd==='tong'){k=ri(2,n-2);m=n-k+1;c=n;hl1=k;hoi='🐰 đứng thứ '+k+' tính từ đầu hàng và đứng thứ '+m+' tính từ cuối hàng. Hàng có mấy bạn?';gt='Cả hai cách đếm đều tính 🐰, nên '+k+' + '+m+' = '+(k+m)+' thì bị đếm 🐰 hai lần. Bớt 1: '+(k+m)+' − 1 = '+c+' bạn.';tag=[[k+m,'Em cộng ra '+(k+m)+' nhưng 🐰 bị đếm hai lần. Phải bớt 1.']]}
+  else{p=ri(1,n-3);q=ri(p+2,n);c=q-p-1;hl1=p;hl2=q;hoi='Hàng có '+n+' bạn. 🐰 đứng thứ '+p+' và 🐻 đứng thứ '+q+' tính từ đầu hàng. Có mấy bạn đứng giữa 🐰 và 🐻?';gt='Từ '+p+' đến '+q+' có '+q+' − '+p+' = '+(q-p)+', trừ cả 🐻 nữa còn '+c+' bạn đứng giữa.';tag=[[q-p,'Em đếm cả 🐻. Chỉ đếm những bạn đứng giữa.'],[q-p+1,'Em đếm cả 🐰 lẫn 🐻. Chỉ đếm những bạn đứng giữa.']]}
+  const W=Math.max(560,n*58+60);let cs='<text x="12" y="22" font-size="17" fill="#64748b" font-weight="700">đầu hàng ▶</text><text x="'+(W-12)+'" y="22" text-anchor="end" font-size="17" fill="#64748b" font-weight="700">cuối hàng</text>';
+  const cols=['#fca5a5','#93c5fd','#fcd34d','#86efac','#c4b5fd','#fdba74'];
+  for(let i=1;i<=n;i++){const x=40+(i-1)*((W-80)/(n-1||1)),sp=(i===hl1)?mk1:(i===hl2)?mk2:'';
+    cs+='<circle cx="'+x+'" cy="86" r="22" fill="'+(sp?'#fff7ed':cols[i%6])+'" stroke="'+(sp?'#ea580c':'#fff')+'" stroke-width="4"/>';
+    if(sp)cs+='<text x="'+x+'" y="96" text-anchor="middle" font-size="30">'+sp+'</text>';else cs+='<circle cx="'+(x-7)+'" cy="82" r="3" fill="#333"/><circle cx="'+(x+7)+'" cy="82" r="3" fill="#333"/><path d="M'+(x-7)+' 92 Q'+x+' 99 '+(x+7)+' 92" stroke="#333" stroke-width="2.5" fill="none"/>';
+    cs+='<text x="'+x+'" y="132" text-anchor="middle" font-size="18" font-weight="800" fill="#475569">'+i+'</text>'}
+  return mk('viTri',hoi,svg(W,146,cs),numOpts(c,tag.filter(t=>t[0]!==c),0,Math.max(n,c+3)),c,gt);
+}
+/* 8. QUY LUẬT HÌNH */
+const KHO=[{s:'tron',c:'do',n:'tròn đỏ'},{s:'vuong',c:'xd',n:'vuông xanh dương'},{s:'tam',c:'vang',n:'tam giác vàng'},{s:'tron',c:'xl',n:'tròn xanh lá'},{s:'sao',c:'cam',n:'sao cam'},{s:'vuong',c:'tim',n:'vuông tím'}];
+function itemSvg(i,w){w=w||56;return svg(60,60,hinhShape(i.s,COL[i.c],30,32,19)).replace('width="60" height="60"','width="'+w+'" height="'+w+'"')}
+function gQuyLuat(P,muc){
+  const pool=shuffle(KHO);let unit;
+  if(muc===1)unit=[pool[0],pool[1]];else if(muc===2)unit=[pool[0],pool[1],pool[2]];else unit=pick([[pool[0],pool[0],pool[1]],[pool[0],pool[1],pool[1]]]);
+  const show=muc===1?6:muc===2?7:8;const seq=[...Array(show+1)].map((_,i)=>unit[i%unit.length]);
+  const ans=seq[show];let cs='';const W=Math.max(520,(show+1)*66+20);
+  seq.slice(0,show).forEach((it,i)=>{cs+=hinhShape(it.s,COL[it.c],40+i*66,48,22)});
+  cs+='<rect x="'+(40+show*66-28)+'" y="18" width="56" height="60" rx="14" fill="url(#gVang)" stroke="#d97706" stroke-width="3"/><text x="'+(40+show*66)+'" y="62" text-anchor="middle" font-size="40" font-weight="900" fill="#fff">?</text>';
+  const key=i=>i.s+i.c,others=shuffle(KHO.filter(x=>key(x)!==key(ans))).slice(0,3);
+  const opts=shuffle([ans,...others]).map(x=>({h:itemSvg(x),v:key(x),loi:key(x)===key(ans)?null:'Hình này không đúng chỗ. Hãy tìm nhóm hình lặp lại: '+unit.map(u=>u.n).join(' → ')+'.'}));
+  const o=opts.map(x=>({h:x.h,v:x.v,loi:x.loi||MAU_LOI}));
+  return {dang:'quyLuat',hoi:'Hình nào đi tiếp vào chỗ dấu ?',hinh:svg(W,96,cs),opts:o,dung:o.findIndex(x=>x.v===key(ans)),gt:'Các hình lặp lại theo nhóm: '+unit.map(u=>u.n).join(' → ')+'. Sau '+show+' hình là '+ans.n+'.'};
+}
+/* 9. NGÀY TRONG TUẦN */
+const THU=['Thứ Hai','Thứ Ba','Thứ Tư','Thứ Năm','Thứ Sáu','Thứ Bảy','Chủ nhật'];
+function gLich(P,muc){
+  const h=ri(0,6);let hoi,c,gt,tag=[];
+  const kd=muc===1?pick(['mai','qua']):muc===2?pick(['kia','nua']):pick(['nua2','dem']);
+  if(kd==='mai'){c=(h+1)%7;hoi='Hôm nay là '+THU[h]+'. Ngày mai là thứ mấy?';gt='Sau '+THU[h]+' là '+THU[c]+'.';tag=[[(h+6)%7,'Đó là ngày hôm qua. Ngày mai là ngày sau hôm nay.']]}
+  else if(kd==='qua'){c=(h+6)%7;hoi='Hôm nay là '+THU[h]+'. Hôm qua là thứ mấy?';gt='Trước '+THU[h]+' là '+THU[c]+'.';tag=[[(h+1)%7,'Đó là ngày mai. Hôm qua là ngày trước hôm nay.']]}
+  else if(kd==='kia'){c=(h+2)%7;hoi='Hôm nay là '+THU[h]+'. Ngày kia là thứ mấy?';gt='Ngày mai là '+THU[(h+1)%7]+', ngày kia là '+THU[c]+'.';tag=[[(h+1)%7,'Đó là ngày mai. Ngày kia là sau ngày mai một ngày.']]}
+  else if(kd==='nua'){const k=ri(3,5);c=(h+k)%7;hoi='Hôm nay là '+THU[h]+'. '+k+' ngày nữa là thứ mấy?';gt='Đếm thêm '+k+' ngày từ '+THU[h]+' ta được '+THU[c]+'.';tag=[[(h+k+1)%7,'Em đếm cả ngày hôm nay. Phải bắt đầu đếm từ ngày mai.'],[(h+k-1+7)%7,'Em đếm thiếu 1 ngày.']]}
+  else if(kd==='nua2'){const k=ri(5,9);c=(h+k)%7;hoi='Hôm nay là '+THU[h]+'. '+k+' ngày nữa là thứ mấy? (1 tuần có 7 ngày)';gt='Sau 7 ngày lại về '+THU[h]+'. '+k+' = 7 + '+(k-7)+' nên là '+THU[c]+'.';tag=[[(h+k+1)%7,'Em đếm thừa 1 ngày.'],[(h+k+6)%7,'Em đếm thiếu 1 ngày.'],[h,'Đó là ngày hôm nay. Còn thừa một vài ngày nữa.']]}
+  else{const a=ri(0,3),b=ri(a+1,6);c=b-a+1;hoi='Từ '+THU[a]+' đến '+THU[b]+' (tính cả hai ngày đó) có mấy ngày?';gt='Đếm lần lượt: '+THU.slice(a,b+1).join(', ')+'. Có '+c+' ngày.';const nums=numOpts(c,[[b-a,'Em chưa tính ngày đầu. Phải tính cả hai ngày.'],[b-a+2,'Em đếm thừa 1 ngày.']],1,7);
+    let cs2='';for(let i=0;i<7;i++){const x=10+i*78,on=i>=a&&i<=b;cs2+='<rect x="'+x+'" y="14" width="70" height="64" rx="12" fill="'+(on?'url(#gVang)':'#eef2ff')+'" stroke="'+(on?'#d97706':'#c7d2fe')+'" stroke-width="3"/><text x="'+(x+35)+'" y="42" text-anchor="middle" font-size="15" font-weight="800" fill="'+(on?'#fff':'#475569')+'">'+(i<6?'Thứ':'Chủ')+'</text><text x="'+(x+35)+'" y="66" text-anchor="middle" font-size="20" font-weight="900" fill="'+(on?'#fff':'#3730a3')+'">'+(i<6?i+2:'nhật')+'</text>'}
+    return mk('lich',hoi,svg(560,92,cs2),nums,c,gt);}
+  let cs='';for(let i=0;i<7;i++){const x=10+i*78,on=i===h;cs+='<rect x="'+x+'" y="14" width="70" height="64" rx="12" fill="'+(on?'url(#gVang)':'#eef2ff')+'" stroke="'+(on?'#d97706':'#c7d2fe')+'" stroke-width="3"/><text x="'+(x+35)+'" y="42" text-anchor="middle" font-size="15" font-weight="800" fill="'+(on?'#fff':'#475569')+'">'+(i<6?'Thứ':'Chủ')+'</text><text x="'+(x+35)+'" y="66" text-anchor="middle" font-size="20" font-weight="900" fill="'+(on?'#fff':'#3730a3')+'">'+(i<6?i+2:'nhật')+'</text>'}
+  cs+='<text x="'+(10+h*78+35)+'" y="96" text-anchor="middle" font-size="16" font-weight="800" fill="#d97706">hôm nay</text>';
+  const L=[{v:c,loi:null}],used=new Set([c]);for(const [v,m] of tag){if(!used.has(v)&&L.length<4){used.add(v);L.push({v,loi:m})}}
+  for(const v of shuffle([0,1,2,3,4,5,6])){if(L.length>=4)break;if(!used.has(v)){used.add(v);L.push({v,loi:null})}}
+  return mk('lich',hoi,svg(560,104,cs),shuffle(L),c,gt,v=>THU[v]);
+}
+
+/* ======= ĐẤU TRƯỜNG: dạng bài theo cấu trúc đề thi quốc tế (TIMO: 5 chủ đề × 5 câu) — song ngữ Việt–Anh ======= */
+const SEPB='␟';
+function bi(v,e){return v+SEPB+e}
+const NAMES=['Bin','Su','Mít','Na','Tép','Bo','Kem','Xoài','Sóc','Bơ'];
+const THU_EN=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+function ord(n){const m=n%100;if(m>=11&&m<=13)return n+'th';return n+(['th','st','nd','rd'][n%10]||'th')}
+function tenNgau(n){return shuffle(NAMES).slice(0,n)}
+function sumInts(a){return a.reduce((x,y)=>x+y,0)}
+function o4(c,tag,lo,hi){return numOpts(c,tag.filter(t=>t&&t[0]!==c&&t[0]>=lo),lo,hi)}
+function textOpts(c,wrongs,loiMap){
+  const L=[{v:c,loi:null}];const used=new Set([c]);
+  for(const w of wrongs){if(!used.has(w)&&L.length<4){used.add(w);L.push({v:w,loi:(loiMap&&loiMap[w])||null})}}
+  return shuffle(L);
+}
+function exprSvg(tokens,hl){
+  let x=14,y=12,cs='',rows=1,mx=0;const W=560,H0=52;
+  tokens.forEach((t,i)=>{
+    const isNum=/^[0-9?A-Za-z\u{1F300}-\u{1FAFF}]/u.test(t)&&!/^[+−=<>]$/.test(t);
+    const w=isNum?Math.max(40,t.length*20+18):30;
+    if(x+w>W-10){x=14;y+=H0+8;rows++}
+    if(isNum){const q=hl&&hl.includes(i);cs+='<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+H0+'" rx="12" fill="'+(q?'url(#gVang)':'#eef2ff')+'" stroke="'+(q?'#d97706':'#6366f1')+'" stroke-width="3"/><text x="'+(x+w/2)+'" y="'+(y+37)+'" text-anchor="middle" font-size="'+(t.length>3&&!/^[0-9]+$/.test(t)?24:30)+'" font-weight="900" fill="'+(q?'#fff':'#3730a3')+'">'+t+'</text>'}
+    else cs+='<text x="'+(x+w/2)+'" y="'+(y+38)+'" text-anchor="middle" font-size="34" font-weight="900" fill="#7c3aed">'+t+'</text>';
+    x+=w+6;mx=Math.max(mx,x);
+  });
+  return svg(W,rows*(H0+8)+14,'<g transform="translate('+Math.max(0,Math.round((W-mx-8)/2))+',0)">'+cs+'</g>');
+}
+function weekStrip(idx,nhan,idx2,nhan2){let cs='';for(let i=0;i<7;i++){const x=10+i*78,on=i===idx,on2=i===idx2;cs+='<rect x="'+x+'" y="14" width="70" height="64" rx="12" fill="'+(on?'url(#gVang)':on2?'#bbf7d0':'#eef2ff')+'" stroke="'+(on?'#d97706':on2?'#16a34a':'#c7d2fe')+'" stroke-width="3"/><text x="'+(x+35)+'" y="42" text-anchor="middle" font-size="15" font-weight="800" fill="'+(on?'#fff':'#475569')+'">'+(i<6?'Thứ':'Chủ')+'</text><text x="'+(x+35)+'" y="66" text-anchor="middle" font-size="20" font-weight="900" fill="'+(on?'#fff':'#3730a3')+'">'+(i<6?i+2:'nhật')+'</text>'}
+  if(nhan&&idx>=0)cs+='<text x="'+(10+idx*78+35)+'" y="98" text-anchor="middle" font-size="16" font-weight="800" fill="#d97706">'+nhan+'</text>';
+  if(nhan2&&idx2>=0)cs+='<text x="'+(10+idx2*78+35)+'" y="98" text-anchor="middle" font-size="16" font-weight="800" fill="#16a34a">'+nhan2+'</text>';
+  return svg(560,106,cs)}
+
+/* ---------- TƯ DUY LOGIC ---------- */
+function gTuoi(lop,muc){
+  const [a,b]=tenNgau(2);const v=pick(muc===1?[1,2]:muc===2?[2,3]:[1,2,3]);let hoi,c,gt,tag;
+  if(v===1){const x=ri(lop===1?9:18,lop===1?16:40),y=ri(2,Math.min(8,x-2));c=x-y;
+    hoi=bi('Năm nay '+a+' '+x+' tuổi. '+b+' ít hơn '+a+' '+y+' tuổi. Hỏi '+b+' bao nhiêu tuổi?','This year '+a+' is '+x+' years old. '+b+' is '+y+' years younger than '+a+'. How old is '+b+'?');
+    gt=bi('Ít hơn thì bớt: '+x+' − '+y+' = '+c+'.','"Younger" means subtract: '+x+' − '+y+' = '+c+'.');tag=[[x+y,'Em đã cộng. "Ít hơn" thì phải bớt.'],[y,'Đó là số tuổi hơn kém. Phải lấy '+x+' bớt '+y+'.']]}
+  else if(v===2){const n=ri(2,lop===1?7:9),t=ri(n+3,lop===1?16:30);c=t-n;
+    hoi=bi(n+' năm nữa '+a+' sẽ '+t+' tuổi. Hỏi bây giờ '+a+' bao nhiêu tuổi?','In '+n+' years '+a+' will be '+t+' years old. How old is '+a+' now?');
+    gt=bi('Bây giờ ít hơn lúc đó '+n+' năm: '+t+' − '+n+' = '+c+'.','Now is '+n+' years earlier: '+t+' − '+n+' = '+c+'.');tag=[[t+n,'Em đã cộng. Bây giờ phải ít tuổi hơn lúc '+n+' năm nữa.']]}
+  else{const d=ri(2,6),n=ri(2,5),t=ri(n+4,16);c=t-n+d;
+    hoi=bi(a+' hơn '+b+' '+d+' tuổi. '+n+' năm nữa '+b+' sẽ '+t+' tuổi. Hỏi năm nay '+a+' bao nhiêu tuổi?',a+' is '+d+' years older than '+b+'. In '+n+' years '+b+' will be '+t+'. How old is '+a+' this year?');
+    gt=bi('Năm nay '+b+': '+t+' − '+n+' = '+(t-n)+' tuổi. '+a+' hơn '+d+' tuổi: '+(t-n)+' + '+d+' = '+c+'.',b+' is '+t+' − '+n+' = '+(t-n)+' now. '+a+' is '+d+' older: '+(t-n)+' + '+d+' = '+c+'.');tag=[[t-n,'Đó mới là tuổi của '+b+'. Cộng thêm '+d+' tuổi nữa.'],[t+d,'Em quên bớt '+n+' năm.'],[t-n-d,'Em đã trừ. '+a+' hơn '+b+' thì phải cộng.']]}
+  return mk('logic',hoi,exprSvg(['🎂','?']),o4(c,tag,0,60),c,gt);
+}
+function gNgay2(lop,muc){
+  const y=ri(0,6);const kd=pick(muc===1?['sau','truoc']:muc===2?['sau','truoc','sau']:['sau','truoc','thang']);let hoi,c,gt,tag=[],w=0,d=0;
+  if(kd==='sau'){const k=ri(2,lop===1?4:6);c=(y+1+k)%7;hoi=bi('Hôm qua là '+THU[y]+'. '+k+' ngày sau hôm nay là thứ mấy?','Yesterday was '+THU_EN[y]+'. What day will it be '+k+' days from today?');gt=bi('Hôm nay là '+THU[(y+1)%7]+'. Đếm tiếp '+k+' ngày được '+THU[c]+'.','Today is '+THU_EN[(y+1)%7]+'. Counting on '+k+' days gives '+THU_EN[c]+'.');tag=[[(y+k)%7,'Em đếm từ hôm qua. Hôm nay mới là điểm bắt đầu.'],[(y+2+k)%7,'Em đếm thừa 1 ngày.']]}
+  else if(kd==='truoc'){const k=ri(2,lop===1?4:6);c=((y+1-k)%7+7)%7;hoi=bi('Hôm qua là '+THU[y]+'. '+k+' ngày trước hôm nay là thứ mấy?','Yesterday was '+THU_EN[y]+'. What day was it '+k+' days before today?');gt=bi('Hôm nay là '+THU[(y+1)%7]+'. Lùi '+k+' ngày được '+THU[c]+'.','Today is '+THU_EN[(y+1)%7]+'. Counting back '+k+' days gives '+THU_EN[c]+'.');tag=[[((y-k)%7+7)%7,'Em lùi từ hôm qua. Hôm nay mới là điểm bắt đầu.'],[((y+2-k)%7+7)%7,'Em lùi thiếu 1 ngày.']]}
+  else{const L=pick([30,31]);d=ri(1,28);w=ri(0,6);const w2=pick([0,1,2,3,4,5,6].filter(x=>x!==w));const first=(w+(L-d)+1)%7;c=((w2-first+7)%7)+1;
+    hoi=bi('Ngày '+d+' tháng này là '+THU[w]+' (tháng này có '+L+' ngày). Ngày đầu tiên là '+THU[w2]+' của tháng sau là ngày mấy?','The '+ord(d)+' of this month is a '+THU_EN[w]+' (this month has '+L+' days). What is the date of the first '+THU_EN[w2]+' of next month?');
+    gt=bi('Tháng này còn '+(L-d)+' ngày nữa là hết. Ngày 1 tháng sau là '+THU[first]+'. Từ đó tìm ngày đầu tiên là '+THU[w2]+': ngày '+c+'.','There are '+(L-d)+' days left this month, so the 1st of next month is a '+THU_EN[first]+'. The first '+THU_EN[w2]+' is the '+ord(c)+'.');tag=[[c+7,'Chưa phải ngày đầu tiên, còn có ngày sớm hơn.'],[c%7+1,null]]}
+  if(kd==='thang')return mk('logic',hoi,weekStrip(w,THU[w]+' ngày '+d),o4(c,tag,1,14),c,gt);
+  const L=[{v:c,loi:null}],used=new Set([c]);for(const [v,m] of tag){if(!used.has(v)&&L.length<4){used.add(v);L.push({v,loi:m})}}
+  for(const v of shuffle([0,1,2,3,4,5,6])){if(L.length>=4)break;if(!used.has(v)){used.add(v);L.push({v,loi:null})}}
+  return mk('logic',hoi,weekStrip(y,'hôm qua',(y+1)%7,'hôm nay'),shuffle(L),c,gt,v=>bi(THU[v],THU_EN[v]));
+}
+function gXepHang2(lop,muc){
+  const [a]=tenNgau(1);const kd=pick(muc===1?['lr','truoc']:['lr','truoc','cay','giua']);let hoi,c,gt,tag,n;
+  if(kd==='lr'){const l=ri(2,lop===1?6:9),r=ri(2,lop===1?6:9);c=l+r+1;hoi=bi('Một số bạn xếp hàng chụp ảnh. Có '+l+' bạn đứng bên trái '+a+' và '+r+' bạn đứng bên phải '+a+'. Hỏi hàng có tất cả bao nhiêu bạn?','Some children line up for a photo. '+l+' children stand on '+a+'\'s left and '+r+' on the right. How many children are in the line altogether?');gt=bi(l+' + '+r+' = '+(l+r)+' bạn, cộng thêm chính '+a+': '+c+' bạn.',l+' + '+r+' = '+(l+r)+', plus '+a+': '+c+' children.');tag=[[l+r,'Em quên tính '+a+'.'],[l+r+2,'Em tính '+a+' hai lần.']];n=c}
+  else if(kd==='truoc'){const t=ri(3,lop===1?7:11),s=ri(2,lop===1?6:9);c=t+s+1;hoi=bi('Phía trước '+a+' có '+t+' bạn, phía sau '+a+' có '+s+' bạn. Cả hàng có bao nhiêu bạn?','There are '+t+' children in front of '+a+' and '+s+' behind '+a+'. How many children are in the line?');gt=bi(t+' + '+s+' + 1 ('+a+') = '+c+' bạn.',t+' + '+s+' + 1 ('+a+') = '+c+' children.');tag=[[t+s,'Em quên tính '+a+'.']];n=c}
+  else if(kd==='cay'){const k=ri(4,lop===1?7:10),d=ri(2,lop===1?3:5);c=(k-1)*d;hoi=bi('Người ta trồng '+k+' cây thẳng hàng, hai cây liền nhau cách nhau '+d+' mét. Cây đầu và cây cuối cách nhau bao nhiêu mét?',k+' trees are planted in a straight line, '+d+' meters apart. What is the distance between the first and the last tree?');gt=bi('Có '+k+' cây thì có '+(k-1)+' khoảng cách. '+(k-1)+' × '+d+' = '+c+' mét.',k+' trees make '+(k-1)+' gaps. '+(k-1)+' × '+d+' = '+c+' meters.');tag=[[k*d,'Em nhân với số cây. Phải nhân với số khoảng cách (ít hơn số cây 1).'],[(k+1)*d,null]];n=k}
+  else{const k=ri(2,lop===1?4:7),m=ri(2,lop===1?4:7);c=k+m-1;hoi=bi(a+' đứng thứ '+k+' tính từ đầu hàng và thứ '+m+' tính từ cuối hàng. Hỏi hàng có bao nhiêu bạn?',a+' is '+ord(k)+' from the front and '+ord(m)+' from the back. How many children are in the line?');gt=bi(k+' + '+m+' = '+(k+m)+' nhưng '+a+' bị đếm hai lần. Bớt 1: '+c+' bạn.',k+' + '+m+' = '+(k+m)+' but '+a+' is counted twice. Subtract 1: '+c+' children.');tag=[[k+m,'Em cộng ra '+(k+m)+' nhưng '+a+' đã bị đếm hai lần.']];n=c}
+  let cs='';
+  const sh=Math.min(n,10);for(let i=0;i<sh;i++){const x=40+i*52;cs+=kd==='cay'?'<text x="'+x+'" y="62" text-anchor="middle" font-size="40">🌳</text><line x1="'+x+'" y1="70" x2="'+x+'" y2="80" stroke="#92400e" stroke-width="4"/>':'<circle cx="'+x+'" cy="56" r="20" fill="'+['#fca5a5','#93c5fd','#fcd34d','#86efac','#c4b5fd','#fdba74'][i%6]+'" stroke="#fff" stroke-width="3"/><circle cx="'+(x-6)+'" cy="52" r="3" fill="#333"/><circle cx="'+(x+6)+'" cy="52" r="3" fill="#333"/><path d="M'+(x-6)+' 62 Q'+x+' 68 '+(x+6)+' 62" stroke="#333" stroke-width="2" fill="none"/>'}
+  if(n>10)cs+='<text x="'+(40+sh*52)+'" y="62" font-size="30" font-weight="900" fill="#6366f1">…</text>';
+  return mk('logic',hoi,svg(Math.max(560,sh*52+90),100,cs),o4(c,tag,1,60),c,gt);
+}
+function gDoiChac(lop,muc){
+  const [a]=tenNgau(1);const it=pick([['cam','🍊','táo','🍎','oranges','apple'],['kẹo','🍬','bánh','🍪','candies','cookie'],['bi','🔵','kẹo','🍭','marbles','candy']]);
+  const x0=ri(8,lop===1?12:20),x=ri(2,5),y=ri(2,6),hoiTong=muc===3&&rnd()<.6;
+  const c=hoiTong?x0-x+y+1:x0-x+y;
+  const hoi=bi(a+' có '+x0+' '+it[0]+'. '+a+' đổi '+x+' '+it[0]+' lấy 1 '+it[2]+'. Sau đó mẹ cho thêm '+y+' '+it[0]+'. Hỏi '+a+(hoiTong?' có tất cả bao nhiêu (cả '+it[0]+' lẫn '+it[2]+')?':' có bao nhiêu '+it[0]+'?'),
+    a+' has '+x0+' '+it[4]+'. '+a+' trades '+x+' '+it[4]+' for 1 '+it[5]+'. Then mum gives '+a+' '+y+' more '+it[4]+'. How many '+(hoiTong?'items does '+a+' have in total ('+it[4]+' and '+it[5]+')?':it[4]+' does '+a+' have now?'));
+  const gt=bi(x0+' − '+x+' = '+(x0-x)+' '+it[0]+', rồi '+(x0-x)+' + '+y+' = '+(x0-x+y)+' '+it[0]+'.'+(hoiTong?' Cộng thêm 1 '+it[2]+' được '+c+'.':''),
+    x0+' − '+x+' = '+(x0-x)+', then '+(x0-x)+' + '+y+' = '+(x0-x+y)+' '+it[4]+'.'+(hoiTong?' Add 1 '+it[5]+': '+c+'.':''));
+  const tag=[[x0+x+y,'Em đã cộng cả phần đổi đi. Đổi đi thì phải bớt.'],[x0-x,'Mới làm một bước. Mẹ còn cho thêm '+y+'.'],[x0-x+y+(hoiTong?0:1),hoiTong?null:'Em đếm cả quả '+it[2]+'. Câu hỏi chỉ hỏi '+it[0]+'.'],[x0+y,'Em quên phần đổi đi '+x+' '+it[0]+'.']];
+  return mk('logic',hoi,exprSvg([it[1],''+x0,'−',''+x,'+',''+y,'=','?'],[7]),o4(c,tag,0,60),c,gt);
+}
+function gChiaBang(lop,muc){
+  const [a,b]=tenNgau(2);let c,hoi,gt,tag;
+  if(muc<3||rnd()<.5){const x=ri(2,lop===1?8:14);const d=2*ri(1,lop===1?4:7);const y=x+d;c=d/2;
+    hoi=bi(a+' có '+x+' cái kẹo, '+b+' có '+y+' cái kẹo. '+b+' cho '+a+' mấy cái kẹo để hai bạn có số kẹo bằng nhau?',a+' has '+x+' candies and '+b+' has '+y+' candies. How many candies should '+b+' give to '+a+' so that they have the same number?');
+    gt=bi(y+' − '+x+' = '+d+', chia đôi '+d+' : 2 = '+c+'. '+b+' cho '+a+' '+c+' cái.',y+' − '+x+' = '+d+'; half of '+d+' is '+c+'. '+b+' gives '+a+' '+c+' candies.');tag=[[d,'Đó là hơn kém nhau, phải cho một nửa thôi.'],[x+y,null],[c+1,null]]}
+  else{const d=2*ri(1,5);const x=ri(5,12);const s=x+(x+d);c=x+d;
+    hoi=bi(a+' và '+b+' có tất cả '+s+' cái kẹo. '+a+' nhiều hơn '+b+' '+d+' cái. Hỏi '+a+' có mấy cái kẹo?',a+' and '+b+' have '+s+' candies altogether. '+a+' has '+d+' more than '+b+'. How many candies does '+a+' have?');
+    gt=bi('Nếu bớt '+d+' của '+a+', hai bạn bằng nhau: '+(s-d)+' : 2 = '+x+'. '+a+' có '+x+' + '+d+' = '+c+' cái.','Remove '+d+' from '+a+': then both are equal, '+(s-d)+' : 2 = '+x+'. So '+a+' has '+x+' + '+d+' = '+c+'.');tag=[[x,'Đó là số kẹo của '+b+'.'],[s-d,null],[d,null]]}
+  return mk('logic',hoi,exprSvg(['🍬','⇄','🍬']),o4(c,tag,0,60),c,gt);
+}
+function gGiaDinh(lop,muc){
+  const [a]=tenNgau(1);const v=pick(muc===1?[1,2]:[1,2,3]);let hoi,c,gt,tag;
+  if(v===1){const s=ri(2,5),ae=ri(s+1,s+3);c=ae+1-s;hoi=bi(a+' là con út trong nhà. Bố có '+s+' con trai và '+a+' có tất cả '+ae+' anh chị em. Hỏi bố có mấy con gái?',a+' is the youngest child. Dad has '+s+' sons, and '+a+' has '+ae+' brothers and sisters in total. How many daughters does Dad have?');gt=bi('Tính cả '+a+', bố có '+ae+' + 1 = '+(ae+1)+' người con. Trừ '+s+' con trai: '+(ae+1)+' − '+s+' = '+c+' con gái.','Including '+a+', Dad has '+ae+' + 1 = '+(ae+1)+' children. Minus '+s+' sons: '+(ae+1)+' − '+s+' = '+c+' daughters.');tag=[[ae-s,'Em quên tính '+a+' trong số các con.'],[ae+1,null]]}
+  else if(v===2){const t=ri(1,4),g=ri(1,3);c=t+g+1;hoi=bi(a+' có '+t+' anh trai và '+g+' chị gái (không có em). Hỏi mẹ '+a+' có mấy người con?',a+' has '+t+' brothers and '+g+' sisters (and no younger siblings). How many children does '+a+'\'s mother have?');gt=bi(t+' + '+g+' + 1 ('+a+') = '+c+' người con.',t+' + '+g+' + 1 ('+a+') = '+c+' children.');tag=[[t+g,'Em quên tính '+a+'.']]}
+  else{const x=ri(2,4),y=ri(1,3);c=x+y+1+1;hoi=bi(a+' có '+x+' anh chị và '+y+' em. Gia đình có thêm 1 người con nuôi không tính ở trên. Hỏi nhà có tất cả mấy người con?',a+' has '+x+' older siblings and '+y+' younger siblings. The family also has 1 adopted child not counted above. How many children are there in total?');gt=bi(x+' + '+y+' + 1 ('+a+') + 1 = '+c+'.',x+' + '+y+' + 1 ('+a+') + 1 = '+c+'.');tag=[[x+y+1,'Em quên người con nuôi.'],[x+y,null]]}
+  return mk('logic',hoi,exprSvg(['👨‍👩‍👧','?']),o4(c,tag,1,15),c,gt);
+}
+const TOY_EN={'🧸':'teddy bear','🚗':'car','🪁':'kite','⚽':'ball','🎲':'dice','🚂':'train','🧩':'puzzle'};
+function gCanSanh(lop,muc){
+  const toys=shuffle(['🧸','🚗','🪁','⚽','🎲','🚂','🧩']).slice(0,4),ten={'🧸':'gấu bông','🚗':'ô tô','🪁':'diều','⚽':'bóng','🎲':'xúc xắc','🚂':'tàu hoả','🧩':'xếp hình'};
+  const ord=toys;const cmp=shuffle([[0,1],[1,2],[2,3]]);const hoiNhe=muc>=2&&rnd()<.5;
+  let cs='';cmp.forEach((p,i)=>{const [h,l]=p;const left=rnd()<.5;const L=left?ord[h]:ord[l],R=left?ord[l]:ord[h];const ang=left?-10:10;const ox=20+i*180;
+    cs+='<g transform="translate('+ox+',0)"><polygon points="70,100 90,100 80,86" fill="#818cf8"/><rect x="76" y="40" width="8" height="52" rx="3" fill="#6366f1"/><g transform="rotate('+ang+' 80 40)"><rect x="6" y="36" width="148" height="8" rx="4" fill="#4f46e5"/><ellipse cx="22" cy="82" rx="26" ry="6" fill="#c7d2fe"/><ellipse cx="138" cy="82" rx="26" ry="6" fill="#c7d2fe"/><text x="22" y="76" text-anchor="middle" font-size="32">'+L+'</text><text x="138" y="76" text-anchor="middle" font-size="32">'+R+'</text></g></g>'});
+  const c=hoiNhe?ord[3]:ord[0];
+  const hoi=hoiNhe?bi('Cho ba chiếc cân như hình. Món đồ chơi nào nhẹ nhất?','Look at the three scales. Which toy is the lightest?'):bi('Cho ba chiếc cân như hình. Món đồ chơi nào nặng nhất?','Look at the three scales. Which toy is the heaviest?');
+  const o=shuffle(ord).map(t=>({h:bi(t+' '+ten[t],t+' '+TOY_EN[t]),v:t,loi:t===c?MAU_LOI:'Hãy so sánh từng cặp: bên cân nào thấp xuống là bên nặng hơn.'}));
+  return {dang:'logic',hoi,hinh:svg(560,110,cs),opts:o,dung:o.findIndex(x=>x.v===c),gt:bi('Bên thấp xuống là bên nặng hơn. Xếp từ nặng đến nhẹ: '+ord.join(' > ')+'. '+(hoiNhe?'Nhẹ nhất: ':'Nặng nhất: ')+c+'.','The lower side is heavier. From heaviest to lightest: '+ord.join(' > ')+'. '+(hoiNhe?'Lightest: ':'Heaviest: ')+c+'.')};
+}
+function gXacSuat(lop,muc){
+  const mau=[['đỏ','#ef4444','red'],['xanh dương','#3b82f6','blue'],['vàng','#f59e0b','yellow'],['xanh lá','#22c55e','green'],['tím','#8b5cf6','purple']];
+  let cnt;for(let t=0;t<100;t++){cnt=mau.map(()=>ri(1,lop===1?7:10));const mx=Math.max(...cnt),mn=Math.min(...cnt);if(cnt.filter(v=>v===mx).length===1&&cnt.filter(v=>v===mn).length===1)break}
+  const nhieu=rnd()<.6,mx=Math.max(...cnt),mn=Math.min(...cnt);const ci=cnt.indexOf(nhieu?mx:mn);
+  let cs='';let x=30;mau.forEach((m,i)=>{for(let k=0;k<cnt[i];k++){cs+='<circle cx="'+(x+(k%5)*22)+'" cy="'+(34+Math.floor(k/5)*22)+'" r="9" fill="'+m[1]+'" stroke="#0003" stroke-width="1.5"/>'}x+=130;});
+  const hoi=bi('Trong túi có các viên bi như hình. Lấy ngẫu nhiên 1 viên bi. Màu nào '+(nhieu?'dễ lấy được nhất?':'khó lấy được nhất?'),'The bag contains the marbles shown. One marble is picked at random. Which color is '+(nhieu?'most':'least')+' likely to be picked?');
+  const o=shuffle([ci,...shuffle([0,1,2,3,4].filter(i=>i!==ci)).slice(0,3)]).map(i=>({h:bi(mau[i][0],mau[i][2]),v:i,loi:i===ci?MAU_LOI:(nhieu?'Màu này có '+cnt[i]+' viên, chưa phải nhiều nhất.':'Màu này có '+cnt[i]+' viên, chưa phải ít nhất.')}));
+  return {dang:'logic',hoi,hinh:svg(660,100,cs),opts:o,dung:o.findIndex(x=>x.v===ci),gt:bi('Đếm từng màu: '+mau.map((m,i)=>m[0]+' '+cnt[i]).join(', ')+'. Màu '+(nhieu?'nhiều nhất':'ít nhất')+' là '+mau[ci][0]+'.','Count each color: '+mau.map((m,i)=>m[2]+' '+cnt[i]).join(', ')+'. The '+(nhieu?'most':'least')+' likely color is '+mau[ci][2]+'.')};
+}
+function gGioGiac(lop,muc){
+  const hh=ri(1,9),mm=pick(lop===1?[0,30]:[0,15,30,45]);const dh=ri(0,2),dm=pick(lop===1?[0,30]:[15,30,45]);const cong=rnd()<.7||muc===1;
+  const tot=hh*60+mm,kq=cong?tot+dh*60+dm:tot-dh*60-dm;if(kq<60||kq>12*60+59)return gGioGiac(lop,muc);
+  const f=t=>{const h=Math.floor(t/60)||12,m=t%60;return h+':'+String(m).padStart(2,'0')};
+  const c=f(kq);const mo=f(tot),dtxt=(dh?dh+' giờ ':'')+(dm?dm+' phút':''),dten=(dh?dh+(dh>1?' hours ':' hour ')+'':'')+(dm?dm+' minutes':'');
+  const hoi=cong?bi('Bài kiểm tra bắt đầu lúc '+mo+'. Thời gian làm bài là '+dtxt.trim()+'. Hỏi bài kiểm tra kết thúc lúc mấy giờ?','The test starts at '+mo+' and lasts '+dten.trim()+'. At what time does the test end?'):bi('Bây giờ là '+mo+'. Cách đây '+dtxt.trim()+' là mấy giờ?','It is '+mo+' now. What time was it '+dten.trim()+' ago?');
+  const wrong=[kq+30,kq-30,kq+60,kq-60,kq+15,kq-15].map(t=>(t<60||t>779)?null:f(t)).filter(Boolean);
+  const o=textOpts(c,shuffle(wrong).slice(0,5),{});
+  const oo=o.map(x=>({h:x.v,v:x.v,loi:x.loi||'Tính lại: cộng (hoặc trừ) số giờ trước, rồi đến số phút.'}));
+  return {dang:'logic',hoi,hinh:exprSvg(['🕐',mo,cong?'+':'−',dtxt.trim(),'=','?']),opts:oo,dung:oo.findIndex(x=>x.v===c),gt:bi((cong?'Cộng ':'Trừ ')+dtxt.trim()+' '+(cong?'vào ':'từ ')+mo+' được '+c+'.',(cong?'Add ':'Subtract ')+dten.trim()+(cong?' to ':' from ')+mo+': '+c+'.')};
+}
+function gBanhAndy(lop,muc){
+  const [a,b,c0]=tenNgau(3);const T=ri(7,lop===1?10:13);let hoi,ans,gt,tag;
+  const tr=[];for(let x=1;x<T;x++)for(let y=1;y<T;y++){const z=T-x-y;if(z>=1&&x!==y&&y!==z&&x!==z&&x>y&&y>z)tr.push([x,y,z])}
+  if(muc<3||rnd()<.5){ans=Math.max(...tr.map(t=>t[0]));hoi=bi(a+', '+b+' và '+c0+' làm được tất cả '+T+' cái bánh. Mỗi bạn làm ít nhất 1 cái và số bánh mỗi bạn khác nhau. '+a+' làm nhiều bánh nhất. Hỏi '+a+' làm nhiều nhất được bao nhiêu cái bánh?',a+', '+b+' and '+c0+' made '+T+' cakes in total. Each made at least 1 cake and their numbers are all different. '+a+' made the most. What is the greatest number of cakes '+a+' could have made?');
+    gt=bi('Để '+a+' nhiều nhất thì hai bạn kia làm ít nhất: 1 cái và 2 cái (khác nhau). '+a+' làm '+T+' − 1 − 2 = '+ans+' cái.','To make '+a+'\'s number greatest, the others make the least: 1 and 2 (different). '+a+' made '+T+' − 1 − 2 = '+ans+'.');tag=[[T-2,'Hai bạn kia không thể cùng 1 cái vì số bánh phải khác nhau.'],[T-1,null]]}
+  else{ans=Math.min(...tr.map(t=>t[0]));hoi=bi(a+', '+b+' và '+c0+' làm được tất cả '+T+' cái bánh, mỗi bạn làm ít nhất 1 cái, số bánh mỗi bạn khác nhau và '+a+' làm nhiều bánh nhất. Hỏi '+a+' làm ít nhất được bao nhiêu cái bánh?',a+', '+b+' and '+c0+' made '+T+' cakes in total, each at least 1, all different numbers, and '+a+' made the most. What is the least number of cakes '+a+' could have made?');
+    gt=bi('Thử các bộ ba khác nhau có tổng '+T+': '+tr.map(t=>t.join('+')).join('; ')+'. '+a+' ít nhất là '+ans+' cái.','Try different triples with sum '+T+': '+tr.map(t=>t.join('+')).join('; ')+'. The least for '+a+' is '+ans+'.');tag=[[ans+1,null],[ans-1,null],[Math.ceil(T/3),'Chia đều không được vì số bánh phải khác nhau.']]}
+  return mk('toHop',hoi,exprSvg(['🧁',''+T,'→','3']),o4(ans,tag,1,T+2),ans,gt);
+}
+/* ---------- SỐ HỌC / ĐẠI SỐ ---------- */
+function gTongGop(lop,muc){
+  const n=lop===1?(muc===1?5:muc===2?6:7):(muc===1?6:muc===2?7:8);const mx=lop===1?(muc===3?20:15):(muc===1?30:40);
+  let arr=[],pairs=[];const np=Math.floor(n/2);
+  for(let i=0;i<np;i++){const t=pick(lop===1?[10,20]:[20,30,40]);const a=ri(1,Math.min(t-1,mx));arr.push(a,t-a);pairs.push([a,t-a,t])}
+  if(n%2){arr.push(ri(1,mx));}
+  arr=shuffle(arr);const s=sumInts(arr);const toks=[];arr.forEach((v,i)=>{if(i)toks.push('+');toks.push(''+v)});
+  const tag=[[s-1,'Hãy gom các cặp cộng thành số tròn chục rồi cộng lại, sẽ ít nhầm hơn.'],[s+1,'Hãy gom các cặp cộng thành số tròn chục rồi cộng lại.'],[s+10,'Em cộng thừa một chục.'],[s-10,'Em cộng thiếu một chục.']];
+  const ps=pairs.map(p=>'('+p[0]+' + '+p[1]+') = '+p[2]).join('; ');
+  return mk('soHoc',bi('Tính tổng. (Gợi ý: gom các cặp cộng thành số tròn chục.)','Find the sum. (Hint: group the pairs that make round tens.)'),exprSvg(toks),o4(s,tag,0,300),s,
+    bi('Gom các cặp: '+ps+(n%2?'; còn lại 1 số.':'.')+' Tổng = '+s+'.','Group pairs: '+ps+(n%2?'; one number is left.':'.')+' Sum = '+s+'.'));
+}
+function gChuoiPhep(lop,muc){
+  let toks,val,gt,tag;
+  if(muc<2||rnd()<.5){
+    for(let t=0;t<200;t++){const a=ri(10,lop===1?25:60),b=ri(3,9),c=ri(2,9);const s1=pick(['+','−']),s2=pick(['+','−']);let v=s1==='+'?a+b:a-b;v=s2==='+'?v+c:v-c;if(v>=0&&v<=99){toks=[''+a,s1,''+b,s2,''+c,'=','?'];val=v;const m1=s1==='+'?a+b:a-b;
+      gt=bi('Tính lần lượt từ trái sang phải: '+a+' '+s1+' '+b+' = '+m1+', rồi '+m1+' '+s2+' '+c+' = '+v+'.','Work from left to right: '+a+' '+s1+' '+b+' = '+m1+', then '+m1+' '+s2+' '+c+' = '+v+'.');
+      tag=[[a+b+c,'Em cộng hết cả ba số rồi.'],[(s1==='−'&&s2==='+')?a-(b+c):(s1==='+'&&s2==='−')?a+(b-c):a-b-c,'Em tính không đúng thứ tự. Phải làm từ trái sang phải.'],[val+1,null],[val-1,null]];break}}
+  }else{
+    const s=ri(10,lop===1?16:24),k=pick([4,6,8]);let v=s;toks=[''+s];let cur=s;
+    for(let i=1;i<=k;i++){cur=s-i;toks.push(i%2?'−':'+',''+cur);v+=i%2?-cur:cur}
+    toks.push('=','?');val=v;gt=bi('Gom từng cặp (a − b) đều bằng 1: '+(k/2)+' cặp được '+(k/2)+', cộng số cuối '+cur+': '+val+'.','Each pair (a − b) equals 1: '+(k/2)+' pairs give '+(k/2)+'; add the last number '+cur+': '+val+'.');tag=[[val+1,'Em đếm sai số cặp.'],[val-1,null],[val+k/2,null],[s,null]]}
+  return mk('soHoc',bi('Tính giá trị biểu thức.','Find the value of the expression.'),exprSvg(toks,[toks.length-1]),o4(val,tag,0,150),val,gt);
+}
+function gBieuTuong(lop,muc){
+  const em=shuffle(['🐔','🐱','🍎','🍌','🍓','🧁']),[A,B,C]=em;let lines,ask,c,gt,tag;
+  if(muc===1||lop===1&&muc<3){const a=ri(2,9),b=ri(1,9);lines=[[A,A,'=',2*a],[A,B,'=',a+b]];ask=B;c=b;gt=bi(A+' + '+A+' = '+2*a+' nên '+A+' = '+a+'. '+A+' + '+B+' = '+(a+b)+' nên '+B+' = '+(a+b)+' − '+a+' = '+b+'.',A+' + '+A+' = '+2*a+' so '+A+' = '+a+'. '+A+' + '+B+' = '+(a+b)+' so '+B+' = '+(a+b)+' − '+a+' = '+b+'.');tag=[[a,'Đó là giá trị của '+A+'. Phải tìm '+B+'.'],[a+b,null]]}
+  else if(muc===2){const b=ri(2,9),a=ri(2,9);lines=[[A,A,B,'=',2*a+b],[B,B,'=',2*b]];ask=A;c=a;gt=bi(B+' + '+B+' = '+2*b+' nên '+B+' = '+b+'. '+A+' + '+A+' + '+B+' = '+(2*a+b)+' nên '+A+' + '+A+' = '+(2*a)+', '+A+' = '+a+'.',B+' + '+B+' = '+2*b+' so '+B+' = '+b+'. '+A+' + '+A+' + '+B+' = '+(2*a+b)+' so '+A+' + '+A+' = '+(2*a)+', '+A+' = '+a+'.');tag=[[b,'Đó là giá trị của '+B+'. Phải tìm '+A+'.'],[2*a,'Đó là giá trị của hai '+A+'. Mỗi '+A+' chỉ bằng một nửa.'],[2*a+b-b*2,null]]}
+  else{const a=ri(2,8),b=ri(2,8),cc=ri(2,8);lines=[[A,B,'=',a+b],[B,C,'=',b+cc],[A,C,'=',a+cc]];ask=C;c=cc;gt=bi('Cộng ba dòng: hai lần ('+A+' + '+B+' + '+C+') = '+(2*(a+b+cc))+', nên '+A+' + '+B+' + '+C+' = '+(a+b+cc)+'. Bớt dòng 1 ('+(a+b)+') còn '+C+' = '+cc+'.','Add the three lines: 2 × ('+A+' + '+B+' + '+C+') = '+(2*(a+b+cc))+', so '+A+' + '+B+' + '+C+' = '+(a+b+cc)+'. Subtract line 1 ('+(a+b)+'): '+C+' = '+cc+'.');tag=[[a+b+cc,'Đó là tổng ba con, chưa phải một con.'],[b+cc,null],[a,null]]}
+  let cs='',y=10;lines.forEach(L=>{const eq=L.indexOf('=');const left=L.slice(0,eq),val=L[eq+1];let x=40;
+    left.forEach((e,i)=>{if(i){cs+='<text x="'+x+'" y="'+(y+40)+'" font-size="30" font-weight="900" fill="#7c3aed">+</text>';x+=30}cs+='<text x="'+x+'" y="'+(y+42)+'" font-size="40">'+e+'</text>';x+=50});
+    cs+='<text x="'+x+'" y="'+(y+40)+'" font-size="32" font-weight="900" fill="#7c3aed">=</text><rect x="'+(x+36)+'" y="'+(y+6)+'" width="70" height="48" rx="12" fill="#fef3c7" stroke="#f59e0b" stroke-width="3"/><text x="'+(x+71)+'" y="'+(y+42)+'" text-anchor="middle" font-size="32" font-weight="900" fill="#92400e">'+val+'</text>';y+=60});
+  return mk('soHoc',bi('Mỗi hình đại diện cho một số. Tìm số của '+ask+'.','Each picture stands for a number. Find the number for '+ask+'.'),svg(560,y+8,cs),o4(c,tag,0,40),c,gt);
+}
+function gPhuongTrinh(lop,muc){
+  const m=ri(2,lop===1?9:14);
+  const kd=pick(muc===1?['m3','mm5']:['m3','mm5','tru','canbang']);let toks,gt,fn;
+  if(kd==='m3'){const T0=3*m;toks=[''+T0,'−','M','−','M','=','M'];fn=x=>T0-x-x===x;gt=bi('Chuyển vế: '+T0+' = M + M + M = 3 × M nên M = '+m+'.','Rearrange: '+T0+' = M + M + M = 3 × M, so M = '+m+'.')}
+  else if(kd==='mm5'){const k=ri(2,9);const T0=2*m+k;toks=['M','+','M','+',''+k,'=',''+T0];fn=x=>x+x+k===T0;gt=bi('M + M = '+T0+' − '+k+' = '+(2*m)+' nên M = '+m+'.','M + M = '+T0+' − '+k+' = '+(2*m)+', so M = '+m+'.')}
+  else if(kd==='tru'){const k=ri(2,9);toks=[''+(3*m+k),'−','M','=','M','+','M','+',''+k];fn=x=>3*m+k-x===x+x+k;gt=bi('Bớt '+k+' hai vế: '+(3*m)+' − M = M + M nên '+(3*m)+' = M + M + M, M = '+m+'.','Subtract '+k+' from both sides: '+(3*m)+' − M = M + M, so '+(3*m)+' = M + M + M, M = '+m+'.')}
+  else{toks=['M','+','M','+','M','=',''+(3*m),'+','0'];fn=x=>3*x===3*m;gt=bi('M + M + M = '+(3*m)+' nên M = '+m+'.','M + M + M = '+(3*m)+', so M = '+m+'.')}
+  let n=0,only=-1;for(let x=0;x<=100;x++)if(fn(x)){n++;only=x}
+  if(n!==1)return gPhuongTrinh(lop,muc);
+  const tag=[[m+1,null],[m-1,null],[2*m,'Hai M mới bằng '+2*m+'. Mỗi M nhỏ hơn.'],[3*m,'Đó là tổng của ba M.']];
+  return mk('soHoc',bi('Tìm giá trị của M (các chữ M giống nhau có cùng giá trị).','Find the value of M (the same letter has the same value).'),exprSvg(toks,toks.map((t,i)=>t==='M'?i:-1).filter(i=>i>=0)),o4(only,tag,0,60),only,gt);
+}
+function gBatDangThuc(lop,muc){
+  const b=ri(10,lop===1?30:60),x=ri(4,16);const L=x-ri(1,2),H=x+ri(1,2);
+  const out=[];for(let v=Math.max(0,L-6);v<=H+6;v++)if(v<=L||v>=H)out.push(v);const ch=shuffle(out).slice(0,3);
+  if(ch.length<3)return gBatDangThuc(lop,muc);
+  const c=x;const o=shuffle([c,...ch]).map(v=>({h:String(v),v,loi:v===c?MAU_LOI:('Thử: '+b+' + '+v+' = '+(b+v)+', '+((b+v<=b+L)?'chưa lớn hơn '+(b+L):'không bé hơn '+(b+H))+'.')}));
+  return {dang:'soHoc',hoi:bi('Số nào điền vào ? để '+(b+L)+' < '+b+' + ? < '+(b+H)+' đúng?','Which number can replace ? so that '+(b+L)+' < '+b+' + ? < '+(b+H)+' is true?'),hinh:exprSvg([''+(b+L),'<',''+b,'+','?','<',''+(b+H)],[4]),opts:o,dung:o.findIndex(q=>q.v===c),
+    gt:bi('? phải lớn hơn '+L+' và bé hơn '+H+' (vì '+(b+L)+' − '+b+' = '+L+' và '+(b+H)+' − '+b+' = '+H+'). Số đó là '+c+'.','? must be greater than '+L+' and less than '+H+' (since '+(b+L)+' − '+b+' = '+L+' and '+(b+H)+' − '+b+' = '+H+'). The number is '+c+'.')};
+}
+function gBangSo(lop,muc){
+  const v=pick(lop===1?[2,3]:[2,3,4,5]),loai=[['cam','🍊','orange'],['chuối','🍌','banana'],['táo','🍎','apple'],['xoài','🥭','mango']];const cnt=loai.map(()=>ri(1,5));
+  const T=v*(cnt.slice(0,3).reduce((a,b)=>a+b,0)+cnt[3]);
+  let cs='';loai.forEach((l,i)=>{const y=14+i*44;cs+='<text x="14" y="'+(y+28)+'" font-size="18" font-weight="800" fill="#334155">'+l[0]+' · '+l[2]+'</text>';if(i<3){for(let k=0;k<cnt[i];k++)cs+='<text x="'+(150+k*40)+'" y="'+(y+30)+'" font-size="30">🧒</text>'}else cs+='<text x="150" y="'+(y+30)+'" font-size="26" font-weight="900" fill="#d97706">?</text>'});
+  cs+='<text x="400" y="40" font-size="19" font-weight="800" fill="#4f46e5">🧒 = '+v+'</text><text x="400" y="70" font-size="19" font-weight="800" fill="#4f46e5">Σ = '+T+'</text>';
+  const known=cnt.slice(0,3).reduce((a,b)=>a+b,0)*v,c=cnt[3]*v;
+  const tag=[[T-known+v,null],[cnt[3],'Đó là số hình 🧒, mỗi hình là '+v+' bạn.'],[T-known-v,null],[T,null]];
+  return mk('soHoc',bi('Mỗi hình 🧒 là '+v+' bạn. Cả lớp có '+T+' bạn, mỗi bạn chọn 1 loại quả. Có bao nhiêu bạn chọn xoài?','Each 🧒 stands for '+v+' children. There are '+T+' children and each picks one fruit. How many children picked mango?'),svg(560,194,cs),o4(c,tag,0,100),c,
+    bi('Ba loại đầu có '+(known/v)+' hình × '+v+' = '+known+' bạn. Xoài: '+T+' − '+known+' = '+c+' bạn.','The first three fruits have '+(known/v)+' pictures × '+v+' = '+known+' children. Mango: '+T+' − '+known+' = '+c+'.'));
+}
+/* ---------- LÝ THUYẾT SỐ ---------- */
+function evStr(v){const p=v.split(' = ')[0].split(' ');let r=+p[0];for(let i=1;i<p.length;i+=2)r+=(p[i]==='+'?1:-1)*(+p[i+1]);return r}
+function gDienDau(lop,muc){
+  for(let t=0;t<200;t++){
+    const n=[ri(1,9),ri(1,9),ri(1,9),ri(1,9)];const sg=[pick([1,-1]),pick([1,-1]),pick([1,-1])];
+    const ev=s=>{let v=n[0];for(let i=0;i<3;i++){v+=s[i]*n[i+1];if(v<0)return null}return v};
+    const tg=ev(sg);if(tg===null||tg===0)continue;
+    const all=[];for(let m=0;m<8;m++){const s=[m&1?1:-1,m&2?1:-1,m&4?1:-1];const v=ev(s);if(v===tg)all.push(s.join())}
+    if(all.length!==1)continue;
+    const txt=s=>n[0]+s.map((x,i)=>' '+(x>0?'+':'−')+' '+n[i+1]).join('')+' = '+tg;
+    const wrong=[];for(let m=0;m<8;m++){const s=[m&1?1:-1,m&2?1:-1,m&4?1:-1];if(s.join()!==sg.join())wrong.push(s)}
+    const ws=shuffle(wrong).slice(0,3).map(txt);const c=txt(sg);
+    const o=shuffle([c,...ws]).map(v=>({h:v,v,loi:v===c?MAU_LOI:'Thử tính: '+v.split(' = ')[0]+' = '+evStr(v)+', chưa bằng '+tg+'.'}));
+    return {dang:'lyThuyet',hoi:bi('Điền dấu + hoặc − vào các ô trống để được phép tính đúng.','Fill in + or − in the blanks to make the equation correct.'),hinh:exprSvg([''+n[0],'▢',''+n[1],'▢',''+n[2],'▢',''+n[3],'=',''+tg]),opts:o,dung:o.findIndex(q=>q.v===c),gt:bi('Thử từng dấu, chỉ có phép tính '+c+' đúng.','Try each sign: only '+c+' is correct.')};
+  }
+  return gDienDau(lop,muc);
+}
+function gDaySoThuN(lop,muc){
+  const asc=rnd()<.6,d=ri(lop===1?2:3,lop===1?7:9),n=ri(6,muc===1?8:muc===2?10:12);const s=asc?ri(1,lop===1?20:40):ri(n*d+4,n*d+30);const sg=asc?1:-1;
+  const seq=i=>s+sg*d*(i-1);const toks=[];for(let i=1;i<=5;i++)toks.push(''+seq(i));toks.push('…');
+  const c=seq(n);
+  const tag=[[seq(n-1),'Em dừng sớm một số. Số cần tìm là số thứ '+n+'.'],[seq(n+1),'Em đếm thừa một số.'],[s+sg*d*n,null],[c+sg*d*2,null]];
+  return mk('lyThuyet',bi('Các số tạo thành dãy cách đều. Số thứ '+n+' trong dãy là số nào?','These numbers form an arithmetic sequence. What is the '+ord(n)+' number in the sequence?'),exprSvg(toks),o4(c,tag,0,200),c,
+    bi('Mỗi số '+(asc?'hơn':'kém')+' số liền trước '+d+'. Số thứ '+n+' = '+s+' '+(asc?'+':'−')+' '+(n-1)+' × '+d+' = '+c+'.','Each number is '+d+' '+(asc?'more':'less')+' than the one before. The '+ord(n)+' number = '+s+' '+(asc?'+':'−')+' '+(n-1)+' × '+d+' = '+c+'.'));
+}
+function gSoChanLe(lop,muc){
+  let hoi,c,gt,tag;const v=pick(muc===1?[1,2]:[1,2,3]);
+  if(v===1){const ds=pick([['lẻ nhỏ nhất','smallest odd',false,true],['chẵn lớn nhất','largest even',true,false],['lẻ lớn nhất','largest odd',false,false],['chẵn nhỏ nhất','smallest even',true,true]]);const [ten,en,chan,nho]=ds;const dif=muc>=2;
+    let best=null;for(let x=100;x<1000;x++){const s=String(x);if(dif&&new Set(s).size!==s.length)continue;if((x%2===0)!==chan)continue;if(best===null||(nho?x<best:x>best))best=x}
+    c=best;hoi=bi('Số '+ten+' có 3 chữ số'+(dif?' khác nhau':'')+' là số nào?','What is the '+en+' 3-digit number'+(dif?' with different digits':'')+'?');gt=bi('Thử từ '+(nho?'bé':'lớn')+' đến '+(nho?'lớn':'bé')+': số '+ten+' thoả đề là '+c+'.','Check from the '+(nho?'smallest upward':'largest downward')+': the '+en+' number that fits is '+c+'.');tag=[[nho?(chan?100:101):(chan?998:999),dif?'Số này có chữ số lặp lại, đề yêu cầu các chữ số khác nhau.':null],[c+(nho?2:-2),null],[c+1,null]]}
+  else if(v===2){const arr=shuffle([...Array(60)].map((_,i)=>i+10)).slice(0,ri(8,10));const odd=arr.filter(x=>x%2).length;c=odd;hoi=bi('Có bao nhiêu số lẻ trong dãy số: '+arr.join(', ')+'?','How many odd numbers are in the sequence: '+arr.join(', ')+'?');gt=bi('Số lẻ có chữ số tận cùng 1, 3, 5, 7, 9: '+arr.filter(x=>x%2).join(', ')+'. Có '+c+' số.','Odd numbers end in 1, 3, 5, 7 or 9: '+arr.filter(x=>x%2).join(', ')+'. There are '+c+'.');tag=[[arr.length-odd,'Em đếm nhầm số chẵn. Số lẻ tận cùng 1, 3, 5, 7, 9.'],[c+1,null],[c-1,null]]}
+  else{const s=ri(10,40),k=ri(7,10),a=[...Array(k)].map((_,i)=>s+i*3);c=a.filter(x=>x%2===0).length;hoi=bi('Có bao nhiêu số chẵn trong dãy số: '+a.join(', ')+'?','How many even numbers are in the sequence: '+a.join(', ')+'?');gt=bi('Số chẵn tận cùng 0, 2, 4, 6, 8: '+a.filter(x=>x%2===0).join(', ')+'. Có '+c+' số.','Even numbers end in 0, 2, 4, 6 or 8: '+a.filter(x=>x%2===0).join(', ')+'. There are '+c+'.');tag=[[k-c,'Em đếm nhầm số lẻ.'],[c+1,null],[c-1,null]]}
+  return mk('lyThuyet',hoi,exprSvg(['🔢','?']),o4(c,tag,0,1000),c,gt);
+}
+function gSoHaiChuSo(lop,muc){
+  const v=pick(muc===1?[1]:muc===2?[1,2]:[1,2,3]);let hoi,c,gt,tag;
+  if(v===1){const S0=ri(5,14);let ds=[];for(let x=10;x<100;x++)if((x%10)+Math.floor(x/10)===S0)ds.push(x);c=ds.length;hoi=bi('Có bao nhiêu số có hai chữ số mà tổng hai chữ số bằng '+S0+'?','How many 2-digit numbers have digits that add up to '+S0+'?');gt=bi('Các số: '+ds.join(', ')+'. Có '+c+' số.','The numbers: '+ds.join(', ')+'. There are '+c+'.');tag=[[c+1,'Em đếm thừa. Chữ số hàng chục không thể bằng 0.'],[c-1,'Em đếm thiếu một số.'],[S0,null]]}
+  else if(v===2){const d=ri(1,9);c=0;for(let x=10;x<100;x++)if(String(x).includes(String(d)))c++;hoi=bi('Từ 10 đến 99 có bao nhiêu số có chứa chữ số '+d+'?','How many numbers from 10 to 99 contain the digit '+d+'?');gt=bi('Chữ số '+d+' ở hàng chục có 10 số, ở hàng đơn vị có 9 số (không tính trùng '+d+d+'): 10 + 9 − 1 = '+c+'.','The digit '+d+' as tens digit: 10 numbers; as units digit: 9 numbers (do not count '+d+d+' twice): 10 + 9 − 1 = '+c+'.');tag=[[c+1,'Em đếm trùng số '+d+d+' hai lần.'],[c-1,null],[19,null],[20,null]]}
+  else{const S0=pick([2,3,4,5]);let ds=[];for(let x=10;x<100;x++)if((x%10)+Math.floor(x/10)===S0)ds.push(x);c=sumInts(ds);hoi=bi('Tìm tổng của tất cả các số có hai chữ số mà tổng hai chữ số bằng '+S0+'.','Find the sum of all 2-digit numbers whose digits add up to '+S0+'.');gt=bi('Các số: '+ds.join(', ')+'. Tổng: '+ds.join(' + ')+' = '+c+'.','The numbers: '+ds.join(', ')+'. Sum: '+ds.join(' + ')+' = '+c+'.');tag=[[c+10,null],[c-ds[0],'Em bỏ sót một số.'],[c+ds[ds.length-1],null]]}
+  return mk('lyThuyet',hoi,exprSvg(['🔟','?']),o4(c,tag,0,500),c,gt);
+}
+function gSoLon(lop,muc){
+  const digs=lop===1?(muc===1?4:muc===2?5:6):(muc===1?5:muc===2?6:7);const pre=String(ri(1,9))+(rnd()<.5?String(ri(0,9)):'');
+  const set=new Set();while(set.size<4){let s=pre;while(s.length<digs)s+=String(ri(0,9));set.add(s)}
+  const arr=[...set].map(Number);const kd=pick(['lon','be']);const srt=[...arr].sort((x,y)=>x-y);const c=kd==='lon'?srt[3]:srt[0];
+  const o=shuffle(arr).map(v=>({h:String(v),v,loi:v===c?MAU_LOI:'So sánh từng chữ số từ trái sang phải: '+(kd==='lon'?v+' bé hơn '+c:v+' lớn hơn '+c)+'.'}));
+  return {dang:'lyThuyet',hoi:bi('Số nào dưới đây là số '+(kd==='lon'?'lớn nhất?':'bé nhất?'),'Which number below is the '+(kd==='lon'?'greatest?':'smallest?')),hinh:exprSvg(['🔢','?']),opts:o,dung:o.findIndex(q=>q.v===c),
+    gt:bi('Các số đều có '+digs+' chữ số. So sánh lần lượt từ trái sang phải. Xếp tăng dần: '+srt.join(' < ')+'. Số '+(kd==='lon'?'lớn':'bé')+' nhất là '+c+'.','All numbers have '+digs+' digits. Compare digit by digit from the left. In increasing order: '+srt.join(' < ')+'. The '+(kd==='lon'?'greatest':'smallest')+' is '+c+'.')};
+}
+function gXepThuTu(lop,muc){
+  const arr=shuffle([...Array(89)].map((_,i)=>i+10)).slice(0,9);const k=ri(3,5),lon=rnd()<.6;const srt=[...arr].sort((x,y)=>lon?y-x:x-y);const c=srt[k-1];
+  const tag=[[srt[k-2],'Em dừng sớm một số.'],[srt[k],'Em đếm thừa một số.'],[srt[0],null]];
+  return mk('lyThuyet',bi('Xếp các số sau '+(lon?'giảm dần (từ lớn đến bé)':'tăng dần (từ bé đến lớn)')+' để tìm số '+(lon?'lớn':'bé')+' thứ '+k+': '+arr.join(', '),'Arrange the numbers in '+(lon?'descending':'ascending')+' order to find the '+ord(k)+' '+(lon?'largest':'smallest')+' number: '+arr.join(', ')),exprSvg(arr.map(String)),o4(c,tag,0,200),c,
+    bi('Xếp '+(lon?'giảm dần':'tăng dần')+': '+srt.join(', ')+'. Số thứ '+k+' là '+c+'.','In '+(lon?'descending':'ascending')+' order: '+srt.join(', ')+'. The '+ord(k)+' number is '+c+'.'));
+}
+/* ---------- HÌNH HỌC ---------- */
+function gDemHinh2(lop,muc){
+  const kd=pick(muc===1?['doan','quat']:['luoi','quat','doan','luoi2']);let c,hoi,cs,gt,tag;
+  if(kd==='doan'){const k=ri(3,lop===1?5:6);c=k*(k-1)/2;hoi=bi('Trên một đường thẳng có '+k+' điểm. Có bao nhiêu đoạn thẳng nối hai điểm trong số đó?','There are '+k+' points on a straight line. How many line segments join two of these points?');cs='<line x1="40" y1="55" x2="520" y2="55" stroke="#6366f1" stroke-width="5"/>';for(let i=0;i<k;i++)cs+='<circle cx="'+(40+i*480/(k-1))+'" cy="55" r="9" fill="#f59e0b" stroke="#fff" stroke-width="3"/>';gt=bi('Mỗi cặp điểm cho 1 đoạn thẳng. '+k+' điểm có '+(k-1)+'+…+1 = '+c+' đoạn.','Each pair of points gives 1 segment. '+k+' points give '+(k-1)+'+…+1 = '+c+' segments.');tag=[[k-1,'Em chỉ đếm các đoạn liền nhau. Còn đoạn dài hơn nữa.'],[k,null],[c+1,null]];cs=svg(560,100,cs)}
+  else if(kd==='quat'){const k=ri(3,lop===1?5:6);c=k*(k-1)/2;hoi=bi('Hình tam giác dưới đây có '+k+' điểm trên cạnh đáy, nối với đỉnh. Có bao nhiêu hình tam giác?','The triangle below has '+k+' points on its base, each joined to the top vertex. How many triangles are there?');cs='<polygon points="280,10 40,150 520,150" fill="#eef2ff" stroke="#6366f1" stroke-width="4"/>';for(let i=0;i<k;i++){const x=40+i*480/(k-1);cs+='<line x1="280" y1="10" x2="'+x+'" y2="150" stroke="#6366f1" stroke-width="3"/><circle cx="'+x+'" cy="150" r="5" fill="#f59e0b"/>'}gt=bi('Mỗi tam giác cần 2 điểm khác nhau trên đáy cùng đỉnh. Có '+(k-1)+'+…+1 = '+c+' tam giác.','Each triangle needs 2 different base points and the top vertex. There are '+(k-1)+'+…+1 = '+c+' triangles.');tag=[[k-1,'Em chỉ đếm tam giác nhỏ. Còn tam giác ghép từ nhiều tam giác nhỏ.'],[c+1,null],[c-1,null]];cs=svg(560,170,cs)}
+  else{const n=ri(2,3);let sq=0;for(let i=1;i<=n;i++)sq+=(n-i+1)*(n-i+1);c=sq;hoi=bi('Có bao nhiêu hình vuông (mọi cỡ) trong hình lưới '+n+' × '+n+' dưới đây?','How many squares of any size are there in the '+n+' × '+n+' grid below?');cs='';const s=n===2?90:70;for(let i=0;i<n;i++)for(let j=0;j<n;j++)cs+='<rect x="'+(180+j*s)+'" y="'+(12+i*s)+'" width="'+s+'" height="'+s+'" fill="#eef2ff" stroke="#6366f1" stroke-width="3"/>';gt=bi('Hình vuông cỡ 1: '+n*n+'.'+(n>=2?' Cỡ 2: '+(n-1)*(n-1)+'.':'')+(n>=3?' Cỡ 3: 1.':'')+' Tổng '+c+'.','Size 1: '+n*n+'.'+(n>=2?' Size 2: '+(n-1)*(n-1)+'.':'')+(n>=3?' Size 3: 1.':'')+' Total '+c+'.');tag=[[n*n,'Em chỉ đếm hình vuông nhỏ. Còn hình vuông to ghép từ nhiều ô.'],[c+1,null],[c-1,null]];cs=svg(560,n*s+24,cs)}
+  return mk('hinh',hoi,cs,o4(c,tag,0,60),c,gt);
+}
+function gBacThang(lop,muc){
+  const k=ri(3,5);let h=[ri(3,5)];for(let i=1;i<k;i++)h.push(ri(1,h[i-1]));const tot=sumInts(h);const mx=h[0];const lap=muc>=2&&rnd()<.5;
+  let cs='';const u=34;h.forEach((v,i)=>{for(let j=0;j<v;j++)cs+='<rect x="'+(120+i*u)+'" y="'+(10+(mx-1-j)*u)+'" width="'+u+'" height="'+u+'" fill="#a5b4fc" stroke="#4f46e5" stroke-width="3"/>'});
+  if(lap)for(let i=0;i<k;i++)for(let j=h[i];j<mx;j++)cs+='<rect x="'+(120+i*u)+'" y="'+(10+(mx-1-j)*u)+'" width="'+u+'" height="'+u+'" fill="none" stroke="#f59e0b" stroke-width="3" stroke-dasharray="5 4"/>';
+  const c=lap?mx*k-tot:tot;
+  const hoi=lap?bi('Hình bậc thang bằng các ô vuông nhỏ. Cần thêm bao nhiêu ô vuông (nét đứt) để thành hình chữ nhật?','The staircase is made of small squares. How many more squares (dashed) are needed to make a rectangle?'):bi('Hình dưới đây gồm bao nhiêu ô vuông nhỏ?','How many small squares make up the figure below?');
+  const tag=lap?[[tot,'Đó là số ô đã có. Câu hỏi hỏi số ô cần thêm.'],[mx*k,'Đó là tổng số ô của cả hình chữ nhật.'],[c+1,null],[c-1,null]]:[[tot+1,'Em đếm thừa một ô.'],[tot-1,'Em đếm sót một ô.'],[mx*k,'Em tính cả phần ô trống.']];
+  return mk('hinh',hoi,svg(Math.max(400,160+k*u+60),mx*u+22,cs),o4(c,tag,0,60),c,lap?bi('Hình chữ nhật có '+k+' × '+mx+' = '+mx*k+' ô; đã có '+tot+' ô; cần thêm '+(mx*k)+' − '+tot+' = '+c+' ô.','The rectangle has '+k+' × '+mx+' = '+mx*k+' squares; '+tot+' are there; '+(mx*k)+' − '+tot+' = '+c+' more are needed.'):bi('Đếm từng cột: '+h.join(' + ')+' = '+tot+' ô.','Count column by column: '+h.join(' + ')+' = '+tot+' squares.'));
+}
+function gNhomHinh(lop,muc){
+  const kd=pick(muc===1?['tuyen']:['tuyen','vuong','tamgiac']);let f,hoi,gt,n;
+  if(kd==='tuyen'){const a=ri(1,3),d=ri(2,3);f=i=>a+(i-1)*d;n=pick(muc===3?[5,6,7]:[4,5]);gt=bi('Mỗi nhóm nhiều hơn nhóm trước '+d+' chấm. Nhóm thứ '+n+': '+a+' + '+(n-1)+' × '+d+' = '+f(n)+'.','Each group has '+d+' more dots than the previous one. Group '+n+': '+a+' + '+(n-1)+' × '+d+' = '+f(n)+'.')}
+  else if(kd==='vuong'){f=i=>i*i;n=pick([4,5]);gt=bi('Số chấm là 1×1, 2×2, 3×3, …: nhóm thứ '+n+' là '+n+' × '+n+' = '+f(n)+'.','The numbers of dots are 1×1, 2×2, 3×3, …: group '+n+' has '+n+' × '+n+' = '+f(n)+'.')}
+  else{f=i=>i*(i+1)/2;n=pick([4,5,6]);gt=bi('Số chấm là 1, 1+2, 1+2+3, …: nhóm thứ '+n+' là '+f(n)+'.','The numbers of dots are 1, 1+2, 1+2+3, …: group '+n+' has '+f(n)+'.')}
+  hoi=bi('Quan sát quy luật. Nhóm thứ '+n+' có bao nhiêu chấm tròn?','Look at the pattern. How many dots are in group '+n+'?');
+  let cs='',x=14;for(let g=1;g<=3;g++){const cnt=f(g),w=Math.max(80,Math.min(cnt,5)*20+16),hh=Math.ceil(cnt/5)*20+14;cs+='<rect x="'+x+'" y="6" width="'+w+'" height="'+(hh+16)+'" rx="12" fill="#fff" stroke="#c7d2fe" stroke-width="3"/><text x="'+(x+w/2)+'" y="24" text-anchor="middle" font-size="13" font-weight="800" fill="#64748b">nhóm '+g+' · group '+g+'</text>';for(let k=0;k<cnt;k++)cs+='<circle cx="'+(x+14+(k%5)*20)+'" cy="'+(40+Math.floor(k/5)*20)+'" r="7" fill="#6366f1"/>';x+=w+22}
+  cs+='<text x="'+(x+4)+'" y="50" font-size="34" font-weight="900" fill="#d97706">?</text>';
+  const c=f(n);const tag=[[f(n-1),'Em dừng sớm một nhóm.'],[f(n+1),null],[c+1,null],[c-1,null],[f(3)+(f(3)-f(2))*(n-3),kd==='tuyen'?null:'Quy luật này không tăng đều. Hãy xem lại từng nhóm.']];
+  return mk('hinh',hoi,svg(Math.max(540,x+60),Math.ceil(f(3)/5)*20+60,cs),o4(c,tag,0,100),c,gt);
+}
+function gTuanHoan(lop,muc){
+  const L=pick(muc===1?[2,3]:[3,4,5]);const pool=shuffle(KHO);let unit=[];for(let i=0;i<L;i++)unit.push(pool[i%pool.length]);
+  if(L>=4&&rnd()<.5)unit[L-1]=unit[0];
+  const N=ri(L*3+1,L*3+(muc===3?14:7));const ans=unit[(N-1)%L];let cs='';const show=L*2+1;
+  for(let i=0;i<show;i++)cs+=hinhShape(unit[i%L].s,COL[unit[i%L].c],36+i*50,40,19);
+  cs+='<text x="'+(36+show*50)+'" y="52" font-size="30" font-weight="900" fill="#6366f1">…</text>';
+  const key=i=>i.s+i.c,others=shuffle(KHO.filter(x=>key(x)!==key(ans))).slice(0,3);
+  const o=shuffle([ans,...others]).map(x=>({h:itemSvg(x),v:key(x),loi:key(x)===key(ans)?MAU_LOI:'Hình này không đúng chỗ. Tìm nhóm hình lặp lại rồi chia số thứ tự cho độ dài nhóm.'}));
+  return {dang:'hinh',hoi:bi('Các hình xếp theo quy luật lặp lại. Hình thứ '+N+' là hình nào?','The shapes follow a repeating pattern. Which shape is number '+N+'?'),hinh:svg(Math.max(560,show*50+90),80,cs),opts:o,dung:o.findIndex(x=>x.v===key(ans)),
+    gt:bi('Nhóm lặp lại có '+L+' hình. '+N+' = '+Math.floor((N-1)/L)+' × '+L+' + '+(((N-1)%L)+1)+', nên hình thứ '+N+' giống hình thứ '+(((N-1)%L)+1)+' trong nhóm: '+ans.n+'.','The repeating block has '+L+' shapes. '+N+' = '+Math.floor((N-1)/L)+' × '+L+' + '+(((N-1)%L)+1)+', so shape '+N+' is the same as shape '+(((N-1)%L)+1)+' of the block.')};
+}
+/* ---------- TỔ HỢP ---------- */
+function gToHopChuSo(lop,muc){
+  const dg=shuffle([1,2,3,4,5,6,7,8,9]).slice(0,5).sort((x,y)=>x-y);let hoi,c,gt,tag;
+  if(muc<3||rnd()<.5){const le=rnd()<.5;const ds=[];for(const a of dg)for(const b of dg)if(a!==b&&(b%2===1)===le)ds.push(a*10+b);c=ds.length;
+    hoi=bi('Chọn 2 chữ số khác nhau từ '+dg.join(', ')+' để lập các số có hai chữ số. Có thể lập được bao nhiêu số '+(le?'lẻ?':'chẵn?'),'Choose 2 different digits from '+dg.join(', ')+' to form 2-digit numbers. How many '+(le?'odd':'even')+' numbers can be formed?');
+    gt=bi('Số '+(le?'lẻ':'chẵn')+' phải có chữ số hàng đơn vị '+(le?'lẻ':'chẵn')+'. Các số: '+ds.join(', ')+'. Có '+c+' số.','An '+(le?'odd':'even')+' number must end in an '+(le?'odd':'even')+' digit. The numbers: '+ds.join(', ')+'. There are '+c+'.');tag=[[dg.length*(dg.length-1),'Đó là số cách lập mọi số. Câu hỏi chỉ hỏi số '+(le?'lẻ':'chẵn')+'.'],[c+1,null],[c-1,null]]}
+  else{const cd=shuffle([1,2,3,4,5,6,7,8,9]).slice(0,4),mn=rnd()<.5;let best=null;const perm=(a)=>a.length<2?[a]:a.flatMap((x,i)=>perm(a.filter((_,j)=>j!==i)).map(p=>[x,...p]));
+    for(const p of perm(cd)){const s=(p[0]*10+p[1])+(p[2]*10+p[3]);if(best===null||(mn?s<best:s>best))best=s}c=best;
+    hoi=bi('Có 4 thẻ số '+cd.join(', ')+'. Ghép thành hai số có hai chữ số (mỗi thẻ dùng đúng một lần). Tổng '+(mn?'nhỏ nhất':'lớn nhất')+' của hai số đó là bao nhiêu?','There are 4 number cards: '+cd.join(', ')+'. Form two 2-digit numbers (each card used exactly once). What is the '+(mn?'smallest':'greatest')+' possible sum of the two numbers?');
+    gt=bi('Để tổng '+(mn?'nhỏ':'lớn')+' nhất, '+(mn?'hai chữ số bé nhất':'hai chữ số lớn nhất')+' ở hàng chục. Tổng là '+c+'.','For the '+(mn?'smallest':'greatest')+' sum, put the '+(mn?'two smallest':'two largest')+' digits in the tens place. The sum is '+c+'.');tag=[[c+9,null],[c-9,null],[c+18,null],[c+10,null]]}
+  return mk('toHop',hoi,exprSvg(['🃏','?']),o4(c,tag,0,300),c,gt);
+}
+function gToHopMon(lop,muc){
+  const v=pick(muc===1?[1,2]:[1,2,3]);let hoi,c,gt,tag;
+  if(v===1){const a=ri(2,4),b=ri(2,4);c=a*b;hoi=bi('Bin muốn chọn 1 loại thịt và 1 loại rau để nấu món ăn. Có '+a+' loại thịt và '+b+' loại rau. Bin có bao nhiêu cách chọn?','Bin wants to choose 1 kind of meat and 1 kind of vegetable for a dish. There are '+a+' kinds of meat and '+b+' kinds of vegetables. In how many ways can Bin choose?');gt=bi('Mỗi loại thịt ghép với '+b+' loại rau: '+a+' × '+b+' = '+c+' cách.','Each meat pairs with '+b+' vegetables: '+a+' × '+b+' = '+c+' ways.');tag=[[a+b,'Em cộng. Mỗi loại thịt đều ghép được với mọi loại rau nên phải nhân.']]}
+  else if(v===2){const a=ri(2,4),b=ri(2,4);c=a*b;hoi=bi('Su có '+a+' cái áo và '+b+' cái quần khác nhau. Su có bao nhiêu cách mặc một bộ gồm 1 áo và 1 quần?','Su has '+a+' different shirts and '+b+' different pairs of trousers. In how many ways can Su wear 1 shirt and 1 pair of trousers?');gt=bi(a+' × '+b+' = '+c+' cách.',a+' × '+b+' = '+c+' ways.');tag=[[a+b,'Em cộng. Phải nhân số áo với số quần.']]}
+  else{const n=ri(4,7);c=n*(n-1)/2;hoi=bi(n+' bạn gặp nhau, hai bạn bất kì bắt tay nhau đúng 1 lần. Có tất cả bao nhiêu cái bắt tay?',n+' friends meet and every two of them shake hands exactly once. How many handshakes are there in total?');gt=bi('Mỗi bạn bắt tay '+(n-1)+' bạn, nhưng mỗi cái bắt tay bị đếm hai lần: '+n+' × '+(n-1)+' : 2 = '+c+'.','Each friend shakes hands with '+(n-1)+' others, but each handshake is counted twice: '+n+' × '+(n-1)+' : 2 = '+c+'.');tag=[[n*(n-1),'Mỗi cái bắt tay bị đếm hai lần. Phải chia đôi.'],[n-1,null],[c+1,null]]}
+  return mk('toHop',hoi,exprSvg(['🍖','×','🥬','=','?']),o4(c,tag,1,60),c,gt);
+}
+
+const SUB={
+  tdLogic:[gTuoi,gNgay2,gXepHang2,gDoiChac,gChiaBang,gGiaDinh,gCanSanh,gXacSuat,gGioGiac],
+  tdSoHoc:[gTongGop,gChuoiPhep,gBieuTuong,gPhuongTrinh,gBatDangThuc,gBangSo],
+  tdLyThuyet:[gDienDau,gDaySoThuN,gSoChanLe,gSoHaiChuSo,gSoLon,gXepThuTu],
+  tdHinh:[gDemHinh2,gBacThang,gNhomHinh,gTuanHoan],
+  tdToHop:[gToHopChuSo,gToHopMon,gBanhAndy]
+};
+const DANG2={
+  tdLogic:{ten:'Tư duy logic',ic:'🧠',tom:'Tuổi, ngày, xếp hàng, cân, xác suất'},
+  tdSoHoc:{ten:'Số học – Đại số',ic:'➕',tom:'Gom cặp, ẩn hình, bất đẳng thức'},
+  tdLyThuyet:{ten:'Lý thuyết số',ic:'🔢',tom:'Điền dấu, dãy cách đều, số chẵn lẻ'},
+  tdHinh:{ten:'Hình học',ic:'📐',tom:'Đếm hình, bậc thang, quy luật hình'},
+  tdToHop:{ten:'Tổ hợp',ic:'🎯',tom:'Ghép số, chọn món, bắt tay'}
+};
+
+/* ======= VÒNG QUỐC GIA: câu điền đáp án, khó hơn (mô phỏng dạng bài của đề vòng quốc gia TIMO) ======= */
+function mkD(hoi,hinh,ans,gt,alt){return {dang:'tdQG',hoi,hinh,opts:[],dung:-1,loai:'dien',ans:String(ans),alt:alt||[],gt}}
+function perms(a){return a.length<2?[a]:a.flatMap((x,i)=>perms(a.filter((_,j)=>j!==i)).map(p=>[x,...p]))}
+function ketHop(a,k){if(k===0)return [[]];if(a.length<k)return [];return ketHop(a.slice(1),k-1).map(r=>[a[0],...r]).concat(ketHop(a.slice(1),k))}
+const NUMW=['','one','two','three','four','five','six','seven','eight','nine','ten'];
+
+function qGauss(lop,m){
+  const kd=pick(['lienTiep','cach','thieu']);let toks=[],ans,hoi,gt;
+  if(kd==='lienTiep'){const n=ri(10+m*2,14+m*4);ans=n*(n+1)/2;toks=['1','+','2','+','3','+','…','+',''+(n-1),'+',''+n];
+    hoi=bi('Tính 1 + 2 + 3 + … + '+n+'.','Find the value of 1 + 2 + 3 + … + '+n+'.');gt=bi('Ghép cặp đầu–cuối: (1 + '+n+') × '+n+' : 2 = '+ans+'.','Pair first and last: (1 + '+n+') × '+n+' ÷ 2 = '+ans+'.')}
+  else if(kd==='cach'){const a=ri(1,6),d=ri(2,5),k=ri(7+m,10+2*m);const L=[...Array(k)].map((_,i)=>a+i*d);ans=sumInts(L);
+    toks=[''+L[0],'+',''+L[1],'+',''+L[2],'+','…','+',''+L[k-1]];hoi=bi('Tính tổng '+L[0]+' + '+L[1]+' + '+L[2]+' + … + '+L[k-1]+' (mỗi số hơn số liền trước '+d+').','Find the sum '+L[0]+' + '+L[1]+' + '+L[2]+' + … + '+L[k-1]+' (each number is '+d+' more than the previous one).');
+    gt=bi('Có '+k+' số. Ghép cặp đầu–cuối: ('+L[0]+' + '+L[k-1]+') × '+k+' : 2 = '+ans+'.','There are '+k+' numbers. Pair first and last: ('+L[0]+' + '+L[k-1]+') × '+k+' ÷ 2 = '+ans+'.')}
+  else{const n=ri(9,12+m);const bo=shuffle([...Array(n-3)].map((_,i)=>i+2)).slice(0,ri(1,2)).sort((x,y)=>x-y);const L=[...Array(n)].map((_,i)=>i+1).filter(x=>!bo.includes(x));ans=sumInts(L);
+    L.forEach((v,i)=>{if(i)toks.push('+');toks.push(''+v)});hoi=bi('Tính '+L.join(' + ')+'.','Find the value of '+L.join(' + ')+'.');
+    gt=bi('Cộng cả dãy 1 đến '+n+' rồi bớt các số thiếu ('+bo.join(', ')+'): '+(n*(n+1)/2)+' − '+sumInts(bo)+' = '+ans+'.','Add 1 to '+n+' then remove the missing numbers ('+bo.join(', ')+'): '+(n*(n+1)/2)+' − '+sumInts(bo)+' = '+ans+'.')}
+  return mkD(hoi,exprSvg(toks),ans,gt);
+}
+function qNhomCham(lop,m){
+  const kd=pick(['le','tamgiac','vuong','tuyen']);let f,n,rule,ruleEn;
+  if(kd==='le'){f=i=>2*i-1;rule='1, 3, 5, 7, …';ruleEn='1, 3, 5, 7, …'}
+  else if(kd==='tamgiac'){f=i=>i*(i+1)/2;rule='1, 3, 6, 10, …';ruleEn='1, 3, 6, 10, …'}
+  else if(kd==='vuong'){f=i=>i*i;rule='1, 4, 9, 16, …';ruleEn='1, 4, 9, 16, …'}
+  else{const a=ri(1,3),d=ri(2,4);f=i=>a+(i-1)*d;rule='';ruleEn=''}
+  n=ri(9+m,12+2*m);const ans=f(n);
+  let cs='',x=14;for(let g=1;g<=4;g++){const cnt=f(g),w=Math.max(80,Math.min(cnt,5)*20+16),hh=Math.ceil(cnt/5)*20+14;cs+='<rect x="'+x+'" y="6" width="'+w+'" height="'+(hh+16)+'" rx="12" fill="#fff" stroke="#c7d2fe" stroke-width="3"/><text x="'+(x+w/2)+'" y="24" text-anchor="middle" font-size="13" font-weight="800" fill="#64748b">nhóm '+g+' · group '+g+'</text>';for(let k=0;k<cnt;k++)cs+='<circle cx="'+(x+14+(k%5)*20)+'" cy="'+(40+Math.floor(k/5)*20)+'" r="7" fill="#6366f1"/>';x+=w+22}
+  cs+='<text x="'+(x+4)+'" y="50" font-size="30" font-weight="900" fill="#d97706">…</text>';
+  const gt=kd==='le'?bi('Nhóm thứ i có 2 × i − 1 chấm. Nhóm '+n+': 2 × '+n+' − 1 = '+ans+'.','Group i has 2 × i − 1 dots. Group '+n+': 2 × '+n+' − 1 = '+ans+'.'):
+    kd==='tamgiac'?bi('Số chấm là 1, 1+2, 1+2+3, …: nhóm '+n+' có 1 + 2 + … + '+n+' = '+ans+'.','The dots are 1, 1+2, 1+2+3, …: group '+n+' has 1 + 2 + … + '+n+' = '+ans+'.'):
+    kd==='vuong'?bi('Nhóm i có i × i chấm. Nhóm '+n+': '+n+' × '+n+' = '+ans+'.','Group i has i × i dots. Group '+n+': '+n+' × '+n+' = '+ans+'.'):
+    bi('Mỗi nhóm hơn nhóm trước '+(f(2)-f(1))+' chấm. Nhóm '+n+': '+f(1)+' + '+(n-1)+' × '+(f(2)-f(1))+' = '+ans+'.','Each group has '+(f(2)-f(1))+' more dots. Group '+n+': '+f(1)+' + '+(n-1)+' × '+(f(2)-f(1))+' = '+ans+'.');
+  return mkD(bi('Dựa vào quy luật, có bao nhiêu chấm tròn trong nhóm thứ '+n+'?','According to the pattern, how many dots are in group '+n+'?'),svg(Math.max(540,x+60),Math.ceil(f(4)/5)*20+60,cs),ans,gt);
+}
+function qDayCach(lop,m){
+  const asc=rnd()<.7,d=ri(3,9+m),n=ri(8+m,12+2*m);const s=asc?ri(1,30):ri(n*d+10,n*d+60);const sg=asc?1:-1;
+  const seq=i=>s+sg*d*(i-1);const toks=[];for(let i=1;i<=5;i++)toks.push(''+seq(i));toks.push('…');const ans=seq(n);
+  return mkD(bi('Các số sau là dãy số cách đều. Số thứ '+n+' là số nào?','The numbers below form an arithmetic sequence. What is the '+ord(n)+' number?'),exprSvg(toks),ans,
+    bi('Mỗi số '+(asc?'hơn':'kém')+' số liền trước '+d+'. Số thứ '+n+' = '+s+' '+(asc?'+':'−')+' '+(n-1)+' × '+d+' = '+ans+'.','Each number is '+d+' '+(asc?'more':'less')+' than the one before. The '+ord(n)+' number = '+s+' '+(asc?'+':'−')+' '+(n-1)+' × '+d+' = '+ans+'.'));
+}
+function qChuCai(lop,m){
+  const A='ABCDEFGHIJKLMNOPQRSTUVWXYZ';const kd=pick(['cach','xen','tang']);let seq=[],ans,gt;
+  if(kd==='cach'){const st=ri(0,5),d=pick([2,3]);seq=[...Array(5)].map((_,i)=>A[st+i*d]);ans=A[st+5*d];gt=bi('Các chữ cái cách nhau '+d+' vị trí: '+seq.join(', ')+', tiếp theo là '+ans+'.','The letters skip '+(d-1)+' each time: '+seq.join(', ')+', next is '+ans+'.')}
+  else if(kd==='xen'){const a=ri(0,4),b=ri(18,24);seq=[A[a],A[b],A[a+1],A[b-1],A[a+2],A[b-2]];ans=A[a+3];gt=bi('Hai dãy xen kẽ: một dãy tăng dần ('+A[a]+', '+A[a+1]+', '+A[a+2]+', …), một dãy giảm dần. Chữ tiếp theo thuộc dãy tăng: '+ans+'.','Two interleaved sequences: one goes up ('+A[a]+', '+A[a+1]+', '+A[a+2]+', …), one goes down. The next letter belongs to the rising one: '+ans+'.')}
+  else{const st=ri(0,3);const g=[1,2,3,4,5];let p=st;seq=[];for(let i=0;i<5;i++){seq.push(A[p]);p+=g[i]}ans=A[p];gt=bi('Khoảng cách giữa các chữ cái tăng dần 1, 2, 3, 4, …: '+seq.join(', ')+', tiếp theo là '+ans+'.','The gaps grow 1, 2, 3, 4, …: '+seq.join(', ')+', next is '+ans+'.')}
+  return mkD(bi('Theo quy luật dưới đây, chữ cái nào điền vào chỗ trống?','Following the pattern, which letter goes in the blank?'),exprSvg(seq.concat(['?']),[seq.length]),ans,gt,[ans.toLowerCase()]);
+}
+function qChanLe(lop,m){
+  const kd=pick(['gauss','dai','le']);let ans,alt,hoi,gt,toks;
+  if(kd==='gauss'){const n=ri(8,18+m);const s=n*(n+1)/2;ans=s%2?'Odd':'Even';hoi=bi('Tổng 1 + 2 + 3 + … + '+n+' là số chẵn hay số lẻ?','Is the sum 1 + 2 + 3 + … + '+n+' odd or even?');toks=['1','+','2','+','…','+',''+n];gt=bi('Tổng bằng '+n+' × '+(n+1)+' : 2 = '+s+', là số '+(s%2?'lẻ':'chẵn')+'.','The sum is '+n+' × '+(n+1)+' ÷ 2 = '+s+', which is '+(s%2?'odd':'even')+'.')}
+  else if(kd==='dai'){const L=[...Array(ri(7,9))].map((_,i)=>ri(2,3*(i+2)));const s=sumInts(L);ans=s%2?'Odd':'Even';hoi=bi('Tổng '+L.join(' + ')+' là số chẵn hay số lẻ?','Is the sum '+L.join(' + ')+' odd or even?');toks=[];L.forEach((v,i)=>{if(i)toks.push('+');toks.push(''+v)});const odds=L.filter(x=>x%2).length;gt=bi('Chỉ cần đếm số lẻ: có '+odds+' số lẻ → tổng là số '+(odds%2?'lẻ':'chẵn')+'.','Count the odd numbers: there are '+odds+', so the sum is '+(odds%2?'odd':'even')+'.')}
+  else{const n=ri(5,9);const A0=pick(['1','3','5','7','9']);ans=(n*(n+1)/2+(+A0))%2?'Odd':'Even';
+    hoi=bi('A là một số lẻ. Tổng 1 + 2 + 3 + … + '+n+' + A là số chẵn hay số lẻ?','A is an odd number. Is 1 + 2 + 3 + … + '+n+' + A odd or even?');toks=['1','+','…','+',''+n,'+','A'];gt=bi('1 + … + '+n+' = '+(n*(n+1)/2)+' là số '+((n*(n+1)/2)%2?'lẻ':'chẵn')+'. Cộng với số lẻ A được số '+(ans==='Odd'?'lẻ':'chẵn')+'.','1 + … + '+n+' = '+(n*(n+1)/2)+' is '+((n*(n+1)/2)%2?'odd':'even')+'. Adding the odd number A gives an '+(ans==='Odd'?'odd':'even')+' number.')}
+  alt=ans==='Odd'?['lẻ','le','số lẻ']:['chẵn','chan','số chẵn'];
+  return mkD(hoi,exprSvg(toks),ans,gt,alt);
+}
+function qToHop(lop,m){
+  const kd=pick(['dem','so3','tong']);let hoi,ans,gt;
+  if(kd==='dem'){const dg=shuffle([0,1,2,3,4,5,6,7,8,9]).slice(0,5).sort((a,b)=>a-b);const tt=pick([['le','số lẻ','odd numbers',x=>x%2===1],['chan','số chẵn','even numbers',x=>x%2===0],['boi5','số chia hết cho 5','multiples of 5',x=>x%5===0]]);
+    const L=[];for(const a of dg)for(const b of dg)if(a!==b&&a!==0){const v=a*10+b;if(tt[3](v))L.push(v)}ans=L.length;
+    hoi=bi('Chọn 2 chữ số khác nhau từ '+dg.join(', ')+' để lập số có hai chữ số (chữ số hàng chục khác 0). Có bao nhiêu '+tt[1]+'?','Choose 2 different digits from '+dg.join(', ')+' to form 2-digit numbers (the tens digit cannot be 0). How many '+tt[2]+' can be formed?');
+    gt=bi('Liệt kê: '+L.join(', ')+'. Có '+ans+' số.','List them: '+L.join(', ')+'. There are '+ans+'.')}
+  else if(kd==='so3'){const dg=shuffle([0,1,2,3,4,5,6,7,8,9]).slice(0,4).sort((a,b)=>a-b);const chan=rnd()<.6,nho=rnd()<.5;let best=null;
+    for(const p of perms(dg)){if(p[0]===0)continue;const v=p[0]*100+p[1]*10+p[2];if(chan&&v%2)continue;if(!chan&&v%2===0)continue;if(best===null||(nho?v<best:v>best))best=v}
+    if(best===null)return qToHop(lop,m);ans=best;hoi=bi('Số '+(chan?'chẵn':'lẻ')+' có 3 chữ số '+(nho?'nhỏ nhất':'lớn nhất')+' lập từ 3 trong 4 chữ số '+dg.join(', ')+' (mỗi chữ số dùng nhiều nhất một lần) là số nào?','What is the '+(nho?'smallest':'largest')+' '+(chan?'even':'odd')+' 3-digit number formed by choosing 3 of the digits '+dg.join(', ')+'? (Each digit can be used only once.)');
+    gt=bi('Thử các cách xếp, chữ số hàng trăm khác 0 và chữ số hàng đơn vị '+(chan?'chẵn':'lẻ')+': đáp án '+ans+'.','Try the arrangements: the hundreds digit is not 0 and the units digit is '+(chan?'even':'odd')+': the answer is '+ans+'.')}
+  else{const dg=shuffle([1,2,3,4,5,6,7,8,9]).slice(0,5).sort((a,b)=>a-b);const nho=rnd()<.5,leCa=rnd()<.4;let best=null;
+    for(const c of ketHop(dg,4))for(const p of perms(c)){const x=p[0]*10+p[1],y=p[2]*10+p[3];if(leCa&&(x%2===0||y%2===0))continue;const s=x+y;if(best===null||(nho?s<best:s>best))best=s}
+    if(best===null)return qToHop(lop,m);ans=best;hoi=bi('Chọn 4 chữ số khác nhau từ '+dg.join(', ')+' để lập hai số có hai chữ số'+(leCa?' đều là số lẻ':'')+' rồi cộng lại. Tổng '+(nho?'nhỏ nhất':'lớn nhất')+' là bao nhiêu?','Choose 4 different digits from '+dg.join(', ')+' to form two 2-digit'+(leCa?' odd':'')+' numbers and add them. What is the '+(nho?'minimum':'maximum')+' sum?');
+    gt=bi('Thử các cách chọn và ghép; '+(nho?'chữ số nhỏ ở hàng chục':'chữ số lớn ở hàng chục')+'. Đáp án '+ans+'.','Try the choices and arrangements; put the '+(nho?'small':'large')+' digits in the tens place. The answer is '+ans+'.')}
+  return mkD(hoi,exprSvg(['🃏','?']),ans,gt);
+}
+function qTachSo(lop,m){
+  const N=ri(8,18);const L=[];for(let a=0;a<=9;a++)for(let b=a;b<=9;b++)if(a+b===N)L.push([a,b]);
+  return mkD(bi('Viết '+N+' thành tổng của hai số có một chữ số. Có bao nhiêu cách? (Coi 5 + 6 và 6 + 5 là một cách)','Write '+N+' as the sum of two 1-digit numbers. How many ways are there? (Treat 5 + 6 and 6 + 5 as the same way.)'),exprSvg([''+N,'=','?','+','?']),L.length,
+    bi('Các cách: '+L.map(x=>x[0]+' + '+x[1]).join('; ')+'. Có '+L.length+' cách.','The ways: '+L.map(x=>x[0]+' + '+x[1]).join('; ')+'. There are '+L.length+'.'));
+}
+function qDongXu(lop,m){
+  const kd=pick(['doi','tien']);let hoi,ans,gt;
+  if(kd==='doi'){const a=ri(4,9),v=pick([2,3,4]);const tot=a*pick([5,10]);const per=tot;ans=Math.floor(tot/v);hoi=bi('Alice có '+a+' đồng xu loại $'+(per/a)+'. Cô ấy đổi được nhiều nhất bao nhiêu đồng xu loại $'+v+'?','Alice has '+a+' coins of $'+(per/a)+'. At most how many $'+v+' coins can she exchange them for?');gt=bi('Tổng tiền: '+a+' × '+(per/a)+' = $'+tot+'. $'+tot+' : '+v+' = '+ans+' (lấy phần nguyên).','Total: '+a+' × '+(per/a)+' = $'+tot+'. $'+tot+' ÷ '+v+' = '+ans+' (whole number part).')}
+  else{const a=ri(2,6),b=ri(1,3),c=ri(1,2),p=pick([3,4,6]);const tot=a+5*b+10*c;ans=Math.floor(tot/p);hoi=bi('Peter có '+a+' đồng $1, '+b+' đồng $5 và '+c+' đồng $10. Mỗi món quà lưu niệm giá $'+p+'. Peter mua được nhiều nhất bao nhiêu món?','Peter has '+a+' $1 coins, '+b+' $5 coins and '+c+' $10 coin(s). Each souvenir costs $'+p+'. What is the maximum number of souvenirs he can buy?');gt=bi('Tổng tiền: '+a+' + '+5*b+' + '+10*c+' = $'+tot+'. $'+tot+' : '+p+' = '+ans+' (lấy phần nguyên).','Total: '+a+' + '+5*b+' + '+10*c+' = $'+tot+'. $'+tot+' ÷ '+p+' = '+ans+' (whole number part).')}
+  return mkD(hoi,exprSvg(['💰','?']),ans,gt);
+}
+function qLichTuoi(lop,m){
+  const kd=pick(['ngay','tuoi','tuoi2']);let hoi,ans,gt,alt=[];
+  if(kd==='ngay'){const y=ri(0,6),k=ri(8,25);const c=(y+1+k)%7;ans=THU_EN[c];alt=[THU[c],THU[c].toLowerCase()];hoi=bi('Hôm qua là '+THU[y]+'. '+k+' ngày sau hôm nay là thứ mấy?','Yesterday was '+THU_EN[y]+'. What day of the week will it be '+k+' days from today?');gt=bi('Hôm nay là '+THU[(y+1)%7]+'. '+k+' = '+Math.floor(k/7)+' × 7 + '+(k%7)+', nên là '+THU[c]+'.','Today is '+THU_EN[(y+1)%7]+'. '+k+' = '+Math.floor(k/7)+' × 7 + '+(k%7)+', so it will be '+THU_EN[c]+'.')}
+  else if(kd==='tuoi'){const a=ri(5,12),x=ri(15,30),b=ri(3,9);ans=x+a+b;hoi=bi(a+' năm trước Peter '+x+' tuổi. Hỏi '+b+' năm nữa Peter bao nhiêu tuổi?',a+' years ago Peter was '+x+' years old. How old will he be in '+b+' years?');gt=bi('Bây giờ: '+x+' + '+a+' = '+(x+a)+' tuổi. Sau '+b+' năm: '+(x+a)+' + '+b+' = '+ans+'.','Now: '+x+' + '+a+' = '+(x+a)+'. In '+b+' years: '+(x+a)+' + '+b+' = '+ans+'.')}
+  else{const e=ri(12,24),k=ri(3,6),n=ri(2,5);ans=e-(k-n>=0?(k-n):0);const kenny=k-n;const diff=e-kenny;ans=diff;hoi=bi('Edward bây giờ '+e+' tuổi, còn Kenny sẽ '+k+' tuổi sau '+n+' năm nữa. Hỏi hai bạn hơn kém nhau bao nhiêu tuổi?','Edward is '+e+' now, and Kenny will be '+k+' in '+n+' years. What is the age difference between them?');gt=bi('Kenny bây giờ: '+k+' − '+n+' = '+kenny+' tuổi. Hơn kém: '+e+' − '+kenny+' = '+diff+'.','Kenny is '+k+' − '+n+' = '+kenny+' now. Difference: '+e+' − '+kenny+' = '+diff+'.');if(kenny<=0)return qLichTuoi(lop,m)}
+  return mkD(hoi,exprSvg(['🎂','?']),ans,gt,alt);
+}
+function qTamGiac(lop,m){
+  const n=pick([2,3,3,4]);const ans=Math.floor(n*(n+2)*(2*n+1)/8);const H=n*52+20,W=n*60*2;let cs='';
+  const tx=(r,c)=>[W/2-(r)*30+c*60,10+r*52];
+  for(let r=0;r<n;r++){for(let c=0;c<=r;c++){const A=tx(r,c),B=tx(r+1,c),C=tx(r+1,c+1);cs+='<polygon points="'+A.join(',')+' '+B.join(',')+' '+C.join(',')+'" fill="#eef2ff" stroke="#6366f1" stroke-width="3"/>';if(r<n-1&&c<=r){const D=tx(r+1,c+1),E=tx(r+1,c+1);}}}
+  for(let r=1;r<n;r++){for(let c=0;c<r;c++){const A=tx(r,c),B=tx(r,c+1),C=tx(r+1,c+1);cs+='<polygon points="'+A.join(',')+' '+B.join(',')+' '+C.join(',')+'" fill="#fff" stroke="#6366f1" stroke-width="3" transform="translate(0,0)"/>'}}
+  return mkD(bi('Một hình tam giác lớn được chia thành '+n+' hàng tam giác nhỏ như hình. Có tất cả bao nhiêu hình tam giác (mọi cỡ)?','A big triangle is divided into '+n+' rows of small triangles as shown. How many triangles (of any size) are there in total?'),svg(W,H,cs),ans,
+    bi('Đếm theo cỡ: '+tamGiacChiTiet(n)+'. Tổng '+ans+'.','Count by size: '+tamGiacChiTiet(n)+'. Total '+ans+'.'));
+}
+function tamGiacChiTiet(n){const p=[];for(let k=1;k<=n;k++){const up=(n-k+1)*(n-k+2)/2;let down=0;if(n-2*k+1>0)down=(n-2*k+1)*(n-2*k+2)/2;p.push('cỡ '+k+': '+(up+down))}return p.join(', ')}
+function qLuoiVuong(lop,m){
+  const [a,b]=pick([[3,3],[3,4],[4,4],[2,5],[3,5],[4,5]]);let ans=0;for(let k=1;k<=Math.min(a,b);k++)ans+=(a-k+1)*(b-k+1);
+  let cs='';const u=Math.min(60,Math.floor(480/Math.max(a,b)));for(let i=0;i<a;i++)for(let j=0;j<b;j++)cs+='<rect x="'+(20+j*u)+'" y="'+(10+i*u)+'" width="'+u+'" height="'+u+'" fill="#eef2ff" stroke="#6366f1" stroke-width="3"/>';
+  const parts=[];for(let k=1;k<=Math.min(a,b);k++)parts.push('cỡ '+k+'×'+k+': '+(a-k+1)*(b-k+1));
+  return mkD(bi('Có bao nhiêu hình vuông (mọi cỡ) trong hình lưới '+a+' × '+b+' dưới đây?','How many squares of any size are there in the '+a+' × '+b+' grid below?'),svg(b*u+40,a*u+24,cs),ans,
+    bi('Đếm theo cỡ: '+parts.join('; ')+'. Tổng '+ans+'.','Count by size: '+parts.join('; ').replace(/cỡ/g,'size')+'. Total '+ans+'.'));
+}
+function qDaGiac(lop,m){
+  const k=ri(7+m,10+2*m);const cx=140,cy=110;const pts=[];
+  for(let i=0;i<k;i++){const a=-Math.PI/2+i*2*Math.PI/k+rnd()*0.15,r=70+rnd()*(i%2?25:55);pts.push([cx+r*Math.cos(a),cy+r*Math.sin(a)])}
+  const hoi=rnd()<.5?bi('Đa giác dưới đây có bao nhiêu cạnh?','How many sides does the polygon below have?'):bi('Đa giác dưới đây có bao nhiêu góc trong?','How many interior angles does the polygon below have?');
+  const cs='<polygon points="'+pts.map(p=>p[0].toFixed(0)+','+p[1].toFixed(0)).join(' ')+'" fill="#e0e7ff" stroke="#4f46e5" stroke-width="4" stroke-linejoin="round"/>'+pts.map(p=>'<circle cx="'+p[0].toFixed(0)+'" cy="'+p[1].toFixed(0)+'" r="4" fill="#f59e0b"/>').join('');
+  return mkD(hoi,svg(280,220,cs),k,bi('Đếm các đỉnh (chấm vàng): có '+k+' đỉnh nên có '+k+' cạnh và '+k+' góc trong.','Count the vertices (yellow dots): there are '+k+', so '+k+' sides and '+k+' interior angles.'));
+}
+function qDoanThang(lop,m){
+  const k=ri(6,8+m);const ans=k*(k-1)/2;let cs='<line x1="30" y1="50" x2="530" y2="50" stroke="#6366f1" stroke-width="5"/>';for(let i=0;i<k;i++)cs+='<circle cx="'+(30+i*500/(k-1))+'" cy="50" r="9" fill="#f59e0b" stroke="#fff" stroke-width="3"/>';
+  return mkD(bi('Trên một đường thẳng có '+k+' điểm. Có bao nhiêu đoạn thẳng có hai đầu mút là hai trong các điểm đó?','There are '+k+' points on a line. How many line segments have two of these points as their endpoints?'),svg(560,100,cs),ans,bi('Mỗi cặp điểm cho 1 đoạn: '+(k-1)+' + '+(k-2)+' + … + 1 = '+ans+'.','Each pair of points gives 1 segment: '+(k-1)+' + '+(k-2)+' + … + 1 = '+ans+'.'));
+}
+function phanHoiMM(s,g){let hit=0;const sm=[],gm=[];for(let i=0;i<2;i++){if(s[i]===g[i])hit++;else{sm.push(s[i]);gm.push(g[i])}}let mis=0;for(const d of gm){const j=sm.indexOf(d);if(j>=0){mis++;sm.splice(j,1)}}return [hit,mis]}
+const MM_TXT=[['Không chữ số nào đúng.','No digit is correct.'],['Một chữ số đúng và đúng vị trí.','One digit is correct and in the right place.'],['Một chữ số đúng nhưng sai vị trí.','One digit is correct but in the wrong place.'],['Cả hai chữ số đúng nhưng sai vị trí.','Both digits are correct but in the wrong places.'],['Cả hai chữ số đều đúng.','Both digits are correct.']];
+function mmClue(h,mi){if(h===0&&mi===0)return 0;if(h===1&&mi===0)return 1;if(h===0&&mi===1)return 2;if(h===0&&mi===2)return 3;if(h===2)return 4;return -1}
+function qMastermind(lop,m){
+  for(let t=0;t<400;t++){
+    const secret=ri(10,99);const ss=[Math.floor(secret/10),secret%10];if(ss[0]===ss[1])continue;
+    const gs=[];while(gs.length<2){const g=ri(10,99);const gg=[Math.floor(g/10),g%10];if(gg[0]!==gg[1]&&g!==secret&&!gs.includes(g))gs.push(g)}
+    const cl=gs.map(g=>{const [h,mi]=phanHoiMM(ss,[Math.floor(g/10),g%10]);return mmClue(h,mi)});if(cl.some(c=>c<0))continue;
+    const sol=[];for(let x=10;x<=99;x++){const xs=[Math.floor(x/10),x%10];if(xs[0]===xs[1])continue;let ok=true;for(let i=0;i<2;i++){const [h,mi]=phanHoiMM(xs,[Math.floor(gs[i]/10),gs[i]%10]);if(mmClue(h,mi)!==cl[i]){ok=false;break}}if(ok)sol.push(x)}
+    if(sol.length!==1||sol[0]!==secret)continue;
+    const hoi=bi('Bin viết một số có hai chữ số khác nhau. Su đoán “'+gs[0]+'?” — Bin đáp: “'+MM_TXT[cl[0]][0]+'” Su đoán tiếp “'+gs[1]+'?” — Bin đáp: “'+MM_TXT[cl[1]][0]+'” Số Bin viết là số nào?','Bin writes a 2-digit number with two different digits. Su guesses “'+gs[0]+'?” — Bin says: “'+MM_TXT[cl[0]][1]+'” Su guesses “'+gs[1]+'?” — Bin says: “'+MM_TXT[cl[1]][1]+'” What is Bin\'s number?');
+    return mkD(hoi,exprSvg(['🕵️','?']),secret,bi('Thử từng số có hai chữ số khác nhau với cả hai gợi ý: chỉ có '+secret+' phù hợp.','Test every 2-digit number with different digits against both clues: only '+secret+' fits.'));
+  }
+  return qDayCach(lop,m);
+}
+function qLogicThu(lop,m){
+  const ng=tenNgau(3);const pets=[['mèo','cat','Cat','🐱'],['chó','dog','Dog','🐶'],['thỏ','bunny','Bunny','🐰']];
+  for(let t=0;t<300;t++){
+    const asg=shuffle([0,1,2]);const clues=[];
+    const kinds=shuffle([[0,'not'],[1,'not'],[2,'not'],[0,'has'],[1,'has'],[2,'has']]);
+    const cand=[];for(const [i,tp] of kinds){if(tp==='has')cand.push({i,p:asg[i],tp});else{const q=pick([0,1,2].filter(x=>x!==asg[i]));cand.push({i,p:q,tp})}}
+    const pick2=cand.slice(0,2);if(pick2[0].i===pick2[1].i)continue;
+    const ok=perms([0,1,2]).filter(a=>pick2.every(c=>c.tp==='has'?a[c.i]===c.p:a[c.i]!==c.p));
+    const ask=pick([0,1,2]);if(pick2.some(c=>c.i===ask&&c.tp==='has'))continue;const set=new Set(ok.map(a=>a[ask]));if(set.size!==1)continue;
+    const pa=pets[ok[0][ask]];
+    const cl=pick2.map(c=>c.tp==='has'?bi(ng[c.i]+' nuôi '+pets[c.p][0]+'.',ng[c.i]+' has a '+pets[c.p][1]+'.'):bi(ng[c.i]+' không nuôi '+pets[c.p][0]+'.',ng[c.i]+' does not have a '+pets[c.p][1]+'.'));
+    const vi=cl.map(x=>x.split(SEPB)[0]).join(' '),en=cl.map(x=>x.split(SEPB)[1]).join(' ');
+    return mkD(bi('Ba bạn '+ng.join(', ')+' mỗi bạn nuôi một con vật khác nhau: mèo, chó hoặc thỏ. '+vi+' Hỏi '+ng[ask]+' nuôi con gì?','Three friends '+ng.join(', ')+' each have a different pet: a cat, a dog or a bunny. '+en+' What pet does '+ng[ask]+' have?'),exprSvg(['🐱','🐶','🐰','?']),pa[2],
+      bi('Loại trừ từng khả năng theo hai gợi ý, chỉ còn: '+ng[ask]+' nuôi '+pa[0]+'.','Eliminate possibilities using the two clues; only one is left: '+ng[ask]+' has a '+pa[1]+'.'),[pa[0],pa[1],pa[1].toLowerCase()]);
+  }
+  return qDayCach(lop,m);
+}
+function qCatBanh(lop,m){
+  const N=ri(5,21);let c=0;while(1+c*(c+1)/2<N)c++;
+  return mkD(bi('Cắt một chiếc bánh tròn bằng các nhát cắt thẳng. Cần ít nhất bao nhiêu nhát cắt để chia bánh thành ít nhất '+N+' phần?','A round cake is cut with straight cuts. At least how many cuts are needed to get at least '+N+' pieces?'),exprSvg(['🎂','✂️','?']),c,
+    bi('Với c nhát cắt tối đa được 1 + (1 + 2 + … + c) phần. c = '+c+' cho '+(1+c*(c+1)/2)+' phần (đủ), c = '+(c-1)+' chỉ cho '+(1+(c-1)*c/2)+' phần.','With c cuts you can get at most 1 + (1 + 2 + … + c) pieces. c = '+c+' gives '+(1+c*(c+1)/2)+' pieces (enough); c = '+(c-1)+' gives only '+(1+(c-1)*c/2)+'.'));
+}
+function qChuoiDai(lop,m){
+  const kd=pick(['xen','lap','ba']);let toks=[],ans,gt;
+  if(kd==='xen'){const n=pick([9,11,13,15,17,19,21]);toks=['1'];let v=1;for(let i=2;i<=n;i++){toks.push(i%2?'+':'−',''+i);v+=i%2?i:-i}toks.push('=','?');ans=v;gt=bi('Ghép cặp (1 − 2) + (3 − 4) + … mỗi cặp bằng −1: có '+((n-1)/2)+' cặp, rồi cộng '+n+'... Kết quả '+ans+'.','Group pairs (1 − 2) + (3 − 4) + … each pair is −1: '+((n-1)/2)+' pairs, then add '+n+'… The result is '+ans+'.');ans=(n+1)/2;gt=bi('Ghép (2 − 1) rồi (4 − 3)… mỗi cặp bằng 1. Kết quả = '+ans+'.','Group (2 − 1), (4 − 3), … each pair is 1. The result is '+ans+'.')}
+  else if(kd==='lap'){const a=ri(3,7),b=ri(3,8),ka=ri(5,8),kb=ri(2,4);for(let i=0;i<ka;i++){if(i)toks.push('+');toks.push(''+a)}for(let i=0;i<kb;i++)toks.push('−',''+b);toks.push('=','?');ans=a*ka-b*kb;if(ans<0)return qChuoiDai(lop,m);gt=bi(ka+' số '+a+' → '+(a*ka)+'; trừ '+kb+' số '+b+' → '+(b*kb)+'. Kết quả '+ans+'.',ka+' numbers '+a+' → '+(a*ka)+'; subtract '+kb+' numbers '+b+' → '+(b*kb)+'. The result is '+ans+'.')}
+  else{const x=ri(60,400),y=ri(60,400),z=ri(30,Math.min(250,x+y-1));const s1=pick([1,-1]);ans=x+s1*y-z;if(ans<0)return qChuoiDai(lop,m);toks=[''+x,s1>0?'+':'−',''+y,'−',''+z,'=','?'];gt=bi('Làm lần lượt từ trái sang phải: '+x+' '+(s1>0?'+':'−')+' '+y+' = '+(x+s1*y)+', rồi − '+z+' = '+ans+'.','Left to right: '+x+' '+(s1>0?'+':'−')+' '+y+' = '+(x+s1*y)+', then − '+z+' = '+ans+'.')}
+  return mkD(bi('Tính giá trị biểu thức.','Find the value of the expression.'),exprSvg(toks,[toks.length-1]),ans,gt);
+}
+function qSoLonDien(lop,m){
+  const digs=ri(7,9);const pre=String(ri(1,9))+String(ri(0,9))+String(ri(0,9));const set=new Set();while(set.size<4){let s=pre;while(s.length<digs)s+=String(ri(0,9));set.add(s)}
+  const arr=[...set];const nho=rnd()<.5;const srt=[...arr].map(Number).sort((a,b)=>a-b);const ans=nho?srt[0]:srt[3];
+  return mkD(bi('Số nào trong các số sau là số '+(nho?'nhỏ nhất':'lớn nhất')+'? '+arr.join(', '),'Which number below is the '+(nho?'smallest':'greatest')+'? '+arr.join(', ')),exprSvg(['🔢','?']),ans,bi('Các số đều có '+digs+' chữ số, so sánh từ trái sang phải: '+srt.join(' < ')+'. Đáp án '+ans+'.','All have '+digs+' digits; compare from the left: '+srt.join(' < ')+'. The answer is '+ans+'.'));
+}
+SUB.tdQG=[qGauss,qNhomCham,qDayCach,qChuCai,qChanLe,qToHop,qTachSo,qDongXu,qLichTuoi,qTamGiac,qLuoiVuong,qDaGiac,qDoanThang,qMastermind,qLogicThu,qCatBanh,qChuoiDai,qSoLonDien];
+DANG2.tdQG={ten:'Vòng quốc gia (điền đáp án)',ic:'🔥',tom:'Khó nhất · tự điền đáp án · dạng đề quốc gia'};
+
+function hopLe(r){return !!r&&((r.loai==='dien'&&r.ans!=null&&r.ans!=='')||(r.dung>=0&&r.opts.length===4&&new Set(r.opts.map(o=>o.v)).size===4))}
+function ganDau(){
+  Object.assign(DANG,DANG2);
+  Object.keys(SUB).forEach(k=>{GEN[k]=(P,muc,lop)=>{
+    let q=null,loi=null;const cao=muc>=4&&k!=='tdQG';const L2=cao?2:(lop||1),M2=cao?3:muc;
+    for(let t=0;t<12&&!q;t++){const f=pick(SUB[k]);try{const r=f(L2,M2);if(hopLe(r))q=r}catch(e){loi=e}}
+    if(!q)throw loi||new Error('không sinh được '+k);q.dang=k;return q}});
+}
+const DS_DAU=['tdLogic','tdSoHoc','tdLyThuyet','tdHinh','tdToHop'];
+DANG.tdITMC={ten:'ITMC (đề thật)',ic:'🌍',tom:'Đề ITMC khối 2'};
+DANG.tdFMO={ten:'FMO · ASMO (thi thử)',ic:'🧠',tom:'Đề thi thử FMO, ASMO'};
+const DS_QG=['tdQG'];
+
+const GEN={daySo:gDaySo,demHinh:gDemHinh,soSanh:gSoSanh,canBang:gCanBang,soThieu:gSoThieu,loiVan:gLoiVan,viTri:gViTri,quyLuat:gQuyLuat,lich:gLich};
+ganDau();
+const DS_ALL=DS_DANG.concat(DS_DAU,DS_QG,['tdITMC','tdFMO']);
+function sinhCau(dang,P,muc,lop){
+  for(let t=0;t<30;t++){
+    const q=GEN[dang](P,muc,lop||1);
+    if(hopLe(q))return q;
+  }
+  throw new Error('Không sinh được câu '+dang);
+}
+function sinhBo(dangSel,P,muc,n,lop){
+  const kq=[];let g=0,hang=[];
+  while(kq.length<n&&g++<400){
+    let d;
+    if(dangSel==='all'||dangSel==='dauAll'){if(!hang.length)hang=shuffle(dangSel==='all'?DS_DANG:DS_DAU);d=hang.pop()}else d=dangSel;
+    const q=sinhCau(d,P,muc,lop);
+    if(g<150&&kq.some(x=>x.hoi===q.hoi&&x.hinh===q.hinh))continue;
+    if(g>=150&&kq.length&&kq[kq.length-1].hoi===q.hoi&&g<390)continue;
+    kq.push(q);
+  }
+  return kq;
+}
+/* Thi thử TIMO vòng loại: 25 câu = 5 chủ đề × 5 câu, xếp từ dễ đến khó trong mỗi chủ đề */
+function sinhTimo(lop){
+  const mm=[2,2,3,3,4],kq=[];
+  DS_DAU.forEach(d=>{mm.forEach(m=>{let q,g=0;do{q=sinhCau(d,10,m,lop);g++}while(g<40&&kq.some(x=>x.hoi===q.hoi&&x.hinh===q.hinh));kq.push(q)})});
+  return kq;
+}
+if(typeof module!=='undefined')module.exports={sinhCau,sinhBo,sinhTimo,DS_DANG,DS_DAU,DS_QG,DS_ALL,SUB,setSeed};
+</script>
+
+<script id="ui">
+/* ======= GIAO DIỆN ======= */
+const $=id=>document.getElementById(id);
+const KEY='titoan_v1';
+let S={mode:'lop',tier:'co-ban',nguon:'all',ngu:'song',timo:false,limit:900,lop:1,P:10,muc:1,dang:'all',ma:'',qs:[],i:0,kq:[],giay:0,t0:0,tim:null,hien:false,chon:null,tay:[0,0,0,0],demo:false,cap:null};
+const CH=['A','B','C','D','E'];
+const MUC_TEN={1:'⭐ Khởi động',2:'⭐⭐ Tăng tốc',3:'⭐⭐⭐ Thử thách'};
+const MUC_DAU={1:'⭐ Làm quen',2:'⭐⭐ Vòng loại',3:'⭐⭐⭐ Chung kết',4:'🔥 Quốc gia'};
+let am=true,ac=null;
+function tieng(loai){if(!am)return;try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();const o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);const t=ac.currentTime;
+  if(loai==='dung'){o.type='sine';o.frequency.setValueAtTime(880,t);o.frequency.setValueAtTime(1320,t+.1);g.gain.setValueAtTime(.6,t);g.gain.exponentialRampToValueAtTime(.001,t+.4);o.start(t);o.stop(t+.36)}
+  else if(loai==='sai'){o.type='triangle';o.frequency.setValueAtTime(220,t);o.frequency.exponentialRampToValueAtTime(140,t+.25);g.gain.setValueAtTime(.55,t);g.gain.exponentialRampToValueAtTime(.001,t+.35);o.start(t);o.stop(t+.31)}
+  else{o.type='sine';o.frequency.setValueAtTime(660,t);g.gain.setValueAtTime(.25,t);g.gain.exponentialRampToValueAtTime(.001,t+.14);o.start(t);o.stop(t+.13)}}catch(e){}}
+function phao(){const cv=$('pk'),x=cv.getContext('2d');cv.width=innerWidth;cv.height=innerHeight;const ps=[...Array(90)].map(()=>({x:innerWidth/2+(Math.random()-.5)*200,y:innerHeight*.6,vx:(Math.random()-.5)*14,vy:-Math.random()*16-4,c:['#ef4444','#f59e0b','#22c55e','#3b82f6','#a855f7'][Math.floor(Math.random()*5)],r:4+Math.random()*5,a:1}));
+  let f=0;(function an(){x.clearRect(0,0,cv.width,cv.height);ps.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.5;p.a-=.016;x.globalAlpha=Math.max(0,p.a);x.fillStyle=p.c;x.fillRect(p.x,p.y,p.r,p.r*1.4)});if(++f<75)requestAnimationFrame(an);else x.clearRect(0,0,cv.width,cv.height)})()}
+function robot(mood,size){size=size||120;const mouth=mood==='vui'?'M44 74 Q60 90 76 74':mood==='buon'?'M46 84 Q60 70 74 84':mood==='nghi'?'M48 80 L72 80':'M46 76 Q60 88 74 76';
+  const mat=mood==='buon'?'<path d="M40 52 L52 56 M80 52 L68 56" stroke="#1e1b4b" stroke-width="4" stroke-linecap="round"/>':'';
+  return '<svg viewBox="0 0 120 140" width="'+size+'" height="'+(size*140/120)+'"><line x1="60" y1="8" x2="60" y2="24" stroke="#6366f1" stroke-width="5"/><circle cx="60" cy="8" r="7" fill="#f59e0b"/><rect x="20" y="24" width="80" height="68" rx="22" fill="url(#gRb)" stroke="#4f46e5" stroke-width="4"/><circle cx="44" cy="52" r="10" fill="#fff"/><circle cx="76" cy="52" r="10" fill="#fff"/><circle cx="'+(mood==='nghi'?47:45)+'" cy="53" r="5" fill="#1e1b4b"/><circle cx="'+(mood==='nghi'?79:77)+'" cy="53" r="5" fill="#1e1b4b"/>'+mat+'<path d="'+mouth+'" stroke="#1e1b4b" stroke-width="5" fill="none" stroke-linecap="round"/><rect x="34" y="96" width="52" height="34" rx="12" fill="#a5b4fc" stroke="#4f46e5" stroke-width="3"/><text x="60" y="121" text-anchor="middle" font-size="20" font-weight="900" fill="#312e81">Tí</text><circle cx="14" cy="60" r="7" fill="#f59e0b"/><circle cx="106" cy="60" r="7" fill="#f59e0b"/></svg>'}
+$('logo').innerHTML=robot('vui',40)+'<span><b>TÍ TOÁN</b> <small style="font-size:14px;color:#64748b;font-weight:700">Toán tư duy lớp 1–2</small></span>';
+$('amBtn').onclick=()=>{am=!am;$('amBtn').textContent=am?'🔊':'🔇'};
+
+/* tên tác giả — sửa ở đây nếu cần */
+const TAC_GIA='cô Nguyễn Thị Diệu Thúy',TAC_GIA_NGAN='cô Diệu Thúy',TRUONG='TH Hoàng Mai';
+const hoaDau=s=>s.charAt(0).toUpperCase()+s.slice(1);
+$('tacGia').textContent='👩‍🏫 '+hoaDau(TAC_GIA_NGAN)+' - '+TRUONG;
+$('heroTG').textContent='💐 Phòng luyện Toán tư duy do '+TAC_GIA_NGAN+' xây dựng cho các con';
+$('chan').textContent='Ứng dụng của '+TAC_GIA+' · '+TRUONG;
+/* ngôn ngữ Việt–Anh */
+const SEP='␟';
+try{const v=localStorage.getItem('titoan_ngu');if(v)S.ngu=v}catch(e){}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function T(s,raw){
+  if(typeof s!=='string')return s==null?'':String(s);
+  if(raw&&/^\s*<svg/.test(s))return s;
+  const p=s.split(SEP),v=esc(p[0]),e=p.length>1?esc(p[1]):'';
+  if(!e)return v;
+  return S.ngu==='vi'?v:S.ngu==='en'?e:v+'<span class="en">'+e+'</span>';
+}
+function Tp(s){const p=String(s).split(SEP);return S.ngu==='en'&&p[1]?p[1]:p[0]}
+const NGU_TEN={song:'🌐 Việt–Anh',vi:'🇻🇳 Tiếng Việt',en:'🇬🇧 English'};
+$('nnBtn').onclick=()=>{S.ngu=S.ngu==='song'?'vi':S.ngu==='vi'?'en':'song';try{localStorage.setItem('titoan_ngu',S.ngu)}catch(e){}capNhatNgu()};
+function capNhatNgu(){
+  $('nnBtn').textContent=NGU_TEN[S.ngu];
+  if($('m-cau').classList.contains('on')&&S.qs[S.i]){const q=S.qs[S.i];$('hoi').innerHTML=hoiHtml(q);document.querySelectorAll('#lc .o .nd').forEach((el,k)=>{el.innerHTML=optHtml(q,k)})}
+  if($('m-ketqua').classList.contains('on')&&S.cap)veKetQua();
+}
+$('nnBtn').textContent=NGU_TEN[S.ngu];
+/* ===== LOA ĐỌC ĐỀ + ĐÁP ÁN (theo ngôn ngữ đang chọn) ===== */
+const EMO={vi:{'🍎':'táo','🍊':'cam','🍓':'dâu','🍐':'lê','🍌':'chuối','🍇':'nho','🍋':'chanh','🥕':'cà rốt','🥭':'xoài','🧒':'bạn nhỏ'},en:{'🍎':'apple','🍊':'orange','🍓':'strawberry','🍐':'pear','🍌':'banana','🍇':'grapes','🍋':'lemon','🥕':'carrot','🥭':'mango','🧒':'child'}};
+function chuThuan(h,ng){const m=EMO[ng||'vi'];return String(h==null?'':h).replace(/<[^>]*>/g,' ').replace(/[\u{1F000}-\u{1FAFF}]/gu,c=>m[c]?' '+m[c]+' ':'').replace(/[\u{2600}-\u{27BF}\u{FE0F}]/gu,'').replace(/\s+/g,' ').trim()}
+function tachNgu(h){const p=String(h==null?'':h).split(SEP);return {vi:chuThuan(p[0],'vi'),en:chuThuan(p[1]||'','en')}}
+function noiDungDoc(q){
+  let hv='',he='',ov=[],oe=[];
+  if(q.bank){const it=q.nh;if(it.img)return null;const qg=it.cap==='qg';hv=(!qg&&it.vi)?it.vi:'';he=it.en||'';if(!hv&&!he)hv=it.vi||'';
+    ov=oe=q.opts.map(o=>chuThuan(o.h))}
+  else{const t=tachNgu(q.hoi);hv=t.vi;he=t.en;q.opts.forEach(o=>{const x=tachNgu(o.h);ov.push(x.vi);oe.push(x.en||x.vi)})}
+  const dsach=(oo,tien)=>q.loai==='dien'?'':oo.map((t,k)=>' '+tien+' '+CH[k]+(t?': '+t:'')+'.').join('');
+  return {vi:hv?hv+(/[.?!]$/.test(hv)?'':'.')+dsach(ov,'Đáp án'):'',en:he?he+(/[.?!]$/.test(he)?'':'.')+dsach(oe,'Option'):''};
+}
+function docAnh(t){try{if(!window.speechSynthesis)return;const vs=speechSynthesis.getVoices().filter(v=>/^en/i.test(v.lang));
+  const v=vs.find(x=>/Natural|Online|Aria|Jenny|Google US|Samantha/i.test(x.name))||vs.find(x=>/en-US/i.test(x.lang))||vs[0];
+  const u=new SpeechSynthesisUtterance(t);if(v){u.voice=v;u.lang=v.lang}else u.lang='en-US';u.rate=.9;u.volume=1;speechSynthesis.speak(u)}catch(e){}}
+function baoNhe(m){try{let d=document.getElementById('__baoDoc');if(d)d.remove();d=document.createElement('div');d.id='__baoDoc';d.setAttribute('role','status');d.textContent=m;
+  d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);max-width:92vw;background:#1f2937;color:#fff;padding:12px 16px;border-radius:12px;font:16px/1.4 system-ui,sans-serif;z-index:99999';document.body.appendChild(d);setTimeout(()=>d.remove(),4500)}catch(e){}}
+function docDe(){
+  const q=S.qs[S.i];if(!q)return;const n=noiDungDoc(q);
+  if(!n){baoNhe('Đề này là hình ảnh nên loa chưa đọc được. / This question is a picture, so it cannot be read aloud.');return}
+  const ngu=S.ngu;dungGiong();ganGiongDaChon();
+  if(ngu==='en'){if(n.en)docAnh(n.en);else if(n.vi)docGiongViet(n.vi);return}
+  if(ngu==='vi'){if(n.vi)docGiongViet(n.vi);else if(n.en)docAnh(n.en);return}
+  if(n.vi)docGiongViet(n.vi);
+  if(n.en&&n.en!==n.vi)setTimeout(()=>docAnh(n.en),(speechSynthesis.getVoices().length?0:900));
+}
+$('bDoc').onclick=docDe;
+function dsGiongViet(){try{return speechSynthesis.getVoices().filter(v=>/^vi/i.test(v.lang))}catch(e){return[]}}
+function ganGiongDaChon(){try{const t=localStorage.getItem('titoan_giong');if(!t)return;const v=dsGiongViet().find(x=>x.name===t);if(v)__giongMay=v}catch(e){}}
+try{speechSynthesis.addEventListener('voiceschanged',()=>setTimeout(ganGiongDaChon,0));setTimeout(ganGiongDaChon,300)}catch(e){}
+$('bGiong').onclick=()=>{const ds=dsGiongViet();
+  if(!ds.length){baoNhe('Máy chưa có giọng đọc tiếng Việt. Mở bằng Microsoft Edge (có mạng) để có giọng Việt.');return}
+  if(ds.length===1){baoNhe('Máy chỉ có 1 giọng Việt: '+ds[0].name.replace(/Microsoft\s*/,''));return}
+  const i=ds.indexOf(__giongMay);const v=ds[(i+1)%ds.length];__giongMay=v;
+  try{localStorage.setItem('titoan_giong',v.name)}catch(e){}
+  baoNhe('Giọng '+((i+1)%ds.length+1)+'/'+ds.length+': '+v.name.replace(/Microsoft\s*/,''));
+  dungGiong();docGiongViet('Chào em, mình cùng làm toán nhé.');
+};
+/* ngân hàng đề thật */
+const NH=(window.NGAN_HANG||[]);
+const CHT='ABCDE';
+function nh2q(it){
+  const q={dang:it.grp,bank:true,nh:it,loai:it.loai,nguon:it.nguon,gt:it.gt||'',
+    hinh:it.img?'<img alt="" src="'+it.img+'" style="max-width:100%;height:auto">':'',hoi:'',opts:[],dung:-1,ans:it.ans};
+  if(it.loai==='tn'){q.opts=(it.opts||Array(it.no||4).fill('')).map((h,k)=>({h:it.img?'':h,v:CHT[k],loi:null}));q.dung=CHT.indexOf(it.ans)}
+  return q;
+}
+function optHtml(q,k){const o=q.opts[k];return q.bank?esc(o.h):T(o.h,true)}
+function hoiHtml(q){
+  if(q.bank){const it=q.nh;const tag='<div class="nguon">'+esc(q.nguon)+' · câu '+it.n+'</div>';
+    if(it.img)return tag+'<div class="en" style="font-size:.6em">'+(S.ngu==='en'?'Look at the picture':S.ngu==='vi'?'Xem đề trong hình':'Xem đề trong hình · Look at the picture')+'</div>';
+    let h=tag;const qg=it.cap==='qg';
+    const hasVi=!!it.vi,hasEn=!!it.en;
+    if(S.ngu==='vi'){h+='<div>'+esc(hasVi&&!qg?it.vi:(it.en||it.vi))+'</div>'+(qg&&hasVi?'<div class="gloss">Thuật ngữ: '+esc(it.vi)+'</div>':'')}
+    else if(S.ngu==='en'){h+='<div>'+esc(it.en||it.vi)+'</div>'}
+    else{h+='<div>'+esc(it.en||it.vi)+'</div>'+(hasVi?(qg?'<div class="gloss">Thuật ngữ · Glossary: '+esc(it.vi)+'</div>':'<div class="en2">'+esc(it.vi)+'</div>'):'')}
+    if(it.sh)h+='<div class="shared">'+esc(it.sh)+'</div>';
+    return h}
+  return T(q.hoi);
+}
+function soKhop(q,v){const a=String(v).trim(),b=String(q.ans).trim();if(a===''||b==='')return false;if(!isNaN(+a)&&!isNaN(+b))return +a===+b;const al=a.toLowerCase();return al===b.toLowerCase()||(q.alt||[]).some(x=>String(x).trim().toLowerCase()===al)}
+function nhLoc(){return NH.filter(q=>(S.nguon==='all'||q.nguon===S.nguon)&&(S.dang==='thatAll'||q.grp===S.dang))}
+function sinhThat(n){return shuffle(nhLoc()).slice(0,n).map(nh2q)}
+function deTongHop(){
+  if(S.nguon!=='all'){const full=NH.filter(q=>q.nguon===S.nguon).sort((a,b)=>a.n-b.n);if(full.length>=20)return full.map(nh2q)}
+  let base=NH.filter(q=>q.loai==='tn'&&(S.nguon==='all'||q.nguon===S.nguon));if(base.length<20)base=NH.filter(q=>S.nguon==='all'||q.nguon===S.nguon);
+  const kq=[];DS_DAU.forEach(g=>{shuffle(base.filter(q=>q.grp===g)).slice(0,5).forEach(x=>kq.push(nh2q(x)))});
+  if(kq.length<20)return shuffle(base).slice(0,25).map(nh2q);
+  return kq;
+}
+
+/* kho dữ liệu */
+function doc(){try{return JSON.parse(localStorage.getItem(KEY))||{lan:[]}}catch(e){return{lan:[]}}}
+function ghi(d){try{localStorage.setItem(KEY,JSON.stringify(d))}catch(e){}}
+function luuLan(l){if(S.demo)return;const d=doc();d.lan.push(l);if(d.lan.length>2000)d.lan=d.lan.slice(-2000);ghi(d)}
+
+/* điều hướng */
+function di(m,k){document.querySelectorAll('.man').forEach(e=>e.classList.remove('on'));$('m-'+m).classList.add('on');scrollTo(0,0);if(m==='baocao')veBaoCao();if(m==='home')dungDongHo();}
+function dungDongHo(){if(S.tim){clearInterval(S.tim);S.tim=null}}
+
+/* trang chủ */
+function pill(box,vals,cur,fn,lab){$(box).innerHTML=vals.map(v=>'<span class="pill'+(v===cur?' on':'')+'" data-v="'+v+'">'+(lab?lab(v):v)+'</span>').join('');$(box).querySelectorAll('.pill').forEach(e=>e.onclick=()=>{fn(isNaN(+e.dataset.v)?e.dataset.v:+e.dataset.v);veHome()})}
+function veHome(){
+  const dau=S.tier==='dau',that=S.tier==='that';
+  const tiers=NH.length?['co-ban','dau','that']:['co-ban','dau'];
+  pill('pTier',tiers,S.tier,v=>{S.tier=v;S.dang=v==='dau'?'dauAll':v==='that'?'thatAll':'all';S.muc=v==='dau'?2:S.muc},v=>v==='dau'?'🏆 Đấu trường thi quốc tế':v==='that'?'📚 Đề thật (TIMO…)':'🌱 Rèn nền');
+  pill('pLop',[1,2],S.lop,v=>{S.lop=v;S.P=v===1?10:100},v=>'Lớp '+v);
+  pill('pP',[10,20,100],S.P,v=>S.P=v,v=>'Trong '+v);
+  pill('pMuc',dau?[1,2,3,4]:[1,2,3],S.muc,v=>S.muc=v,v=>(dau?MUC_DAU:MUC_TEN)[v]);
+  if(NH.length){const ng=['all'].concat([...new Set(NH.map(q=>q.nguon))]);const dem=v=>v==='all'?NH.length:NH.filter(q=>q.nguon===v).length;
+    pill('pNguon',ng,S.nguon,v=>{S.nguon=v},v=>(v==='all'?'Tất cả đề':v)+' ('+dem(v)+')')}
+  $('rowP').style.display=(dau||that)?'none':'';$('rowLop').style.display=that?'none':'';$('rowMuc').style.display=that?'none':'';$('rowNguon').style.display=that?'':'none';
+  $('ghiDau').style.display=dau?'':'none';$('ghiThat').style.display=that?'':'none';$('bTimo').style.display=(dau||that)?'':'none';
+  $('bTimo').textContent=that?'⏱️ Đề thi tổng hợp có bấm giờ (25 câu · 60 phút)':'🏅 Thi thử TIMO vòng loại: 25 câu · 60 phút';
+  let ds;
+  if(that){const dem=g=>NH.filter(q=>(S.nguon==='all'||q.nguon===S.nguon)&&q.grp===g).length;ds=[['thatAll','📚','Tổng hợp','Trộn 5 chủ đề · '+nhLoc().length+' câu']].concat(DS_DAU.concat(['tdITMC','tdFMO']).map(k=>[k,DANG[k].ic,DANG[k].ten,dem(k)+' câu']))}
+  else ds=dau?[['dauAll','🏆','Tổng hợp đấu trường','Trộn cả 5 chủ đề']].concat(DS_DAU.map(k=>[k,DANG[k].ic,DANG[k].ten,DANG[k].tom]),DS_QG.map(k=>[k,DANG[k].ic,DANG[k].ten,DANG[k].tom]))
+              :[['all','🌟','Tổng hợp','Trộn tất cả các dạng']].concat(DS_DANG.map(k=>[k,DANG[k].ic,DANG[k].ten,DANG[k].tom]));
+  if(!ds.some(d=>d[0]===S.dang))S.dang=ds[0][0];
+  $('luoiDang').innerHTML=ds.map(d=>'<div class="dang'+(S.dang===d[0]?' on':'')+'" data-k="'+d[0]+'"><div class="ic">'+d[1]+'</div><div class="tn">'+d[2]+'</div><small>'+d[3]+'</small></div>').join('');
+  $('luoiDang').querySelectorAll('.dang').forEach(e=>e.onclick=()=>{S.dang=e.dataset.k;veHome()});
+  $('heroRb').innerHTML=robot('vui',130);
+}
+function maHopLe(){const m=$('ma').value.trim().toUpperCase();if(!m)return {ok:false,m:'',msg:'Em nhập mã (VD HS01) để lưu kết quả, hoặc bấm “Chơi thử không lưu”.'};
+  if(!/^[A-Z0-9]{2,8}$/.test(m))return {ok:false,m,msg:'Em chỉ nhập mã như HS01, không nhập tên thật nhé.'};return {ok:true,m}}
+function batDau(mode,timo){
+  S.mode=mode;S.ma='';S.demo=false;S.timo=!!timo;S.limit=timo?3600:900;
+  if(mode!=='lop'){const r=maHopLe();$('canhMa').textContent=r.ok?'':r.msg;if(!r.ok){if(!(r.m===''&&confirm('Chưa có mã. Chơi thử KHÔNG lưu kết quả nhé?')))return}S.ma=r.ok?r.m:''}
+  if(S.tier==='that'){if(timo){S.qs=deTongHop();S.timo=S.qs.length>=20;if(S.qs[0]&&S.qs[0].nh&&S.qs[0].nh.phut)S.limit=S.qs[0].nh.phut*60}else S.qs=sinhThat(10);if(!S.qs.length){alert('Chưa có câu phù hợp trong bộ đề đã chọn.');return}}
+  else if(timo)S.qs=sinhTimo(S.lop);else S.qs=sinhBo(S.dang,S.P,S.muc,10,S.lop);S.i=0;S.kq=[];S.giay=0;S.t0=Date.now();
+  dungDongHo();
+  if(mode==='thi'){$('dongHo').style.display='';let c=S.limit;S.tim=setInterval(()=>{c--;$('dongHo').textContent=String(Math.floor(c/60)).padStart(2,'0')+':'+String(c%60).padStart(2,'0');if(c<=0){nop()}},1000);$('dongHo').textContent=String(Math.floor(c/60)).padStart(2,'0')+':'+String(c%60).padStart(2,'0')}else $('dongHo').style.display='none';
+  di('cau');hienCau();
+}
+$('bLop').onclick=()=>batDau('lop');$('bLuyen').onclick=()=>batDau('luyen');$('bThi').onclick=()=>batDau('thi');$('bTimo').onclick=()=>batDau('thi',true);
+$('bThoat').onclick=()=>{if(confirm('Thoát bài này? Kết quả chưa lưu.')){dungDongHo();di('home')}};
+
+/* câu hỏi */
+function veCham(){$('cham').innerHTML=S.qs.map((q,i)=>{const r=S.kq[i];return '<i class="'+(i===S.i?'n':r?(r.dung===true?'d':r.dung===false?'s':'d'):'')+'"></i>'}).join('');$('cauSo').textContent='Câu '+(S.i+1)+'/'+S.qs.length}
+function hienCau(){
+  try{dungGiong()}catch(e){}
+  const q=S.qs[S.i];S.hien=false;S.chon=(S.kq[S.i]&&S.kq[S.i].chon!=null)?S.kq[S.i].chon:null;S.tay=Array(q.opts&&q.opts.length?q.opts.length:4).fill(0);
+  const dien=q.loai==='dien';
+  veCham();$('hinh').innerHTML=q.hinh||'';$('hinh').style.display=q.hinh?'':'none';$('hoi').innerHTML=hoiHtml(q);
+  $('lc').innerHTML=dien?'':q.opts.map((o,k)=>'<button class="o" data-k="'+k+'"><span class="ch">'+CH[k]+'</span><span class="nd">'+optHtml(q,k)+'</span></button>').join('');
+  $('khuDien').style.display=(dien&&S.mode!=='lop')?'':'none';$('inDien').value=(dien&&S.chon!=null)?S.chon:'';$('inDien').disabled=false;
+  $('tb').className='thongbao';$('tb').textContent='';$('tbDA').style.display='none';$('tbGiai').style.display='none';$('cotLop').style.display='none';
+  $('khuLop').style.display=(S.mode==='lop'&&!dien)?'':'none';
+  $('rbCau').innerHTML=robot('nghi',130);$('loiRb').textContent=S.mode==='lop'?'Cả lớp cùng nghĩ nhé!':'Tí Toán đang chờ em…';
+  if(S.mode==='lop'){if(dien)veTay();else veTay();$('dkn').innerHTML='<button class="btn cam" id="bHien">👀 Hiện đáp án (Space)</button>';$('bHien').onclick=hienDapAnLop;if(dien){$('tb').className='thongbao gt';$('tb').textContent='Câu điền đáp án: cả lớp làm vào bảng con / vở, rồi cô bấm “Hiện đáp án”.'}}
+  else if(S.mode==='luyen'){$('dkn').innerHTML=''}
+  else{$('dkn').innerHTML='<button class="btn phu" id="bBo">⏭ Bỏ qua</button><button class="btn" id="bTiep">'+(S.i===S.qs.length-1?'📨 Nộp bài':'Câu tiếp ▶')+'</button>';$('bTiep').onclick=()=>tiepThi(false);$('bBo').onclick=()=>{S.kq[S.i]={dung:null,chon:null};tiepThi(true)}}
+  document.querySelectorAll('#lc .o').forEach(b=>b.onclick=()=>chonDA(+b.dataset.k));
+  if(S.mode==='thi'&&!dien&&S.chon!=null&&document.querySelectorAll('#lc .o')[S.chon])document.querySelectorAll('#lc .o')[S.chon].style.outline='6px solid #4f46e5';
+  if(dien&&S.mode!=='lop'){$('bDien').style.display=S.mode==='luyen'?'':'none';$('inDien').oninput=()=>{if(S.mode==='thi'){S.chon=$('inDien').value.trim();S.kq[S.i]={dung:null,chon:S.chon}}};setTimeout(()=>{try{$('inDien').focus()}catch(e){}},50)}
+  tieng('nhe');
+}
+function veTay(){$('tay').innerHTML=S.tay.map((_,k)=>'<div class="ct" style="border-color:'+['#ef4444','#3b82f6','#f59e0b','#22c55e','#8b5cf6'][k]+'">'+CH[k]+' <button data-k="'+k+'" data-d="-1">−</button><b id="tn'+k+'">'+S.tay[k]+'</b><button data-k="'+k+'" data-d="1">+</button></div>').join('');
+  $('tay').querySelectorAll('button').forEach(b=>b.onclick=()=>{const k=+b.dataset.k;S.tay[k]=Math.max(0,S.tay[k]+(+b.dataset.d));$('tn'+k).textContent=S.tay[k]})}
+const LOI_CHUNG='Chưa đúng. / Not quite.';
+function gtHtml(q){return q.bank?esc(q.gt):T(q.gt)}
+function ganGiai(q,loiTxt){
+  const b=$('bGiai');if(!b)return;
+  b.onclick=()=>{const t=$('tbGiai');if(t.style.display==='block'){t.style.display='none';b.textContent='📖 Cách giải'}else{
+    const hint=loiTxt&&loiTxt!==LOI_CHUNG&&loiTxt!==T(MAU_LOI)?'<i>'+loiTxt+'</i><br>':'';
+    t.innerHTML='📖 <b>Cách giải / Solution:</b> '+hint+(gtHtml(q)||'<i>Đề này chỉ có đáp án, chưa có lời giải. / Only the answer key is available.</i>');t.style.display='block';b.textContent='🙈 Ẩn cách giải'}};
+}
+function hienDA(q,dapTxt,dapIdx){
+  const t=$('tbDA');t.innerHTML='💡 <b>Đáp án / Answer: '+dapTxt+'</b>';t.style.display='block';
+  if(dapIdx!=null&&dapIdx>=0)document.querySelectorAll('#lc .o').forEach((b,j)=>{if(j===dapIdx){b.classList.remove('mo','saix');b.classList.add('dungx')}});
+}
+function phanHoi(q,dung,loiTxt,dapTxt,dapIdx){
+  const tb=$('tb');
+  if(dung){tb.className='thongbao dung';tb.innerHTML='🎉 <b>Đúng rồi! / Correct!</b>';tieng('dung');phao();$('rbCau').innerHTML=robot('vui',130);$('loiRb').textContent='Giỏi quá!'}
+  else{tb.className='thongbao sai';tb.innerHTML='🤔 <b>Chưa đúng. / Not quite.</b> Em thử bấm xem đáp án hoặc cách giải nhé.';tieng('sai');$('rbCau').innerHTML=robot('buon',130);$('loiRb').textContent='Không sao, mình học thêm!'}
+  $('dkn').innerHTML='<button class="btn cam" id="bDapAn">💡 Xem đáp án</button><button class="btn xanh" id="bGiai">📖 Cách giải</button><button class="btn" id="bTiep">'+(S.i===S.qs.length-1?'🏁 Xem kết quả':'Câu tiếp ▶')+'</button>';
+  $('bDapAn').onclick=()=>hienDA(q,dapTxt,dapIdx);ganGiai(q,loiTxt);
+  $('bTiep').onclick=()=>{if(S.i===S.qs.length-1)nop();else{S.i++;hienCau()}};
+}
+function chonDA(k){
+  const q=S.qs[S.i];
+  if(S.mode==='lop'||q.loai==='dien'||k<0||k>=q.opts.length)return;
+  if(S.mode==='thi'){S.chon=k;S.kq[S.i]={dung:null,chon:k};document.querySelectorAll('#lc .o').forEach((b,j)=>b.style.outline=j===k?'6px solid #4f46e5':'');tieng('nhe');return}
+  if(S.hien)return;S.hien=true;const dung=k===q.dung;
+  S.kq[S.i]={dung,chon:k};veCham();
+  document.querySelectorAll('#lc .o').forEach((b,j)=>{if(j===k)b.classList.add(dung?'dungx':'saix');else b.classList.add('mo')});
+  const dap=CH[q.dung]+((q.bank&&q.nh.img)||!optHtml(q,q.dung)?'':' — '+optHtml(q,q.dung));
+  phanHoi(q,dung,q.bank?LOI_CHUNG:T(q.opts[k].loi||MAU_LOI),dap,q.dung);
+}
+function traLoiDien(){
+  const q=S.qs[S.i];if(q.loai!=='dien'||S.mode!=='luyen'||S.hien)return;const v=$('inDien').value.trim();if(!v)return;
+  S.hien=true;const dung=soKhop(q,v);S.kq[S.i]={dung,chon:v};veCham();$('inDien').disabled=true;
+  phanHoi(q,dung,LOI_CHUNG,esc(q.ans),-1);
+}
+$('bDien').onclick=traLoiDien;
+function hienDapAnLop(){
+  const q=S.qs[S.i];if(S.hien)return;S.hien=true;const tong=S.tay.reduce((a,b)=>a+b,0);
+  const sauDA=()=>{$('dkn').innerHTML='<button class="btn xanh" id="bGiai">📖 Cách giải</button><button class="btn" id="bTiep">'+(S.i===S.qs.length-1?'🏁 Xem kết quả':'Câu tiếp ▶ (Enter)')+'</button>';ganGiai(q,'');$('bTiep').onclick=()=>{if(S.i===S.qs.length-1)nop();else{S.i++;hienCau()}}};
+  if(q.loai==='dien'){$('tb').className='thongbao gt';$('tb').innerHTML='💡 <b>Đáp án / Answer: '+esc(q.ans)+'.</b>';S.kq[S.i]={dung:null,tay:null,tong:0,dungN:0};$('rbCau').innerHTML=robot('vui',130);veCham();sauDA();return}
+  document.querySelectorAll('#lc .o').forEach((b,j)=>{if(j===q.dung)b.classList.add('dungx');else b.classList.add('mo')});
+  $('tb').className='thongbao gt';$('tb').innerHTML='💡 <b>Đáp án / Answer: '+CH[q.dung]+((q.bank&&q.nh.img)||!optHtml(q,q.dung)?'':' — '+optHtml(q,q.dung))+'.</b>';
+  if(tong>0){const mx=Math.max(...S.tay,1);$('cotLop').style.display='flex';$('cotLop').innerHTML=S.tay.map((v,k)=>'<div style="height:'+Math.max(8,Math.round(v/mx*140))+'px;background:'+(k===q.dung?'#16a34a':'#ef4444')+'">'+v+'<br><small>'+CH[k]+'</small></div>').join('');
+    const pd=Math.round(S.tay[q.dung]/tong*100);$('loiRb').textContent=pd+'% cả lớp chọn đúng';
+    S.kq[S.i]={dung:null,tay:S.tay.slice(),tong,dungN:S.tay[q.dung]};if(pd>=70)tieng('dung');else tieng('sai')}
+  else S.kq[S.i]={dung:null,tay:null,tong:0,dungN:0};
+  $('rbCau').innerHTML=robot('vui',130);veCham();sauDA();
+}
+function tiepThi(boQua){const q=S.qs[S.i];
+  const co=!boQua&&S.chon!=null&&S.chon!=='';
+  if(co)S.kq[S.i]={dung:q.loai==='dien'?soKhop(q,S.chon):S.chon===q.dung,chon:S.chon};
+  else if(!S.kq[S.i]||S.kq[S.i].chon==null||S.kq[S.i].chon==='')S.kq[S.i]={dung:null,chon:null};
+  if(S.i===S.qs.length-1)nop();else{S.i++;hienCau()}}
+document.addEventListener('keydown',e=>{if(!$('m-cau').classList.contains('on'))return;
+  if(e.target&&e.target.id==='inDien'){if(e.key==='Enter'){e.preventDefault();if(S.mode==='luyen'&&!S.hien)traLoiDien();else if($('bTiep'))$('bTiep').click()}return}
+  if(e.key===' '&&S.mode==='lop'&&!S.hien){e.preventDefault();hienDapAnLop()}
+  else if(e.key==='Enter'&&$('bTiep')){e.preventDefault();$('bTiep').click()}
+  else if('abcdeABCDE'.includes(e.key)&&e.key.length===1&&S.mode!=='lop'){const kk='abcde'.indexOf(e.key.toLowerCase());if(S.qs[S.i]&&kk<S.qs[S.i].opts.length)chonDA(kk)}});
+
+/* nộp & kết quả */
+function nop(){
+  dungDongHo();S.giay=Math.round((Date.now()-S.t0)/1000);
+  const theo={};DS_ALL.forEach(d=>theo[d]=[0,0]);const sai=[];
+  S.qs.forEach((q,i)=>{const r=S.kq[i]||{};
+    if(S.mode==='lop'){const t=r.tong||0;theo[q.dang][1]+=t;theo[q.dang][0]+=r.dungN||0;return}
+    const dung=r.dung===true;theo[q.dang][1]+=1;if(dung)theo[q.dang][0]+=1;
+    if(!dung){const co=r.chon!=null&&r.chon!=='';const dien=q.loai==='dien';
+      sai.push({dang:q.dang,hoi:q.bank?(q.nguon+' · câu '+q.nh.n):Tp(q.hoi),hinh:q.hinh,
+        chon:co?(dien?esc(r.chon):CH[r.chon]+((q.bank&&q.nh.img)||!optHtml(q,r.chon)?'':'. '+optHtml(q,r.chon))):'(bỏ qua)',
+        loi:co?(q.bank||dien?LOI_CHUNG:T(q.opts[r.chon].loi||MAU_LOI)):'Chưa trả lời.',
+        dap:dien?esc(q.ans):CH[q.dung]+((q.bank&&q.nh.img)||!optHtml(q,q.dung)?'':'. '+optHtml(q,q.dung)),gt:gtHtml(q)})}});
+  const dungN=Object.values(theo).reduce((a,b)=>a+b[0],0),tong=Object.values(theo).reduce((a,b)=>a+b[1],0);
+  let diem=0,diemMax=0,coPt=false;
+  if(S.mode!=='lop')S.qs.forEach((q,i)=>{if(q.bank&&q.nh.pt){coPt=true;const r=S.kq[i]||{};const bn=q.nh.sai?0:q.nh.pt;diemMax+=bn;const co=r.chon!=null&&r.chon!=='';
+    if(r.dung===true)diem+=q.nh.pt;else if(co&&q.nh.sai)diem+=q.nh.sai;else if(!co)diem+=(q.nh.bl||0)}});
+  const lan={ts:new Date().toISOString(),ma:S.mode==='lop'?'LOP':(S.ma||''),diem:coPt?diem:null,diemMax:coPt?diemMax:null,che:S.mode,timo:S.timo,tier:S.tier,lop:S.lop,P:S.P,muc:S.muc,dungN,tong,giay:S.giay,theo,sai:sai.map(x=>({dang:x.dang,hoi:x.hoi,loi:String(x.loi).replace(/<[^>]+>/g,'')}))};
+  if(S.mode==='lop'||S.ma)luuLan(lan);
+  S.cap={lan,sai};veKetQua();di('ketqua');
+}
+function saiHtml(s){
+  const hint=s.loi&&s.loi!==LOI_CHUNG&&s.loi!=='Chưa trả lời.'?'<i>'+s.loi+'</i><br>':'';
+  return '<div class="saiitem"><b>'+DANG[s.dang].ic+' '+esc(s.hoi)+'</b><div class="hinh" style="margin:6px 0">'+s.hinh+'</div>Em chọn / Your answer: <b>'+s.chon+'</b> → Chưa đúng. / Not quite.'
+   +'<div><button class="btn cam sm bDA">💡 Xem đáp án</button><button class="btn xanh sm bGi">📖 Cách giải</button></div>'
+   +'<div class="thongbao gt rDA" style="display:none">💡 <b>Đáp án đúng / Correct answer: '+s.dap+'</b></div>'
+   +'<div class="thongbao gt rGi" style="display:none">📖 <b>Cách giải / Solution:</b> '+hint+(s.gt||'<i>Đề này chỉ có đáp án, chưa có lời giải. / Only the answer key is available.</i>')+'</div></div>';
+}
+function veKetQua(){
+  const {lan,sai}=S.cap;const pc=lan.tong?lan.dungN/lan.tong:0;
+  const lop=lan.che==='lop';
+  $('kqTit').textContent=lop?'Cả lớp đã làm xong!':(pc>=.9?'Xuất sắc!':pc>=.7?'Giỏi lắm!':pc>=.5?'Khá lắm, cố thêm chút nữa!':'Mình luyện thêm nhé!');
+  $('kqSao').textContent=pc>=.9?'⭐⭐⭐':pc>=.7?'⭐⭐':pc>=.5?'⭐':'🌱';
+  $('kqSub').textContent=lop?'Tỉ lệ chọn đúng của cả lớp: '+Math.round(pc*100)+'%':(lan.diemMax?'Điểm ITMC: '+lan.diem+' (tối đa '+lan.diemMax+' điểm + 20 điểm câu thưởng) · '+lan.dungN+'/'+lan.tong+' câu đúng · bỏ trống được điểm khuyến khích, câu thưởng sai bị trừ 7':lan.timo?'Điểm thi thử TIMO: '+lan.dungN*4+'/'+lan.tong*4+' ('+lan.dungN+'/'+lan.tong+' câu, mỗi câu 4 điểm)':'Em đúng '+lan.dungN+'/'+lan.tong+' câu');
+  $('rbKq').innerHTML=robot(pc>=.5?'vui':'buon',130);$('kqTG').textContent='💐 '+hoaDau(TAC_GIA_NGAN)+(pc>=.9?' rất tự hào về em!':pc>=.7?' khen em giỏi lắm!':pc>=.5?' tin em sẽ làm tốt hơn nữa!':' luôn ở bên em, mình cùng luyện thêm nhé!');
+  $('kqKpi').innerHTML='<div><b>'+(lop?Math.round(pc*100)+'%':lan.dungN+'/'+lan.tong)+'</b>'+(lop?'cả lớp đúng':'câu đúng')+'</div><div><b>'+Math.floor(lan.giay/60)+':'+String(lan.giay%60).padStart(2,'0')+'</b>thời gian</div><div><b>'+(lan.tier==='that'?'📚':lan.tier==='dau'||lan.timo?'Lớp '+lan.lop:lan.P)+'</b>'+(lan.tier==='that'?'đề thật':lan.tier==='dau'||lan.timo?'cấp đề':'phạm vi số')+'</div><div><b>'+(lan.diemMax?'ITMC':lan.timo?'TIMO':lan.tier==='that'?'🎯':lan.tier==='dau'?'🏆':lan.muc+'⭐')+'</b>'+(lan.timo?'thi tổng hợp':lan.tier==='that'?'luyện':lan.tier==='dau'?'đấu trường':'mức')+'</div>';
+  let h='',yeu=null,ym=2;
+  DS_ALL.forEach(d=>{const [a,t]=lan.theo[d]||[0,0];if(!t)return;const p=a/t;if(p<ym){ym=p;yeu=d}h+='<div class="hang"><div class="nh">'+DANG[d].ic+' '+DANG[d].ten+'</div><div class="thanh"><i style="width:'+Math.round(p*100)+'%;background:'+(p>=.8?'#16a34a':p>=.5?'#f59e0b':'#dc2626')+'"></i></div><div class="so">'+a+'/'+t+'</div></div>'});
+  $('kqDang').innerHTML=h||'<p>Chưa có dữ liệu.</p>';
+  $('kqLuyen').textContent=yeu&&ym<.8?'👉 Nên luyện thêm: '+DANG[yeu].ic+' '+DANG[yeu].ten:'👏 Các dạng đều vững!';
+  $('kqSai').innerHTML=lop?'<p>Chế độ cả lớp: xem biểu đồ từng câu ở màn hình câu hỏi. Tổng hợp nằm trong “Báo cáo cho cô”.</p>':(sai.length?sai.map(saiHtml).join(''):'<p>🎉 Không có câu nào sai!</p>');
+  $('kqSai').querySelectorAll('.saiitem').forEach(it=>{
+    const tg=(sel,btn,on,off)=>{btn.onclick=()=>{const e=it.querySelector(sel);const mo=e.style.display==='block';e.style.display=mo?'none':'block';btn.textContent=mo?on:off}};
+    tg('.rDA',it.querySelector('.bDA'),'💡 Xem đáp án','🙈 Ẩn đáp án');tg('.rGi',it.querySelector('.bGi'),'📖 Cách giải','🙈 Ẩn cách giải')});
+  if(pc>=.7){tieng('dung');phao()}
+}
+function lamLai(){batDau(S.cap.lan.che,S.cap.lan.timo)}
+
+/* báo cáo cho cô */
+function veBaoCao(demo){
+  const d=S.demo?demoData():doc();const L=d.lan;
+  const tongDa=L.length,hs=new Set(L.filter(x=>x.ma&&x.ma!=='LOP').map(x=>x.ma)).size;
+  const agg={};DS_ALL.forEach(k=>agg[k]=[0,0]);L.forEach(l=>DS_ALL.forEach(k=>{if(l.theo&&l.theo[k]){agg[k][0]+=l.theo[k][0];agg[k][1]+=l.theo[k][1]}}));
+  const T=Object.values(agg).reduce((a,b)=>[a[0]+b[0],a[1]+b[1]],[0,0]);
+  $('bcKpi').innerHTML='<div><b>'+tongDa+'</b>lượt làm</div><div><b>'+hs+'</b>mã HS</div><div><b>'+(T[1]?Math.round(T[0]/T[1]*100)+'%':'—')+'</b>tỉ lệ đúng chung</div><div><b>'+L.filter(x=>x.che==='lop').length+'</b>buổi cả lớp</div>';
+  $('bcDang').innerHTML=DS_ALL.map(k=>{const [a,t]=agg[k];const p=t?a/t:0;return '<div class="hang"><div class="nh">'+DANG[k].ic+' '+DANG[k].ten+'</div><div class="thanh"><i style="width:'+Math.round(p*100)+'%;background:'+(!t?'#cbd5e1':p>=.8?'#16a34a':p>=.5?'#f59e0b':'#dc2626')+'"></i></div><div class="so">'+(t?Math.round(p*100)+'%':'—')+'</div></div>'}).join('')+'<p style="color:#475569">Thanh đỏ = dưới 50% (nên ôn lại), vàng = 50–79%, xanh = từ 80%.</p>';
+  const rows=L.slice(-25).reverse();
+  $('bcBang').innerHTML='<tr><th>Ngày</th><th>Mã</th><th>Cách chơi</th><th>Lớp</th><th>Phạm vi</th><th>Mức</th><th>Đúng</th><th>Dạng yếu nhất</th></tr>'+(rows.map(l=>{let y='',m=2;DS_ALL.forEach(k=>{const v=l.theo&&l.theo[k];if(v&&v[1]&&v[0]/v[1]<m){m=v[0]/v[1];y=DANG[k].ten}});return '<tr><td>'+new Date(l.ts).toLocaleDateString('vi-VN')+'</td><td>'+(l.ma||'(không lưu)')+'</td><td>'+({lop:'Cả lớp',luyen:'Luyện',thi:'Thi thử'})[l.che]+'</td><td>'+l.lop+'</td><td>'+l.P+'</td><td>'+l.muc+'</td><td>'+l.dungN+'/'+l.tong+'</td><td>'+(m<.8?y:'—')+'</td></tr>'}).join('')||'<tr><td colspan="8">Chưa có dữ liệu. Cho các em làm vài lượt rồi quay lại.</td></tr>');
+}
+function demoData(){setSeed(7);const L=[];const mas=['HS01','HS02','HS03','HS04','HS05','HS06'];
+  for(let i=0;i<14;i++){const theo={};DS_ALL.forEach((k,j)=>{const base=[.9,.55,.85,.4,.8,.7,.6,.5,.75,.5,.45,.6,.4,.35,.3][j];const t=3,a=Math.min(t,Math.max(0,Math.round(t*(base+(Math.sin(i*3+j)*.2)))));theo[k]=[a,t]});
+    const dn=Object.values(theo).reduce((a,b)=>a+b[0],0),tg=Object.values(theo).reduce((a,b)=>a+b[1],0);L.push({ts:new Date(2026,10,2+i%9).toISOString(),ma:i%5===4?'LOP':mas[i%6],che:i%5===4?'lop':(i%2?'thi':'luyen'),lop:1,P:10,muc:i%3+1,dungN:dn,tong:tg,giay:300+i*20,theo})}
+  return{lan:L}}
+function csv(){const d=doc();const h=['ma','ngay','cach_choi','lop','pham_vi','muc','dung','tong','giay'];DS_ALL.forEach(k=>{h.push(k+'_dung',k+'_tong')});
+  const r=d.lan.map(l=>[l.ma,l.ts.slice(0,10),l.che,l.lop,l.P,l.muc,l.dungN,l.tong,l.giay].concat(DS_ALL.flatMap(k=>l.theo&&l.theo[k]?l.theo[k]:['','']))).map(x=>x.join(','));
+  taiXuong('ti-toan-ket-qua.csv','﻿'+h.join(',')+'\n'+r.join('\n'),'text/csv')}
+function taiXuong(ten,nd,loai){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([nd],{type:loai+';charset=utf-8'}));a.download=ten;document.body.appendChild(a);a.click();a.remove()}
+$('bCsv').onclick=csv;
+$('bSaoLuu').onclick=()=>taiXuong('ti-toan-sao-luu-'+new Date().toISOString().slice(0,10)+'.json',JSON.stringify(doc()),'application/json');
+$('bNhap').onclick=()=>$('fNhap').click();
+$('fNhap').onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const j=JSON.parse(r.result);if(!j.lan)throw 0;const d=doc();d.lan=d.lan.concat(j.lan);ghi(d);veBaoCao();alert('Đã nhập '+j.lan.length+' lượt.')}catch(x){alert('File không đúng định dạng sao lưu.')}};r.readAsText(f)};
+$('bXoa').onclick=()=>{if(confirm('Xoá TOÀN BỘ kết quả trên máy này? Không khôi phục được (trừ khi đã Sao lưu).')){ghi({lan:[]});veBaoCao()}};
+
+/* chế độ chụp: #man&tham số */
+function chup(){
+  const h=location.hash.slice(1);if(!h)return;const ps=h.split('&');const man=ps[0],q={};ps.slice(1).forEach(x=>{const [k,v]=x.split('=');q[k]=v});
+  document.body.classList.add('chup');
+  if(q.seed)setSeed(+q.seed);if(q.ngu)S.ngu=q.ngu;if(q.nguon)S.nguon=decodeURIComponent(q.nguon);if(q.tier)S.tier=q.tier;if(q.lop)S.lop=+q.lop;if(q.P)S.P=+q.P;else if(q.lop)S.P=S.lop===1?10:100;if(q.muc)S.muc=+q.muc;if(q.dang)S.dang=q.dang;
+  if(man==='home'){veHome();di('home')}
+  else if(man==='cau'){S.mode=q.mode||'luyen';S.ma='';S.demo=true;S.qs=S.tier==='that'?(q.timo?deTongHop():sinhThat(10)):(q.timo?sinhTimo(S.lop):sinhBo(S.dang,S.P,S.muc,10,S.lop));if(q.id){const it=NH.find(x=>x.id===q.id);if(it)S.qs[0]=nh2q(it)}S.i=+(q.i||0);S.kq=[];S.t0=Date.now();if(q.i)for(let j=0;j<S.i;j++)S.kq[j]={dung:j%3!==1,chon:0};di('cau');hienCau();
+    if(q.chon!=null&&S.mode==='luyen')chonDA(+q.chon);
+    if(q.da&&$('bDapAn'))$('bDapAn').click();if(q.gi&&$('bGiai'))$('bGiai').click();
+    if(S.mode==='lop'&&q.tay){S.tay=q.tay.split(',').map(Number);veTay();hienDapAnLop()}}
+  else if(man==='ketqua'||man==='ket-qua'){S.demo=true;S.mode='luyen';S.qs=sinhBo(S.tier==='dau'?'dauAll':'all',S.P,S.muc,10,S.lop);S.kq=S.qs.map((x,i)=>({dung:i%3!==1,chon:i%3!==1?x.dung:(x.dung+1)%4}));S.ma='HS01';S.t0=Date.now()-312000;$('dai').style.display='block';nop()}
+  else if(man==='baocao'||man==='bao-cao'){S.demo=true;$('dai').style.display='block';di('baocao')}
+}
+veHome();di('home');capNhatNgu();chup();capNhatNgu();
+</script>
+</body>
+</html>
