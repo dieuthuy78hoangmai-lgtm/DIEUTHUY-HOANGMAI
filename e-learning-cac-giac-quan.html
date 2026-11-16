@@ -1800,12 +1800,20 @@ function capNut(){ const c = CANH[P.i];
   $("#b-chay").textContent = xem && P.chay ? "⏸" : "▶"; $("#b-chay").setAttribute("aria-label", !xem ? "Nghe lại câu hỏi" : P.chay ? "Dừng" : "Phát"); }
 function dongBo(){ const B = P.rt.B; let k = -1; for (let j = 0; j < B.length; j++) if (P.t >= B[j].s && P.t < B[j].e){ k = j; break; }
   if (k !== P.nhip){ P.nhip = k; if (k >= 0 && P.chay && B[k].e - P.t > .15) phat(B[k].id, P.t - B[k].s); else im(); }
+  for (let j = Math.max(0, k) ; j < Math.min(B.length, Math.max(0, k) + 3); j++){ const mj = MEDIA[B[j].id]; if (mj && mj.loai === "am" && !kho[B[j].id]){ kho[B[j].id] = new Audio(mj.s); kho[B[j].id].preload = "auto"; } }
   datPhuDe(k >= 0 ? LOI[B[k].id] : ""); }
 let truoc = performance.now(), nhipN = 0, nhipT = 0;   // nhịp khung hình: chậm quá (máy yếu) thì tắt nền chuyển động
 function khung(now){
   const dt = Math.min(.1, (now - truoc) / 1000); truoc = now; const c = CANH[P.i], rt = P.rt;
   if (c && rt && CANH_XEM[c.loai]){
-    if (P.chay){ P.t += dt * P.toc * TDK(); if (P.t >= rt.tong){ P.t = rt.tong; P.chay = false; im(); capNut();
+    if (P.chay){ let buoc = dt * P.toc * TDK(); const Bk = rt.B, kk = P.nhip, au = dangNoi && dangNoi.a;
+      if (kk >= 0 && Bk[kk] && au instanceof HTMLMediaElement && dangNoi.id === Bk[kk].id && !au.ended && !au.paused){
+        if (!P.giu) P.giu = now;
+        if (now - P.giu < 8000){   // chờ giọng đọc xong câu rồi mới sang câu / cảnh kế (tối đa 8 giây để không bị treo)
+          if (au.readyState < 3 && au.currentTime < .05) buoc = 0;
+          else if (P.t + buoc >= Bk[kk].e - .02) buoc = Math.max(0, Bk[kk].e - .02 - P.t); } }
+      else P.giu = 0;
+      P.t += buoc; if (P.t >= rt.tong){ P.t = rt.tong; P.chay = false; im(); capNut();
         if (!P.xong.has(P.i)) xongCanh(); else nutTiep.hidden = P.i >= CANH.length - 1;
         clearTimeout(P.hen); const i0 = P.i; P.hen = setTimeout(() => { if (P.i === i0 && !P.chay && P.t >= rt.tong && P.i < CANH.length - 1) moCanh(P.i + 1); }, 1500); } }
     dongBo(); rt.ve(P.t);
