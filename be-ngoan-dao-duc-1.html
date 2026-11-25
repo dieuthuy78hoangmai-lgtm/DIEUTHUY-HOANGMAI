@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bé ngoan mỗi ngày — Đạo đức 1</title>
+<!-- Trò chơi ôn tập Đạo đức 1 (Kết nối tri thức với cuộc sống). Nội dung và hình lấy từ SGK cô đã mua, chỉ dùng trong lớp. Chạy không cần mạng, không gửi dữ liệu đi. -->
+<style>
+:root{
+  --nen1:#6a3fb5; --nen2:#e0609a; --cat:#ffe8a8; --chu:#1d2a3a; --trang:#fff;
+  --dung:#22b35e; --sai:#ef476f; --vang:#ffd166; --chinh:#ff9f1c;
+  --A:#ef476f; --B:#3a86ff; --C:#ffb703; --D:#2ec4b6;
+  --bong:0 10px 30px rgba(0,30,60,.25);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{font-family:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;color:var(--chu);
+  background:radial-gradient(1200px 600px at 15% 10%,rgba(255,255,255,.25),transparent 60%),
+             radial-gradient(900px 500px at 90% 90%,rgba(255,209,102,.25),transparent 60%),
+             linear-gradient(160deg,var(--nen2),var(--nen1));user-select:none}
+button{font-family:inherit;cursor:pointer;border:none}
+.man{position:absolute;inset:0;display:none;flex-direction:column;animation:hien .3s ease}
+.man.bat{display:flex}
+@keyframes hien{from{opacity:0}to{opacity:1}}
+.tat-hieu-ung *{animation:none!important;transition:none!important}
+
+/* ---- BẢN ĐỒ ---- */
+#bando .tieude{text-align:center;padding:2.2vh 0 0}
+.logo{font-size:clamp(28px,4.4vw,64px);font-weight:900;letter-spacing:1px;
+  background:linear-gradient(90deg,#fff,#ffe08a,#fff);-webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 4px 0 rgba(0,40,80,.35))}
+.phude{color:#e9fbff;font-size:clamp(15px,1.6vw,24px);font-weight:600;margin-top:4px}
+#ban-do-svg{flex:1;width:100%;min-height:0}
+.dao-nut{cursor:pointer}
+.dao-nut:hover .dao-than{transform:translateY(-8px)}
+.dao-than{transition:transform .25s;transform-box:fill-box}
+.noi{animation:noi 3.5s ease-in-out infinite}
+@keyframes noi{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.song{animation:song 6s linear infinite}
+@keyframes song{from{transform:translateX(0)}to{transform:translateX(-200px)}}
+.thanh-duoi{display:flex;gap:12px;justify-content:center;padding:0 0 2vh}
+.nut-phu{background:rgba(255,255,255,.16);color:#fff;border:2px solid rgba(255,255,255,.4);border-radius:999px;
+  padding:10px 20px;font-size:17px;font-weight:700;backdrop-filter:blur(6px)}
+.nut-phu:hover{background:rgba(255,255,255,.28)}
+.nut-phu.bat{background:#fff;color:var(--nen1)}
+
+/* ---- GIỚI THIỆU ĐẢO ---- */
+#gioithieu{align-items:center;justify-content:center}
+.the-kinh{background:rgba(255,255,255,.93);border-radius:28px;box-shadow:var(--bong);padding:4vh 4vw;text-align:center;max-width:900px;width:88%}
+.dao-to{font-size:110px;line-height:1;animation:noi 3s ease-in-out infinite}
+.gt-ten{font-size:clamp(34px,4vw,60px);font-weight:900;margin:8px 0}
+.gt-phan{display:inline-block;color:#fff;font-weight:800;border-radius:999px;padding:6px 22px;font-size:22px}
+.gt-chude{font-size:22px;margin:16px 0 6px;color:#3b4b5f}
+.gt-dang{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:14px 0 22px}
+.gt-dang span{background:#eef6ff;border-radius:12px;padding:6px 12px;font-size:17px;font-weight:600}
+.nut-chinh{background:linear-gradient(180deg,#ffb84d,#ff8c00);color:#fff;font-size:30px;font-weight:900;border-radius:20px;
+  padding:16px 54px;box-shadow:0 7px 0 #c46a00,0 12px 24px rgba(0,0,0,.2);transition:transform .1s}
+.nut-chinh:active{transform:translateY(5px);box-shadow:0 2px 0 #c46a00}
+.nut-chinh:hover{filter:brightness(1.06)}
+
+/* ---- CÂU HỎI ---- */
+.dau{display:flex;align-items:center;gap:14px;padding:12px 20px;color:#fff}
+.dau .ten-dao{font-weight:900;font-size:22px;white-space:nowrap}
+.cham{flex:1;display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
+.cham i{width:16px;height:16px;border-radius:50%;background:rgba(255,255,255,.35);display:block}
+.cham i.dung{background:var(--dung);box-shadow:0 0 0 2px #fff}
+.cham i.sai{background:var(--sai);box-shadow:0 0 0 2px #fff}
+.cham i.nay{background:#fff;transform:scale(1.35)}
+.nut-tron{width:52px;height:52px;border-radius:50%;background:rgba(255,255,255,.2);color:#fff;font-size:26px;border:2px solid rgba(255,255,255,.45)}
+.nut-tron:hover{background:rgba(255,255,255,.35)}
+.khung{flex:1;min-height:0;margin:0 20px 16px;background:rgba(255,255,255,.95);border-radius:26px;box-shadow:var(--bong);
+  display:flex;flex-direction:column;padding:18px 24px;position:relative}
+.hang-hoi{display:flex;align-items:center;gap:16px}
+.cu{width:84px;height:84px;flex:none}
+.bong-noi{flex:1;background:#fff7e0;border:3px solid #ffd166;border-radius:22px;padding:12px 20px;position:relative}
+.bong-noi:before{content:"";position:absolute;left:-16px;top:28px;border:8px solid transparent;border-right:12px solid #ffd166}
+.hoi{font-size:clamp(22px,2.4vw,36px);font-weight:800;line-height:1.25}
+.bai-tag{font-size:14px;color:#8a6d1f;font-weight:700;margin-bottom:2px}
+.loai-tag{font-size:14px;font-weight:800;color:#fff;border-radius:999px;padding:3px 12px;margin-left:6px;vertical-align:middle}
+.than{flex:1;min-height:0;display:flex;gap:22px;margin-top:14px}
+.anh-to{flex:1.15;min-width:0;display:flex;align-items:center;justify-content:center;background:#f3f8fc;border-radius:20px;padding:10px;position:relative;overflow:hidden}
+.anh-to img{width:100%;height:100%;border-radius:14px;object-fit:contain}
+.cot-chon{flex:1;display:flex;flex-direction:column;gap:14px;justify-content:center;min-width:0}
+.chon{display:flex;align-items:center;gap:16px;text-align:left;background:#fff;border:4px solid #e3ebf3;border-radius:20px;
+  padding:14px 18px;font-size:clamp(19px,1.9vw,30px);font-weight:700;color:var(--chu);box-shadow:0 5px 0 #d6e0ea;transition:transform .12s}
+.chon:hover{transform:translateY(-3px)}
+.chon b{flex:none;width:58px;height:58px;border-radius:16px;color:#fff;font-size:32px;display:flex;align-items:center;justify-content:center}
+.chon.dung{border-color:var(--dung);background:#e8fff0;animation:nay .5s}
+.chon.sai{border-color:var(--sai);background:#ffeef2;animation:rung .45s}
+.chon.mo{opacity:.45}
+@keyframes rung{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-12px)}40%,80%{transform:translateX(12px)}}
+@keyframes nay{0%{transform:scale(1)}40%{transform:scale(1.06)}100%{transform:scale(1)}}
+.luoi-tranh{flex:1;display:flex;gap:20px;align-items:stretch;justify-content:center;min-height:0}
+.tranh{flex:1;max-width:520px;background:#fff;border:5px solid #e3ebf3;border-radius:22px;padding:10px;display:flex;flex-direction:column;
+  align-items:center;gap:8px;box-shadow:0 6px 0 #d6e0ea;transition:transform .12s;min-height:0}
+.tranh:hover{transform:translateY(-4px)}
+.tranh .o-anh{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;width:100%}
+.tranh img{width:100%;height:100%;object-fit:contain;border-radius:12px}
+.tranh b{width:56px;height:56px;border-radius:50%;color:#fff;font-size:30px;display:flex;align-items:center;justify-content:center;flex:none}
+.tranh.dung{border-color:var(--dung);background:#e8fff0;animation:nay .5s}
+.tranh.sai{border-color:var(--sai);background:#ffeef2;animation:rung .45s}
+.tranh.mo{opacity:.4}
+.ds{display:flex;gap:26px;justify-content:center}
+.ds button{flex:1;max-width:330px;border-radius:26px;padding:20px;font-size:40px;font-weight:900;color:#fff;transition:transform .12s;display:flex;flex-direction:column;align-items:center}
+.ds button span{font-size:84px;line-height:1.1}
+.ds .d{background:linear-gradient(180deg,#3ddc84,#1fa855);box-shadow:0 8px 0 #157a3d}
+.ds .s{background:linear-gradient(180deg,#ff6b8b,#e03159);box-shadow:0 8px 0 #a51d3d}
+.ds button:hover{transform:translateY(-4px)}
+.ds button.mo{opacity:.35}
+.ds button.chot{outline:6px solid #fff;outline-offset:-10px;animation:nay .5s}
+
+/* kéo thả */
+.kt{flex:1;display:flex;flex-direction:column;gap:12px;min-height:0}
+.khay{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;min-height:120px;padding:10px;border:3px dashed #c9d8e6;border-radius:18px;background:#f7fbff}
+.the{background:#fff;border:4px solid #dbe6f0;border-radius:16px;padding:6px;display:flex;flex-direction:column;align-items:center;gap:4px;
+  box-shadow:0 5px 0 #d0dbe6;cursor:grab;touch-action:none;transition:transform .12s;max-width:200px}
+.the img{height:92px;max-width:180px;object-fit:contain;border-radius:10px;pointer-events:none}
+.the span{font-size:19px;font-weight:800;text-align:center;padding:2px 6px;pointer-events:none}
+.the.chu-to span{font-size:24px;padding:12px 14px}
+.the.chon-roi{border-color:var(--chinh);transform:translateY(-6px) scale(1.04);box-shadow:0 10px 0 #e48a12}
+.the.dang-keo{position:fixed;z-index:50;pointer-events:none;transform:scale(1.08) rotate(-3deg)}
+.the.rung{animation:rung .45s;border-color:var(--sai)}
+.the.xong{border-color:var(--dung);cursor:default;box-shadow:0 3px 0 #9fd9b4}
+.the.xong img{height:66px}
+.the.xong span{font-size:16px}
+.cac-nhom{flex:1;display:flex;gap:12px;min-height:0}
+.nhom{flex:1;border-radius:20px;border:4px solid;display:flex;flex-direction:column;min-width:0;transition:transform .15s,box-shadow .15s}
+.nhom h4{color:#fff;font-size:clamp(18px,1.7vw,26px);text-align:center;padding:8px;border-radius:14px 14px 0 0}
+.nhom .trong{flex:1;display:flex;flex-wrap:wrap;gap:8px;align-content:flex-start;justify-content:center;padding:8px;overflow:auto}
+.nhom.sang{transform:scale(1.03);box-shadow:0 0 0 6px rgba(255,209,102,.8)}
+.kt-anh{display:flex;gap:14px;flex:1;min-height:0}
+.kt-anh .anh-to{flex:1}
+.kt-anh .kt{flex:1}
+.nhom.chu-cai h4{font-size:30px}
+
+/* nối */
+.noi-vung{flex:1;position:relative;display:flex;justify-content:space-between;min-height:0}
+.noi-cot{display:flex;flex-direction:column;gap:12px;justify-content:space-around;width:38%;z-index:2}
+.noi-o{background:#fff;border:4px solid #dbe6f0;border-radius:18px;padding:6px 14px;display:flex;align-items:center;justify-content:center;gap:10px;
+  font-size:clamp(18px,1.8vw,28px);font-weight:800;min-height:64px;box-shadow:0 5px 0 #d0dbe6;transition:transform .12s;flex:1;max-height:160px}
+.noi-o img{max-height:100%;max-width:100%;object-fit:contain;border-radius:10px;height:100%}
+.noi-o:hover{background:#f6fbff}
+.noi-o.chon-roi{border-color:var(--chinh);box-shadow:0 0 0 5px rgba(255,159,28,.35)}
+.noi-o.xong{border-color:var(--dung);background:#effff4}
+.noi-o.rung{animation:rung .45s;border-color:var(--sai)}
+.noi-svg{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
+
+/* xếp thứ tự */
+.sx{flex:1;display:flex;flex-direction:column;gap:16px;min-height:0}
+.o-xep{display:flex;gap:16px;justify-content:center;flex:1;min-height:0}
+.o-trong{flex:1;max-width:360px;border:4px dashed #b9cbe0;border-radius:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:#f5f9ff;position:relative;padding:8px;gap:6px}
+.o-trong .so{position:absolute;top:-18px;left:50%;transform:translateX(-50%);width:44px;height:44px;border-radius:50%;background:var(--chinh);color:#fff;
+  font-weight:900;font-size:24px;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 0 #c46a00}
+.o-trong.co{border-style:solid;border-color:var(--dung);background:#effff4}
+.o-trong img{max-width:100%;max-height:150px;object-fit:contain;border-radius:10px}
+.o-trong span{font-size:22px;font-weight:800;text-align:center}
+.mui-ten{align-self:center;font-size:40px;color:#9ab}
+
+/* đoán tranh */
+.doan{position:relative;display:inline-block;max-height:100%}
+.doan img{display:block;width:auto;height:auto}
+.o-che{position:absolute;inset:0;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);gap:0}
+.o-che button{border:2px solid #fff;background:linear-gradient(135deg,#7b2ff7,#f107a3);color:#fff;font-size:40px;font-weight:900;border-radius:10px;box-shadow:inset 0 -6px 0 rgba(0,0,0,.18);transition:opacity .35s,transform .35s}
+.o-che button:nth-child(3n+2){background:linear-gradient(135deg,#3a86ff,#00c2ff)}
+.o-che button:nth-child(3n){background:linear-gradient(135deg,#ff9f1c,#ff5d8f)}
+.o-che button.mo{opacity:0;transform:scale(.6);pointer-events:none}
+
+/* phản hồi */
+.phan-hoi{position:absolute;left:24px;right:24px;bottom:18px;border-radius:22px;padding:14px 20px;display:none;align-items:center;gap:18px;z-index:20;
+  box-shadow:0 10px 30px rgba(0,0,0,.25);animation:len .35s ease}
+@keyframes len{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
+.phan-hoi.bat{display:flex}
+.phan-hoi.dung{background:linear-gradient(90deg,#e6fff0,#c9f7da);border:4px solid var(--dung)}
+.phan-hoi.sai{background:linear-gradient(90deg,#fff1f4,#ffdbe3);border:4px solid var(--sai)}
+.ph-bieu{font-size:64px;line-height:1}
+.ph-chu{flex:1}
+.ph-chu h3{font-size:30px;font-weight:900}
+.phan-hoi.dung h3{color:#138a45}.phan-hoi.sai h3{color:#c2183f}
+.ph-chu p{font-size:clamp(18px,1.6vw,24px);font-weight:600;margin-top:2px}
+.nut-tiep{background:linear-gradient(180deg,#4dabff,#1f6fe5);color:#fff;font-size:26px;font-weight:900;border-radius:18px;padding:14px 30px;box-shadow:0 6px 0 #1550a8;white-space:nowrap}
+.nut-tiep:active{transform:translateY(4px);box-shadow:0 2px 0 #1550a8}
+
+/* kết quả */
+#ketqua{align-items:center;justify-content:center}
+.sao-to{font-size:96px;letter-spacing:10px;margin:6px 0}
+.sao-to .tat{filter:grayscale(1) opacity(.3)}
+.sao-to span{display:inline-block;animation:bung .6s backwards}
+.sao-to span:nth-child(2){animation-delay:.25s}.sao-to span:nth-child(3){animation-delay:.5s}
+@keyframes bung{from{transform:scale(0) rotate(-90deg)}to{transform:none}}
+.kq-so{font-size:30px;font-weight:800}
+.kq-on{text-align:left;margin:16px auto 6px;max-height:30vh;overflow:auto;background:#fff6f8;border-radius:16px;padding:10px 18px;max-width:760px}
+.kq-on h4{color:#c2183f;font-size:20px;margin-bottom:6px}
+.kq-on li{font-size:18px;margin:4px 0 4px 20px}
+.hang-nut{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:18px}
+.nut-vien{background:#fff;color:var(--nen1);border:3px solid var(--nen1);border-radius:16px;padding:12px 22px;font-size:20px;font-weight:800}
+.nut-vien:hover{background:#eef7ff}
+#phao{position:fixed;inset:0;pointer-events:none;z-index:99}
+.huong-dan{max-width:860px;text-align:left;font-size:19px;line-height:1.55}
+.huong-dan li{margin:6px 0 6px 22px}
+.the-ABCD{display:flex;gap:10px;justify-content:center;margin:12px 0}
+.the-ABCD b{width:70px;height:70px;border-radius:16px;color:#fff;font-size:38px;display:flex;align-items:center;justify-content:center}
+.chan-trang{color:#d9f4ff;font-size:13px;text-align:center;padding-bottom:6px}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <radialGradient id="gCat" cx="50%" cy="40%" r="60%"><stop offset="0" stop-color="#fff3c4"/><stop offset="1" stop-color="#f3cf78"/></radialGradient>
+    <radialGradient id="gCo" cx="50%" cy="30%" r="70%"><stop offset="0" stop-color="#8ee06a"/><stop offset="1" stop-color="#3d9b3a"/></radialGradient>
+    <linearGradient id="gBien" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#39c3e6"/><stop offset="1" stop-color="#0a6ea3"/></linearGradient>
+  </defs>
+</svg>
+
+<div id="dang-tai" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;color:#fff;z-index:200">
+  <div style="font-size:90px;animation:noi 1.6s ease-in-out infinite">⛵</div>
+  <div style="font-size:30px;font-weight:900">Đang tải trò chơi…</div>
+  <div style="font-size:18px;opacity:.85">Trò chơi có nhiều tranh và giọng đọc, chờ khoảng 10–20 giây nhé.</div>
+</div>
+<!-- ======== BẢN ĐỒ ======== -->
+<section class="man" id="bando">
+  <div class="tieude">
+    <div class="logo">BÉ NGOAN MỖI NGÀY</div>
+    <div class="phude">Đạo đức 1 · Bốn chặng ôn tập cùng bạn Cú</div>
+  </div>
+  <svg id="ban-do-svg" viewBox="0 0 1600 760" preserveAspectRatio="xMidYMid meet"></svg>
+  <div class="thanh-duoi">
+    <button class="nut-phu" id="nut-huongdan">📖 Cách chơi</button>
+    <button class="nut-phu" id="nut-tudoc">🔊 Tự đọc câu hỏi: BẬT</button>
+    <button class="nut-phu" id="nut-xoa">🧹 Xoá sao đã đạt</button>
+  </div>
+  <div class="chan-trang">Nội dung và tranh lấy từ SGK Đạo đức 1 — bộ Kết nối tri thức với cuộc sống · dùng ôn tập trong lớp</div>
+</section>
+
+<!-- ======== CÁCH CHƠI ======== -->
+<section class="man" id="huongdan" style="align-items:center;justify-content:center">
+  <div class="the-kinh huong-dan">
+    <h2 style="font-size:34px;text-align:center;margin-bottom:8px">📖 Cách chơi</h2>
+    <ul>
+      <li>Cô chiếu lên TV, bấm chọn một <b>chặng</b> (giữa kì 1, cuối kì 1, giữa kì 2, cuối kì 2).</li>
+      <li>Máy đọc câu hỏi. Học sinh <b>giơ thẻ A · B · C</b> hoặc <b>mặt cười 😊 (Đúng) / mặt mếu ☹️ (Sai)</b>; cô bấm đáp án nhiều bạn chọn.</li>
+      <li>Câu <b>kéo thả, nối, xếp thứ tự</b>: cô mời một bạn lên chạm (hoặc cô bấm theo lời cả lớp). Chạm vào thẻ rồi chạm vào ô — hoặc kéo thẻ thả vào ô.</li>
+      <li>Câu <b>đoán tranh</b>: mở từng ô số, cả lớp đoán càng sớm càng giỏi.</li>
+      <li>Hết chặng: máy cho <b>sao</b> và liệt kê <b>những câu lớp còn sai</b> để cô ôn lại.</li>
+    </ul>
+    <div class="the-ABCD"><b style="background:var(--A)">A</b><b style="background:var(--B)">B</b><b style="background:var(--C)">C</b><b style="background:#22b35e;font-size:40px">😊</b><b style="background:#e03159;font-size:40px">☹️</b></div>
+    <p style="text-align:center;font-size:16px;color:#567">Phím tắt: <b>1 2 3</b> chọn đáp án · <b>Đ / S</b> đúng – sai · <b>Enter</b> câu tiếp · <b>R</b> đọc lại</p>
+    <div style="text-align:center;margin-top:14px"><button class="nut-chinh" data-ve="bando">Đã hiểu ✓</button></div>
+  </div>
+</section>
+
+<!-- ======== GIỚI THIỆU ĐẢO ======== -->
+<section class="man" id="gioithieu">
+  <div class="the-kinh">
+    <div class="dao-to" id="gt-bieu">🏠</div>
+    <div class="gt-ten" id="gt-ten"></div>
+    <div class="gt-phan" id="gt-phan"></div>
+    <div class="gt-chude" id="gt-chude"></div>
+    <div class="gt-dang" id="gt-dang"></div>
+    <button class="nut-chinh" id="nut-batdau">Lên đường! ⛵</button>
+    <div style="margin-top:16px"><button class="nut-vien" data-ve="bando">← Về bản đồ</button></div>
+  </div>
+</section>
+
+<!-- ======== CÂU HỎI ======== -->
+<section class="man" id="cauhoi">
+  <div class="dau">
+    <button class="nut-tron" data-ve="bando" title="Về bản đồ">🗺️</button>
+    <div class="ten-dao" id="ch-ten"></div>
+    <div class="cham" id="ch-cham"></div>
+    <div class="ten-dao" id="ch-so"></div>
+    <button class="nut-tron" id="nut-doc" title="Đọc lại (R)">🔊</button>
+  </div>
+  <div class="khung" id="khung">
+    <div class="hang-hoi">
+      <svg class="cu" viewBox="0 0 100 100" aria-hidden="true">
+        <ellipse cx="50" cy="58" rx="36" ry="38" fill="#a0673a"/><ellipse cx="50" cy="66" rx="24" ry="26" fill="#f5d7a8"/>
+        <path d="M18 30 L28 8 L38 26 Z M82 30 L72 8 L62 26 Z" fill="#a0673a"/>
+        <circle cx="35" cy="44" r="15" fill="#fff"/><circle cx="65" cy="44" r="15" fill="#fff"/>
+        <circle cx="37" cy="46" r="7" fill="#1d2a3a"/><circle cx="63" cy="46" r="7" fill="#1d2a3a"/>
+        <circle cx="39" cy="43" r="2.4" fill="#fff"/><circle cx="65" cy="43" r="2.4" fill="#fff"/>
+        <path d="M44 56 L56 56 L50 66 Z" fill="#ff9f1c"/>
+        <path d="M30 80 q20 10 40 0" stroke="#d6b07a" stroke-width="3" fill="none"/>
+        <rect x="28" y="2" width="44" height="10" rx="3" fill="#1d2a3a"/><rect x="38" y="-6" width="24" height="12" rx="2" fill="#1d2a3a"/>
+        <line x1="72" y1="7" x2="80" y2="20" stroke="#ffd166" stroke-width="3"/><circle cx="80" cy="22" r="4" fill="#ffd166"/>
+      </svg>
+      <div class="bong-noi">
+        <div class="bai-tag"><span id="ch-bai"></span><span class="loai-tag" id="ch-loai"></span></div>
+        <div class="hoi" id="ch-hoi"></div>
+      </div>
+    </div>
+    <div class="than" id="ch-than"></div>
+    <div class="phan-hoi" id="phan-hoi">
+      <div class="ph-bieu" id="ph-bieu"></div>
+      <div class="ph-chu"><h3 id="ph-tieu"></h3><p id="ph-giai"></p></div>
+      <button class="nut-tiep" id="nut-tiep">Câu tiếp ➜</button>
+    </div>
+  </div>
+</section>
+
+<!-- ======== KẾT QUẢ ======== -->
+<section class="man" id="ketqua">
+  <div class="the-kinh">
+    <div style="font-size:30px;font-weight:900" id="kq-ten"></div>
+    <div class="sao-to" id="kq-sao"></div>
+    <div class="kq-so" id="kq-so"></div>
+    <div class="kq-on" id="kq-on"></div>
+    <div class="hang-nut">
+      <button class="nut-vien" id="nut-onsai">🔁 Ôn lại câu sai</button>
+      <button class="nut-vien" id="nut-choilai">↻ Chơi lại cả chặng</button>
+      <button class="nut-vien" id="nut-xuat">💾 Lưu kết quả (CSV)</button>
+      <button class="nut-chinh" data-ve="bando" style="font-size:22px;padding:12px 30px">🗺️ Về bản đồ</button>
+    </div>
+  </div>
+</section>
+
+<canvas id="phao"></canvas>
+
+<script src="dd1-giong.js"></script>
+<script src="dd1-hinh.js"></script>
+<script>
+const CAU_DOC = ["Chào mừng các bạn đến với Bé ngoan mỗi ngày, môn Đạo đức!", "Các bạn được ba sao! Giỏi quá!", "Các bạn được hai sao! Cố lên nữa nhé!", "Các bạn được một sao! Mình cùng ôn lại nhé!", "Mình cùng ôn lại bài nhé!", "Chưa đúng rồi, các bạn thử lại nhé!", "Chào mừng các bạn đến với Nhà Yêu Thương!", "Bạn nào đã biết giữ vệ sinh đôi tay? Các bạn chọn tranh A, B, C.", "Bạn rửa tay sạch sẽ là biết giữ vệ sinh đôi tay. Chùi tay vào áo, cho tay lên mũi là chưa sạch.", "Chưa rửa tay đã cầm thức ăn là việc nên làm. Đúng hay sai?", "Sai rồi! Em luôn giữ đôi tay sạch sẽ hằng ngày, rửa tay trước khi ăn.", "Bạn nào chưa biết giữ vệ sinh răng miệng? Các bạn chọn tranh A, B, C.", "Bạn nói «Con không đánh răng đâu ạ!» là chưa biết giữ vệ sinh răng miệng. Chải răng mỗi ngày, hai lần sáng, tối.", "Mỗi ngày em nên chải răng mấy lần? A. Hai lần: buổi sáng và buổi tối. B. Không cần chải răng. C. Một tuần một lần.", "Bạn ơi hãy nhớ: chải răng mỗi ngày, hai lần sáng, tối.", "Bạn nào chưa biết giữ cơ thể sạch sẽ? Các bạn chọn tranh A, B, C.", "Bạn có quần áo, mặt mũi lấm bẩn là chưa giữ cơ thể sạch sẽ. Em luôn tắm, gội sạch sẽ hằng ngày.", "Xếp các tranh theo đúng thứ tự khi tắm.", "Đầu tóc gọn gàng, hằng ngày tắm gội, mình càng đẹp xinh.", "Bạn nào chưa biết giữ trang phục gọn gàng? Các bạn chọn tranh A, B, C.", "Quần áo vứt bừa bãi trên sàn là chưa gọn gàng. Giữ gìn trang phục gọn gàng, thơm tho, sạch sẽ.", "Cởi áo vứt xuống sân trường để đá bóng là việc nên làm. Đúng hay sai?", "Sai rồi! Em rèn thói quen giữ trang phục gọn gàng, sạch sẽ.", "Gia đình bạn nhỏ gồm những ai? A. Ông bà, bố mẹ, bạn nhỏ và em gái. B. Chỉ có bạn nhỏ. C. Cô giáo và các bạn.", "Gia đình bạn nhỏ có ông bà, bố mẹ, bạn nhỏ và em gái.", "Khi lạc nhà, thỏ con gặp điều gì? A. Bị sói đuổi, bị đói và bị mưa rét. B. Được ăn no, chơi vui. C. Gặp mẹ ngay.", "Thỏ con lạc nhà gặp nhiều nguy hiểm. Ai cũng cần có gia đình yêu thương, chăm sóc.", "Việc làm nào thể hiện tình yêu thương trong gia đình?", "Em yêu gia đình nhỏ, có ông bà, mẹ cha, anh chị em ruột thịt, tình thương mến chan hoà.", "Bạn nào chưa biết lễ phép, vâng lời? Các bạn chọn tranh A, B, C.", "Bạn nói «Không! Phim đang hay mà ông» là chưa vâng lời. Bé ngoan lễ phép, vâng lời ông bà, cha mẹ.", "Việc nào nên làm, việc nào không nên làm với ông bà?", "Quan tâm, chăm sóc ông bà, biết ơn, hiếu thảo — em là cháu ngoan.", "Bố em đi làm về vừa nóng, vừa mệt. Em sẽ làm gì? A. Lấy nước mời bố, hỏi han bố. B. Đòi bố cho đi chơi ngay. C. Không để ý đến bố.", "Quan tâm, chăm sóc mẹ cha, em luôn ghi nhớ mới là con ngoan.", "Việc nào KHÔNG nên làm với em nhỏ? Các bạn chọn tranh A, B, C.", "Tranh giành đồ chơi với em là không nên. Anh em chung một mái nhà, quan tâm, giúp đỡ, chan hoà yêu thương.", "Nếu là anh, chị của em bé đang khóc, em sẽ làm gì? A. Dỗ dành, chơi cùng em. B. Mặc kệ em khóc. C. Mắng em.", "Em hãy thể hiện sự chăm sóc, giúp đỡ em nhỏ bằng những việc làm phù hợp.", "Chào mừng các bạn đến với Trường Nề Nếp!", "Mải chơi điện tử nên vào lớp muộn là việc đáng đồng tình. Đúng hay sai?", "Sai rồi! Nội quy mình nhớ khắc ghi, đến trường học tập em đi đúng giờ.", "Việc nào không nên làm? Các bạn chọn tranh A, B.", "Đã đến giờ dậy mà còn đòi ngủ thêm thì dễ đi học muộn. Chuẩn bị sách vở từ tối hôm trước là việc nên làm.", "Nhờ bạn viết hộ bài là không nên. Học bài, làm bài đầy đủ, em giỏi, bạn, thầy yêu.", "Gặp bài khó, em sẽ làm gì? A. Cố gắng suy nghĩ, hỏi cô giáo hoặc bạn. B. Bỏ dở không làm nữa. C. Chép bài của bạn.", "Em cùng các bạn nhắc nhau học bài, làm bài đầy đủ.", "Lớp nào đang giữ trật tự? Các bạn chọn tranh A, B.", "Cả lớp ngồi ngay ngắn nghe cô giảng bài là giữ trật tự. Trật tự trong trường, lớp — em là học trò ngoan.", "Trong giờ học, bạn rủ: «Tớ có chuyện này hay lắm!». Em sẽ làm gì? A. Nhắc bạn để ra chơi rồi kể, giờ học phải trật tự. B. Quay sang nói chuyện ngay. C. Cười to trong lớp.", "Em cùng các bạn nhắc nhau luôn giữ trật tự trong trường, lớp.", "Việc làm nào giữ gìn tài sản của trường, lớp?", "Tài sản chung của trường, ta cùng nhau gìn giữ.", "Hái hoa trong vườn trường là việc nên làm. Đúng hay sai?", "Sai rồi! Em nhắc bạn không hái hoa. Cùng nhau giữ gìn tài sản của trường, lớp.", "Em đồng tình hay không đồng tình với việc làm của bạn?", "Cùng nhau gìn giữ vệ sinh, trường lớp sạch đẹp, chúng mình khoẻ, vui.", "Đi vệ sinh xong, mất nước thì thôi kệ, không cần báo ai. Đúng hay sai?", "Sai rồi! Em cần báo cô giáo hoặc người lớn để giữ nhà vệ sinh luôn sạch sẽ.", "Để đồ dùng, quần áo bừa bãi khắp phòng là gọn gàng, ngăn nắp. Đúng hay sai?", "Sai rồi! Đồ dùng, sách vở, đồ chơi, để cho ngăn nắp, đúng nơi, dễ tìm.", "Em cần làm gì để sách vở, đồ dùng luôn gọn gàng? A. Xếp sách vở, đồ dùng đúng chỗ sau khi dùng. B. Vứt đồ dùng khắp nơi. C. Để mẹ dọn hết cho em.", "Đồ dùng, sách vở, đồ chơi, để cho ngăn nắp, đúng nơi, dễ tìm.", "Xếp các tranh theo thứ tự một ngày của bạn nhỏ (xem đồng hồ nhé).", "Học tập, sinh hoạt đúng giờ giúp em mạnh khoẻ, lấy cờ thi đua.", "Em không đồng tình với bạn nào? Các bạn chọn tranh A, B.", "Vừa ăn vừa đọc truyện là chưa đúng giờ nào việc nấy. Học tập, sinh hoạt đúng giờ có lợi cho sức khoẻ.", "Chơi phi máy bay giấy trong giờ ngủ trưa là đúng. Đúng hay sai?", "Sai rồi! Em khuyên bạn ngủ trưa đúng giờ, không làm ồn ảnh hưởng các bạn.", "Chào mừng các bạn đến với Vườn Thật Thà!", "Bạn nào đã tự giác học tập?", "Em luôn tự giác học hành, chuyên cần, tích cực mới thành trò ngoan.", "Ngồi đọc truyện, không ra tập thể dục cùng các bạn là tự giác. Đúng hay sai?", "Sai rồi! Em khuyên bạn ra tập thể dục cùng cả lớp.", "Ở trường, em cần tự giác tham gia những hoạt động nào? A. Trực nhật, trồng cây, giúp đỡ người khó khăn, chơi cùng bạn. B. Chỉ ngồi một chỗ. C. Không tham gia gì.", "Tham gia hoạt động ở trường: tích cực, tự giác, hoà đồng bạn ơi!", "Bạn nào tự giác ủng hộ bạn có hoàn cảnh khó khăn? Các bạn chọn tranh A, B.", "Bạn để dành tiền ủng hộ bạn có hoàn cảnh khó khăn là tự giác tham gia hoạt động ở trường.", "Bạn nào tự giác, bạn nào chưa tự giác làm việc nhà?", "Tuổi nhỏ làm việc nhỏ, tự giác giúp mẹ cha, chăm chỉ không quản ngại, cả nhà vui chan hoà.", "Đại bàng nâu đã nói dối mẹ điều gì? A. Nói đã luyện tập tốt nhưng thật ra chỉ ngủ. B. Nói mình bị ốm. C. Nói đã đi học.", "Đại bàng nâu nói dối nên không biết bay, bị rơi xuống nước. Chúng ta không nên nói dối.", "Bạn nào đã nói dối mẹ? Các bạn chọn tranh A, B, C.", "Bạn đang chơi xếp hình mà nói «Con đang ôn bài ạ!» là nói dối. Miệng xinh lời nói thật thà.", "Cô kiểm tra đồ dùng học tập mà em quên bút chì. Em sẽ nói gì với cô? A. Thưa cô, em quên bút chì ạ. B. Em có mang ạ. C. Không nói gì.", "Em luôn nói lời chân thật. Thầy yêu, bạn mến, mẹ cha vui lòng.", "Tự ý lấy đồ chơi của bạn mang về nhà là đúng. Đúng hay sai?", "Sai rồi! Đồ dùng của riêng ai, mỗi khi cần sử dụng, nhớ hỏi xin, hỏi mượn, không tự ý lấy dùng.", "Bạn nào đáng khen? Các bạn chọn tranh A, B.", "Bạn hỏi mượn bút trước khi dùng là đáng khen. Bạn lấy thước khi chưa hỏi cần được nhắc nhở.", "Việc nào nên làm, việc nào không nên làm?", "Đồ dùng của riêng ai, mỗi khi cần sử dụng, nhớ hỏi xin, hỏi mượn, không tự ý lấy dùng.", "Tôm và Tép nhặt được của rơi đã làm gì? A. Trả lại cho bà cụ đánh mất. B. Giữ lại làm của mình. C. Vứt đi.", "Tôm và Tép trả lại của rơi nên được bà khen ngoan. Của rơi là của người ta, nếu em nhặt được, thật thà trả ngay.", "«Mình nhặt được là của mình.» Bạn nói như vậy là đúng. Đúng hay sai?", "Sai rồi! Nhặt được của rơi, em trả lại người đánh mất hoặc nhờ người lớn tìm cách trả lại.", "Bạn nào chưa biết nhận lỗi? Các bạn chọn tranh A, B, C.", "Đá bóng làm vỡ kính rồi rủ nhau trốn đi là chưa biết nhận lỗi. Mỗi khi em mắc lỗi, hãy nói lời xin lỗi.", "Em lỡ làm vỡ lọ hoa, mẹ hỏi «Ai làm vỡ lọ hoa đây?». Em sẽ làm gì? A. Nhận lỗi và xin lỗi mẹ. B. Đổ lỗi cho chú chó. C. Trốn đi.", "Biết nhận ra sai lầm, hãy nói lời xin lỗi, em thấy lòng mình vui.", "Chào mừng các bạn đến với Pháo Đài An Toàn!", "Hành vi nào an toàn, hành vi nào không an toàn khi tham gia giao thông?", "Đi bộ quan sát trước sau, ngồi trên xe máy, mũ mau đội vào.", "Em đi bộ trên vỉa hè (hoặc lề đường bên phải) và quan sát cẩn thận khi qua đường. Đúng hay sai?", "Đúng rồi! Em rèn thói quen đi bộ trên vỉa hè, đội mũ bảo hiểm khi đi xe máy, quan sát cẩn thận khi qua đường.", "Việc nào nên làm để phòng, tránh đuối nước? Các bạn chọn tranh A, B, C.", "Đi bơi có phao, có người lớn bên cạnh là an toàn. Chơi xa sông, xa hồ; học bơi và quan sát.", "Để phòng, tránh đuối nước: chơi xa sông, xa hồ, học bơi và quan sát, đi thuyền mặc áo phao.", "Trong tranh, những gì có thể gây bỏng? A. Bô xe máy, chảo dầu nóng, bàn là, ấm nước sôi. B. Quả táo, cái ghế. C. Tấm thảm, chậu cây.", "Pô xe, phích nước, bàn là, bếp đun, lửa nóng… tránh xa, chớ gần.", "Việc nào nên làm, việc nào không nên làm để phòng, tránh bỏng?", "Em thực hiện một số cách đơn giản và phù hợp để phòng, tránh bị bỏng.", "Đốt lửa để chơi là trò chơi an toàn. Đúng hay sai?", "Sai rồi! Lửa nóng có thể gây bỏng. Em khuyên bạn không nghịch lửa.", "Bạn nào đang phòng, tránh bị ngã đúng cách? Các bạn chọn tranh A, B, C.", "Đội mũ, đeo đồ bảo vệ khi trượt patin là an toàn. Chạy trên thang cuốn, trèo lên lưng trâu dễ bị ngã.", "Trèo lên cây cao để chơi là an toàn. Đúng hay sai?", "Sai rồi! Trèo leo thương tích rất cao. Đừng nên chạy nhảy ở nơi trơn.", "Bạn nào đã biết phòng, tránh điện giật? Các bạn chọn tranh A, B, C.", "Tránh xa dây điện bị đứt là đúng. Chọc tay vào ổ điện, chơi gần trạm điện rất nguy hiểm.", "Áo bị ném lên cột điện, em trèo lên lấy là đúng. Đúng hay sai?", "Sai rồi! Không chơi gần đường điện. Em nhờ người lớn giúp đỡ.", "Việc nào nên làm, việc nào không nên làm để phòng, tránh ngộ độc thực phẩm?", "Nhớ điều ăn chín uống sôi. Thực phẩm quá hạn, đồ ôi không dùng.", "Em của Hiếu muốn mua nước ngọt có màu xanh, đỏ ở hội chợ. Nếu là Hiếu, em sẽ nói gì? A. Không nên mua, uống nước không rõ nguồn gốc dễ bị ngộ độc. B. Mua thật nhiều. C. Uống luôn không cần hỏi.", "Thực phẩm quá hạn, đồ ôi không dùng. Em phòng, tránh ngộ độc thực phẩm.", "Quy tắc 5 ngón tay: nối mỗi ngón tay với cách cư xử.", "Ôm hôn người thân ruột thịt; nắm tay bạn bè, thầy cô; bắt tay người quen; vẫy tay người lạ; xua tay, hét to, bỏ chạy khi người lạ có cử chỉ thân mật.", "Không được cho người khác chạm vào miệng, ngực, giữa hai đùi và mông của mình. Đúng hay sai?", "Đúng rồi! Hãy bảo vệ cơ thể, để phòng kẻ xấu xa.", "Em chọn việc nên làm để phòng, tránh bị xâm hại. Các bạn chọn tranh A, B.", "Chống lại và hét to khi người lạ muốn ôm, hôn. Không đi một mình ở nơi tối, vắng vẻ.", "Người lạ nói: «Cháu bé, vào nhà chú chơi, chú có nhiều đồ ăn ngon lắm!». Em sẽ làm gì? A. Từ chối, chạy về và kể với bố mẹ. B. Đi theo chú ngay. C. Nhận đồ ăn của chú.", "Từ chối nhận quà của người lạ. Bị kẻ nào xâm hại, tìm người để sẻ chia."];
+</script>
+<script>
+// NGÂN HÀNG CÂU HỎI — chỉ lấy từ SGK Đạo đức 1 (Kết nối tri thức với cuộc sống)
+const DAO = [
+ { ma:"gk1", ten:"Nhà Yêu Thương", phan:"Giữa học kì 1", chude:"Chủ đề 1. Tự chăm sóc bản thân · 2. Yêu thương gia đình · 3. Quan tâm, chăm sóc người thân (Bài 1–9)", mau:"#ff6b8b", mau2:"#ffc2d1", bieu:"🏡",
+  cau:[
+   {loai:"chonhinh", bai:"Bài 1 · tr.7", hoi:"Bạn nào đã biết giữ vệ sinh đôi tay?", hinhs:["tay2","tay1","tay4"], dung:1,
+    giai:"Bạn rửa tay sạch sẽ là biết giữ vệ sinh đôi tay. Chùi tay vào áo, cho tay lên mũi là chưa sạch."},
+   {loai:"dungsai", bai:"Bài 1 · tr.7", hinh:"tay_vd", hoi:"Chưa rửa tay đã cầm thức ăn là việc nên làm.", dung:false,
+    giai:"Sai rồi! Em luôn giữ đôi tay sạch sẽ hằng ngày, rửa tay trước khi ăn."},
+   {loai:"chonhinh", bai:"Bài 2 · tr.9", hoi:"Bạn nào chưa biết giữ vệ sinh răng miệng?", hinhs:["rang1","rang4","rang2"], dung:1,
+    giai:"Bạn nói «Con không đánh răng đâu ạ!» là chưa biết giữ vệ sinh răng miệng. Chải răng mỗi ngày, hai lần sáng, tối."},
+   {loai:"chon", bai:"Bài 2 · tr.9", hinh:"rang2", hoi:"Mỗi ngày em nên chải răng mấy lần?",
+    chon:["Hai lần: buổi sáng và buổi tối","Không cần chải răng","Một tuần một lần"], dung:0,
+    giai:"Bạn ơi hãy nhớ: chải răng mỗi ngày, hai lần sáng, tối."},
+   {loai:"chonhinh", bai:"Bài 3 · tr.11", hoi:"Bạn nào chưa biết giữ cơ thể sạch sẽ?", hinhs:["tam2","tam1","tam3"], dung:1,
+    giai:"Bạn có quần áo, mặt mũi lấm bẩn là chưa giữ cơ thể sạch sẽ. Em luôn tắm, gội sạch sẽ hằng ngày."},
+   {loai:"sapxep", bai:"Bài 3 · tr.11", hoi:"Xếp các tranh theo đúng thứ tự khi tắm.",
+    buoc:[{hinh:"tamb1",ten:"Xả nước lên người"},{hinh:"tamb2",ten:"Xát xà phòng"},{hinh:"tamb3",ten:"Xả sạch xà phòng"},{hinh:"tamb4",ten:"Lau khô người"}],
+    giai:"Đầu tóc gọn gàng, hằng ngày tắm gội, mình càng đẹp xinh."},
+   {loai:"chonhinh", bai:"Bài 4 · tr.13", hoi:"Bạn nào chưa biết giữ trang phục gọn gàng?", hinhs:["tp2","tp1","tp3"], dung:2,
+    giai:"Quần áo vứt bừa bãi trên sàn là chưa gọn gàng. Giữ gìn trang phục gọn gàng, thơm tho, sạch sẽ."},
+   {loai:"dungsai", bai:"Bài 4 · tr.13", hinh:"tp_vd", hoi:"Cởi áo vứt xuống sân trường để đá bóng là việc nên làm.", dung:false,
+    giai:"Sai rồi! Em rèn thói quen giữ trang phục gọn gàng, sạch sẽ."},
+   {loai:"chon", bai:"Bài 5 · tr.14", hinh:"gd", hoi:"Gia đình bạn nhỏ gồm những ai?",
+    chon:["Ông bà, bố mẹ, bạn nhỏ và em gái","Chỉ có bạn nhỏ","Cô giáo và các bạn"], dung:0,
+    giai:"Gia đình bạn nhỏ có ông bà, bố mẹ, bạn nhỏ và em gái."},
+   {loai:"chon", bai:"Bài 5 · tr.15", hinh:"tho", hoi:"Khi lạc nhà, thỏ con gặp điều gì?",
+    chon:["Bị sói đuổi, bị đói và bị mưa rét","Được ăn no, chơi vui","Gặp mẹ ngay"], dung:0,
+    giai:"Thỏ con lạc nhà gặp nhiều nguy hiểm. Ai cũng cần có gia đình yêu thương, chăm sóc."},
+   {loai:"keotha", bai:"Bài 5 · tr.18–19", hoi:"Việc làm nào thể hiện tình yêu thương trong gia đình?",
+    nhom:["😊 Yêu thương","☹️ Chưa yêu thương"],
+    the:[{hinh:"gd_om",ten:"Dìu ông đi",vao:[0]},{hinh:"gd_keotoc",ten:"Hai chị em cãi nhau",vao:[1]},{hinh:"gd_dam",ten:"Đấm lưng cho ông bà",vao:[0]},
+         {hinh:"gd_phan",ten:"Đòi phần hơn em",vao:[1]},{hinh:"gd_quet",ten:"Quét nhà giúp mẹ",vao:[0]}],
+    giai:"Em yêu gia đình nhỏ, có ông bà, mẹ cha, anh chị em ruột thịt, tình thương mến chan hoà."},
+   {loai:"chonhinh", bai:"Bài 6 · tr.21", hoi:"Bạn nào chưa biết lễ phép, vâng lời?", hinhs:["lp1","lp2","lp3"], dung:2,
+    giai:"Bạn nói «Không! Phim đang hay mà ông» là chưa vâng lời. Bé ngoan lễ phép, vâng lời ông bà, cha mẹ."},
+   {loai:"keotha", bai:"Bài 7 · tr.23", hoi:"Việc nào nên làm, việc nào không nên làm với ông bà?",
+    nhom:["😊 Nên làm","☹️ Không nên"],
+    the:[{hinh:"ob2",ten:"Đấm lưng cho ông",vao:[0]},{hinh:"ob4",ten:"Nô đùa khi bà đang ngủ",vao:[1]},{hinh:"ob3",ten:"Chải tóc cho bà",vao:[0]},
+         {hinh:"ob5",ten:"Mời ông bà ăn quả",vao:[0]},{hinh:"ob_vd",ten:"Ông đau chân, cháu bỏ đi chơi",vao:[1]}],
+    giai:"Quan tâm, chăm sóc ông bà, biết ơn, hiếu thảo — em là cháu ngoan."},
+   {loai:"chon", bai:"Bài 8 · tr.25", hinh:"cm_vd", hoi:"Bố em đi làm về vừa nóng, vừa mệt. Em sẽ làm gì?",
+    chon:["Lấy nước mời bố, hỏi han bố","Đòi bố cho đi chơi ngay","Không để ý đến bố"], dung:0,
+    giai:"Quan tâm, chăm sóc mẹ cha, em luôn ghi nhớ mới là con ngoan."},
+   {loai:"chonhinh", bai:"Bài 9 · tr.27", hoi:"Việc nào KHÔNG nên làm với em nhỏ?", hinhs:["e2","e3","e6"], dung:1,
+    giai:"Tranh giành đồ chơi với em là không nên. Anh em chung một mái nhà, quan tâm, giúp đỡ, chan hoà yêu thương."},
+   {loai:"chon", bai:"Bài 9 · tr.27", hinh:"e_vd", hoi:"Nếu là anh, chị của em bé đang khóc, em sẽ làm gì?",
+    chon:["Dỗ dành, chơi cùng em","Mặc kệ em khóc","Mắng em"], dung:0,
+    giai:"Em hãy thể hiện sự chăm sóc, giúp đỡ em nhỏ bằng những việc làm phù hợp."}
+  ]},
+ { ma:"ck1", ten:"Trường Nề Nếp", phan:"Cuối học kì 1", chude:"Chủ đề 4. Thực hiện nội quy trường, lớp · 5. Sinh hoạt nền nếp (Bài 10–16)", mau:"#3a86ff", mau2:"#a9c8ff", bieu:"🏫",
+  cau:[
+   {loai:"dungsai", bai:"Bài 10 · tr.28", hinh:"dh_kp", hoi:"Mải chơi điện tử nên vào lớp muộn là việc đáng đồng tình.", dung:false,
+    giai:"Sai rồi! Nội quy mình nhớ khắc ghi, đến trường học tập em đi đúng giờ."},
+   {loai:"chonhinh", bai:"Bài 10 · tr.29", hoi:"Việc nào không nên làm?", hinhs:["dh1","dh3"], dung:1,
+    giai:"Đã đến giờ dậy mà còn đòi ngủ thêm thì dễ đi học muộn. Chuẩn bị sách vở từ tối hôm trước là việc nên làm."},
+   {loai:"chonhinh", bai:"Bài 11 · tr.31", hoi:"Việc nào không nên làm?", hinhs:["hb1","hb2"], dung:1,
+    giai:"Nhờ bạn viết hộ bài là không nên. Học bài, làm bài đầy đủ, em giỏi, bạn, thầy yêu."},
+   {loai:"chon", bai:"Bài 11 · tr.31", hinh:"hb_vd", hoi:"Gặp bài khó, em sẽ làm gì?",
+    chon:["Cố gắng suy nghĩ, hỏi cô giáo hoặc bạn","Bỏ dở không làm nữa","Chép bài của bạn"], dung:0,
+    giai:"Em cùng các bạn nhắc nhau học bài, làm bài đầy đủ."},
+   {loai:"chonhinh", bai:"Bài 12 · tr.33", hoi:"Lớp nào đang giữ trật tự?", hinhs:["tt3","tt1"], dung:1,
+    giai:"Cả lớp ngồi ngay ngắn nghe cô giảng bài là giữ trật tự. Trật tự trong trường, lớp — em là học trò ngoan."},
+   {loai:"chon", bai:"Bài 12 · tr.33", hinh:"tt_vd", hoi:"Trong giờ học, bạn rủ: «Tớ có chuyện này hay lắm!». Em sẽ làm gì?",
+    chon:["Nhắc bạn để ra chơi rồi kể, giờ học phải trật tự","Quay sang nói chuyện ngay","Cười to trong lớp"], dung:0,
+    giai:"Em cùng các bạn nhắc nhau luôn giữ trật tự trong trường, lớp."},
+   {loai:"keotha", bai:"Bài 13 · tr.34–35", hoi:"Việc làm nào giữ gìn tài sản của trường, lớp?",
+    nhom:["😊 Giữ gìn","☹️ Làm hỏng"],
+    the:[{hinh:"ts_lau",ten:"Lau bàn ghế",vao:[0]},{hinh:"ts3",ten:"Vẽ bậy lên bàn",vao:[1]},{hinh:"ts_voi",ten:"Khoá vòi nước",vao:[0]},
+         {hinh:"ts_kp",ten:"Nhảy trên bàn",vao:[1]},{hinh:"ts_den",ten:"Tắt điện",vao:[0]},{hinh:"ts4",ten:"Vẽ lên tường",vao:[1]}],
+    giai:"Tài sản chung của trường, ta cùng nhau gìn giữ."},
+   {loai:"dungsai", bai:"Bài 13 · tr.35", hinh:"ts_hoa", hoi:"Hái hoa trong vườn trường là việc nên làm.", dung:false,
+    giai:"Sai rồi! Em nhắc bạn không hái hoa. Cùng nhau giữ gìn tài sản của trường, lớp."},
+   {loai:"keotha", bai:"Bài 14 · tr.37", hoi:"Em đồng tình hay không đồng tình với việc làm của bạn?",
+    nhom:["😊 Đồng tình","☹️ Không đồng tình"],
+    the:[{hinh:"vs1",ten:"Quét lớp",vao:[0]},{hinh:"vs2",ten:"Vứt rác dưới gầm bàn",vao:[1]},{hinh:"vs5",ten:"Xả nước sau khi đi vệ sinh",vao:[0]},
+         {hinh:"vs3",ten:"Vẽ bậy lên tường",vao:[1]},{hinh:"vs4",ten:"Nhặt rác",vao:[0]}],
+    giai:"Cùng nhau gìn giữ vệ sinh, trường lớp sạch đẹp, chúng mình khoẻ, vui."},
+   {loai:"dungsai", bai:"Bài 14 · tr.37", hinh:"vs_vd2", hoi:"Đi vệ sinh xong, mất nước thì thôi kệ, không cần báo ai.", dung:false,
+    giai:"Sai rồi! Em cần báo cô giáo hoặc người lớn để giữ nhà vệ sinh luôn sạch sẽ."},
+   {loai:"dungsai", bai:"Bài 15 · tr.39", hinh:"gn_vd", hoi:"Để đồ dùng, quần áo bừa bãi khắp phòng là gọn gàng, ngăn nắp.", dung:false,
+    giai:"Sai rồi! Đồ dùng, sách vở, đồ chơi, để cho ngăn nắp, đúng nơi, dễ tìm."},
+   {loai:"chon", bai:"Bài 15 · tr.38", hinh:"gn2", hoi:"Em cần làm gì để sách vở, đồ dùng luôn gọn gàng?",
+    chon:["Xếp sách vở, đồ dùng đúng chỗ sau khi dùng","Vứt đồ dùng khắp nơi","Để mẹ dọn hết cho em"], dung:0,
+    giai:"Đồ dùng, sách vở, đồ chơi, để cho ngăn nắp, đúng nơi, dễ tìm."},
+   {loai:"sapxep", bai:"Bài 16 · tr.40", hoi:"Xếp các tranh theo thứ tự một ngày của bạn nhỏ (xem đồng hồ nhé).",
+    buoc:[{hinh:"ng1",ten:"Ngủ dậy"},{hinh:"ng3",ten:"Ăn trưa"},{hinh:"ng5",ten:"Học bài"},{hinh:"ng6",ten:"Đi ngủ"}],
+    giai:"Học tập, sinh hoạt đúng giờ giúp em mạnh khoẻ, lấy cờ thi đua."},
+   {loai:"chonhinh", bai:"Bài 16 · tr.41", hoi:"Em không đồng tình với bạn nào?", hinhs:["dg2","dg1"], dung:1,
+    giai:"Vừa ăn vừa đọc truyện là chưa đúng giờ nào việc nấy. Học tập, sinh hoạt đúng giờ có lợi cho sức khoẻ."},
+   {loai:"dungsai", bai:"Bài 16 · tr.41", hinh:"dg_vd", hoi:"Chơi phi máy bay giấy trong giờ ngủ trưa là đúng.", dung:false,
+    giai:"Sai rồi! Em khuyên bạn ngủ trưa đúng giờ, không làm ồn ảnh hưởng các bạn."}
+  ]},
+ { ma:"gk2", ten:"Vườn Thật Thà", phan:"Giữa học kì 2", chude:"Chủ đề 6. Tự giác làm việc của mình · 7. Thật thà (Bài 17–23)", mau:"#2bb673", mau2:"#a6e8c6", bieu:"🌻",
+  cau:[
+   {loai:"keotha", bai:"Bài 17 · tr.43", hoi:"Bạn nào đã tự giác học tập?",
+    nhom:["😊 Tự giác","☹️ Chưa tự giác"],
+    the:[{ten:"📖 Đọc truyện trong giờ học",vao:[1]},{ten:"⏰ Ôn bài đúng giờ",vao:[0]},{ten:"🙋 Tích cực phát biểu",vao:[0]},
+         {ten:"🎮 Vẫn chơi dù đến giờ ôn bài",vao:[1]},{ten:"📚 Đọc trước bài hôm sau",vao:[0]},{ten:"👫 Tích cực hoạt động nhóm",vao:[0]}],
+    giai:"Em luôn tự giác học hành, chuyên cần, tích cực mới thành trò ngoan."},
+   {loai:"dungsai", bai:"Bài 17 · tr.43", hinh:"tgh_vd", hoi:"Ngồi đọc truyện, không ra tập thể dục cùng các bạn là tự giác.", dung:false,
+    giai:"Sai rồi! Em khuyên bạn ra tập thể dục cùng cả lớp."},
+   {loai:"chon", bai:"Bài 18 · tr.44", hinh:"tghd_kp", hoi:"Ở trường, em cần tự giác tham gia những hoạt động nào?",
+    chon:["Trực nhật, trồng cây, giúp đỡ người khó khăn, chơi cùng bạn","Chỉ ngồi một chỗ","Không tham gia gì"], dung:0,
+    giai:"Tham gia hoạt động ở trường: tích cực, tự giác, hoà đồng bạn ơi!"},
+   {loai:"chonhinh", bai:"Bài 18 · tr.45", hoi:"Bạn nào tự giác ủng hộ bạn có hoàn cảnh khó khăn?", hinhs:["tq4","tq_vd"], dung:0,
+    giai:"Bạn để dành tiền ủng hộ bạn có hoàn cảnh khó khăn là tự giác tham gia hoạt động ở trường."},
+   {loai:"keotha", bai:"Bài 19 · tr.47", hoi:"Bạn nào tự giác, bạn nào chưa tự giác làm việc nhà?",
+    nhom:["😊 Tự giác","☹️ Chưa tự giác"],
+    the:[{hinh:"vn1",ten:"Nhặt rau",vao:[0]},{hinh:"vn3",ten:"Nhờ bà dọn phòng",vao:[1]},{hinh:"vn2",ten:"Cất quần áo",vao:[0]},
+         {hinh:"vn5",ten:"Cho mèo ăn",vao:[0]},{hinh:"vn_vd",ten:"Mải xem ti vi, chưa cất quần áo",vao:[1]}],
+    giai:"Tuổi nhỏ làm việc nhỏ, tự giác giúp mẹ cha, chăm chỉ không quản ngại, cả nhà vui chan hoà."},
+   {loai:"chon", bai:"Bài 20 · tr.48", hinh:"dbang", hoi:"Đại bàng nâu đã nói dối mẹ điều gì?",
+    chon:["Nói đã luyện tập tốt nhưng thật ra chỉ ngủ","Nói mình bị ốm","Nói đã đi học"], dung:0,
+    giai:"Đại bàng nâu nói dối nên không biết bay, bị rơi xuống nước. Chúng ta không nên nói dối."},
+   {loai:"chonhinh", bai:"Bài 20 · tr.49", hoi:"Bạn nào đã nói dối mẹ?", hinhs:["nd2","nd1","nd3"], dung:1,
+    giai:"Bạn đang chơi xếp hình mà nói «Con đang ôn bài ạ!» là nói dối. Miệng xinh lời nói thật thà."},
+   {loai:"chon", bai:"Bài 20 · tr.49", hinh:"nd_vd", hoi:"Cô kiểm tra đồ dùng học tập mà em quên bút chì. Em sẽ nói gì với cô?",
+    chon:["Thưa cô, em quên bút chì ạ","Em có mang ạ","Không nói gì"], dung:0,
+    giai:"Em luôn nói lời chân thật. Thầy yêu, bạn mến, mẹ cha vui lòng."},
+   {loai:"dungsai", bai:"Bài 21 · tr.50", hinh:"ly_kp", hoi:"Tự ý lấy đồ chơi của bạn mang về nhà là đúng.", dung:false,
+    giai:"Sai rồi! Đồ dùng của riêng ai, mỗi khi cần sử dụng, nhớ hỏi xin, hỏi mượn, không tự ý lấy dùng."},
+   {loai:"chonhinh", bai:"Bài 21 · tr.51", hoi:"Bạn nào đáng khen?", hinhs:["ly2","ly1"], dung:1,
+    giai:"Bạn hỏi mượn bút trước khi dùng là đáng khen. Bạn lấy thước khi chưa hỏi cần được nhắc nhở."},
+   {loai:"keotha", bai:"Bài 21 · tr.51", hoi:"Việc nào nên làm, việc nào không nên làm?",
+    nhom:["😊 Nên làm","☹️ Không nên"],
+    the:[{ten:"🙋 Hỏi mượn trước khi dùng đồ của bạn",vao:[0]},{ten:"📘 Tự ý mang truyện của thư viện về",vao:[1]},
+         {ten:"🧃 Uống nước trong siêu thị khi chưa trả tiền",vao:[1]},{ten:"🤲 Trả lại đồ đã mượn",vao:[0]}],
+    giai:"Đồ dùng của riêng ai, mỗi khi cần sử dụng, nhớ hỏi xin, hỏi mượn, không tự ý lấy dùng."},
+   {loai:"chon", bai:"Bài 22 · tr.52", hinh:"cr_kp", hoi:"Tôm và Tép nhặt được của rơi đã làm gì?",
+    chon:["Trả lại cho bà cụ đánh mất","Giữ lại làm của mình","Vứt đi"], dung:0,
+    giai:"Tôm và Tép trả lại của rơi nên được bà khen ngoan. Của rơi là của người ta, nếu em nhặt được, thật thà trả ngay."},
+   {loai:"dungsai", bai:"Bài 22 · tr.53", hoi:"«Mình nhặt được là của mình.» Bạn nói như vậy là đúng.", hinh:"cr_vd", dung:false,
+    giai:"Sai rồi! Nhặt được của rơi, em trả lại người đánh mất hoặc nhờ người lớn tìm cách trả lại."},
+   {loai:"chonhinh", bai:"Bài 23 · tr.54", hoi:"Bạn nào chưa biết nhận lỗi?", hinhs:["nl1","nl3","nl2"], dung:1,
+    giai:"Đá bóng làm vỡ kính rồi rủ nhau trốn đi là chưa biết nhận lỗi. Mỗi khi em mắc lỗi, hãy nói lời xin lỗi."},
+   {loai:"chon", bai:"Bài 23 · tr.55", hinh:"nl_vd", hoi:"Em lỡ làm vỡ lọ hoa, mẹ hỏi «Ai làm vỡ lọ hoa đây?». Em sẽ làm gì?",
+    chon:["Nhận lỗi và xin lỗi mẹ","Đổ lỗi cho chú chó","Trốn đi"], dung:0,
+    giai:"Biết nhận ra sai lầm, hãy nói lời xin lỗi, em thấy lòng mình vui."}
+  ]},
+ { ma:"ck2", ten:"Pháo Đài An Toàn", phan:"Cuối học kì 2", chude:"Chủ đề 8. Phòng, tránh tai nạn, thương tích (Bài 24–30)", mau:"#ff9f1c", mau2:"#ffd59a", bieu:"🛡️",
+  cau:[
+   {loai:"keotha", bai:"Bài 24 · tr.57", hoi:"Hành vi nào an toàn, hành vi nào không an toàn khi tham gia giao thông?",
+    nhom:["😊 An toàn","☹️ Không an toàn"],
+    the:[{hinh:"gt1",ten:"Đội mũ bảo hiểm",vao:[0]},{hinh:"gt3",ten:"Chạy nhảy dưới lòng đường",vao:[1]},{hinh:"gt5",ten:"Chờ đèn, đi đúng vạch",vao:[0]},
+         {hinh:"gt_vd1",ten:"Ngồi trên rào chắn",vao:[1]},{hinh:"gt_vd2",ten:"Thả diều gần đường tàu",vao:[1]}],
+    giai:"Đi bộ quan sát trước sau, ngồi trên xe máy, mũ mau đội vào."},
+   {loai:"dungsai", bai:"Bài 24 · tr.57", hinh:"gt_tot", hoi:"Em đi bộ trên vỉa hè (hoặc lề đường bên phải) và quan sát cẩn thận khi qua đường.", dung:true,
+    giai:"Đúng rồi! Em rèn thói quen đi bộ trên vỉa hè, đội mũ bảo hiểm khi đi xe máy, quan sát cẩn thận khi qua đường."},
+   {loai:"chonhinh", bai:"Bài 25 · tr.59", hoi:"Việc nào nên làm để phòng, tránh đuối nước?", hinhs:["dn3","dn1","dn4"], dung:1,
+    giai:"Đi bơi có phao, có người lớn bên cạnh là an toàn. Chơi xa sông, xa hồ; học bơi và quan sát."},
+   {loai:"keotha", bai:"Bài 25 · tr.58–59", hoi:"Việc nào nên làm, việc nào không nên làm?",
+    nhom:["😊 Nên làm","☹️ Không nên"],
+    the:[{hinh:"dn_t1",ten:"Học bơi cùng người lớn",vao:[0]},{hinh:"dn_vd",ten:"Cúi người ra mép thuyền",vao:[1]},{hinh:"dn_t2",ten:"Mặc áo phao khi đi thuyền",vao:[0]},
+         {hinh:"dn_t3",ten:"Không lại gần chỗ nước sâu",vao:[0]},{hinh:"dn5",ten:"Chơi một mình sát mép nước",vao:[1]}],
+    giai:"Để phòng, tránh đuối nước: chơi xa sông, xa hồ, học bơi và quan sát, đi thuyền mặc áo phao."},
+   {loai:"chon", bai:"Bài 26 · tr.60", hinh:"bong_kp", hoi:"Trong tranh, những gì có thể gây bỏng?",
+    chon:["Bô xe máy, chảo dầu nóng, bàn là, ấm nước sôi","Quả táo, cái ghế","Tấm thảm, chậu cây"], dung:0,
+    giai:"Pô xe, phích nước, bàn là, bếp đun, lửa nóng… tránh xa, chớ gần."},
+   {loai:"keotha", bai:"Bài 26 · tr.61", hoi:"Việc nào nên làm, việc nào không nên làm để phòng, tránh bỏng?",
+    nhom:["😊 Nên làm","☹️ Không nên"],
+    the:[{hinh:"b1",ten:"Sờ vào ấm nước nóng",vao:[1]},{hinh:"b3",ten:"Thử nước trước khi tắm",vao:[0]},{hinh:"b4",ten:"Thổi nguội rồi mới ăn",vao:[0]},
+         {hinh:"b5",ten:"Tự rót nước sôi",vao:[1]},{hinh:"b_vd1",ten:"Nghịch bật lửa",vao:[1]}],
+    giai:"Em thực hiện một số cách đơn giản và phù hợp để phòng, tránh bị bỏng."},
+   {loai:"dungsai", bai:"Bài 26 · tr.61", hinh:"b_vd2", hoi:"Đốt lửa để chơi là trò chơi an toàn.", dung:false,
+    giai:"Sai rồi! Lửa nóng có thể gây bỏng. Em khuyên bạn không nghịch lửa."},
+   {loai:"chonhinh", bai:"Bài 27 · tr.63", hoi:"Bạn nào đang phòng, tránh bị ngã đúng cách?", hinhs:["nga2","nga5","nga3"], dung:1,
+    giai:"Đội mũ, đeo đồ bảo vệ khi trượt patin là an toàn. Chạy trên thang cuốn, trèo lên lưng trâu dễ bị ngã."},
+   {loai:"dungsai", bai:"Bài 27 · tr.63", hinh:"nga_vd2", hoi:"Trèo lên cây cao để chơi là an toàn.", dung:false,
+    giai:"Sai rồi! Trèo leo thương tích rất cao. Đừng nên chạy nhảy ở nơi trơn."},
+   {loai:"chonhinh", bai:"Bài 28 · tr.65", hoi:"Bạn nào đã biết phòng, tránh điện giật?", hinhs:["dien2","dien4","dien1"], dung:1,
+    giai:"Tránh xa dây điện bị đứt là đúng. Chọc tay vào ổ điện, chơi gần trạm điện rất nguy hiểm."},
+   {loai:"dungsai", bai:"Bài 28 · tr.65", hinh:"dien_vd", hoi:"Áo bị ném lên cột điện, em trèo lên lấy là đúng.", dung:false,
+    giai:"Sai rồi! Không chơi gần đường điện. Em nhờ người lớn giúp đỡ."},
+   {loai:"keotha", bai:"Bài 29 · tr.67", hoi:"Việc nào nên làm, việc nào không nên làm để phòng, tránh ngộ độc thực phẩm?",
+    nhom:["😊 Nên làm","☹️ Không nên"],
+    the:[{hinh:"td1",ten:"Rửa tay",vao:[0]},{hinh:"td3",ten:"Uống nước lã ở vòi",vao:[1]},{hinh:"td2",ten:"Đậy thức ăn",vao:[0]}],
+    giai:"Nhớ điều ăn chín uống sôi. Thực phẩm quá hạn, đồ ôi không dùng."},
+   {loai:"chon", bai:"Bài 29 · tr.67", hinh:"td_vd", hoi:"Em của Hiếu muốn mua nước ngọt có màu xanh, đỏ ở hội chợ. Nếu là Hiếu, em sẽ nói gì?",
+    chon:["Không nên mua, uống nước không rõ nguồn gốc dễ bị ngộ độc","Mua thật nhiều","Uống luôn không cần hỏi"], dung:0,
+    giai:"Thực phẩm quá hạn, đồ ôi không dùng. Em phòng, tránh ngộ độc thực phẩm."},
+   {loai:"noi", bai:"Bài 30 · tr.69", hoi:"Quy tắc 5 ngón tay: nối mỗi ngón tay với cách cư xử.",
+    trai:[{ten:"✋ Ngón cái"},{ten:"✋ Ngón trỏ"},{ten:"✋ Ngón giữa"},{ten:"✋ Ngón áp út"},{ten:"✋ Ngón út"}],
+    phai:["Ôm hôn — người thân ruột thịt","Nắm tay — bạn bè, thầy cô, họ hàng","Bắt tay — người quen","Vẫy tay — người lạ","Xua tay — người lạ có cử chỉ thân mật"],
+    giai:"Ôm hôn người thân ruột thịt; nắm tay bạn bè, thầy cô; bắt tay người quen; vẫy tay người lạ; xua tay, hét to, bỏ chạy khi người lạ có cử chỉ thân mật."},
+   {loai:"dungsai", bai:"Bài 30 · tr.68", hinh:"xh_than", hoi:"Không được cho người khác chạm vào miệng, ngực, giữa hai đùi và mông của mình.", dung:true,
+    giai:"Đúng rồi! Hãy bảo vệ cơ thể, để phòng kẻ xấu xa."},
+   {loai:"chonhinh", bai:"Bài 30 · tr.69", hoi:"Em chọn việc nên làm để phòng, tránh bị xâm hại.", hinhs:["xh2","xh1"], dung:1,
+    giai:"Chống lại và hét to khi người lạ muốn ôm, hôn. Không đi một mình ở nơi tối, vắng vẻ."},
+   {loai:"chon", bai:"Bài 30 · tr.70", hinh:"xh_vd", hoi:"Người lạ nói: «Cháu bé, vào nhà chú chơi, chú có nhiều đồ ăn ngon lắm!». Em sẽ làm gì?",
+    chon:["Từ chối, chạy về và kể với bố mẹ","Đi theo chú ngay","Nhận đồ ăn của chú"], dung:0,
+    giai:"Từ chối nhận quà của người lạ. Bị kẻ nào xâm hại, tìm người để sẻ chia."}
+  ]}
+];
+
+</script>
+<script>
+// Câu máy đọc cho từng câu hỏi (dùng chung cho app và bước thu giọng)
+const CHU = ["A","B","C","D"];
+function cauDoc(q){
+  let s = q.hoi;
+  if (q.loai==="chon" || q.loai==="doanhinh") s += " " + q.chon.map((c,i)=>CHU[i]+". "+c+".").join(" ");
+  if (q.loai==="chonhinh") s += " Các bạn chọn tranh A, B" + (q.hinhs.length>2?", C":"") + ".";
+  if (q.loai==="dungsai") s += " Đúng hay sai?";
+  return s;
+}
+const CAU_CO_DINH = [
+  "Chào mừng các bạn đến với Bé ngoan mỗi ngày, môn Đạo đức!",
+  "Các bạn được ba sao! Giỏi quá!", "Các bạn được hai sao! Cố lên nữa nhé!",
+  "Các bạn được một sao! Mình cùng ôn lại nhé!", "Mình cùng ôn lại bài nhé!",
+  "Chưa đúng rồi, các bạn thử lại nhé!"
+];
+
+
+</script>
+<script>
+"use strict";
+const $ = s => document.querySelector(s);
+const tao = (tag, cls, html) => { const e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; };
+const MAU = ["var(--A)","var(--B)","var(--C)","var(--D)"];
+const TEN_LOAI = {chon:["Chọn đáp án","#3a86ff"], chonhinh:["Chọn tranh","#8338ec"], dungsai:["Đúng hay sai","#22b35e"],
+  keotha:["Xếp vào nhóm","#ff9f1c"], noi:["Nối cặp","#ef476f"], sapxep:["Xếp thứ tự","#2ec4b6"], doanhinh:["Đoán tranh","#f107a3"]};
+const LUU = "dd1-be-ngoan";
+let luu = {}; try { luu = JSON.parse(localStorage.getItem(LUU) || "{}"); } catch(e) { luu = {}; }
+if (luu.tuDoc === undefined) luu.tuDoc = true;
+function ghi(){ try { localStorage.setItem(LUU, JSON.stringify(luu)); } catch(e){} }
+
+/* ---------- âm thanh (WebAudio, không cần file) ---------- */
+let AC = null;
+function am(){ if (!AC) { try { AC = new (window.AudioContext||window.webkitAudioContext)(); } catch(e){} } return AC; }
+function not(f, t0, dai, kieu="sine", to=.25){ const a=am(); if(!a) return; const o=a.createOscillator(), g=a.createGain();
+  o.type=kieu; o.frequency.value=f; g.gain.setValueAtTime(0,a.currentTime+t0); g.gain.linearRampToValueAtTime(to,a.currentTime+t0+.02);
+  g.gain.exponentialRampToValueAtTime(.001,a.currentTime+t0+dai); o.connect(g).connect(a.destination); o.start(a.currentTime+t0); o.stop(a.currentTime+t0+dai+.05); }
+function amDung(){ not(880,0,.18); not(1320,.12,.35); }
+function amSai(){ not(220,0,.25,"triangle",.3); not(180,.18,.35,"triangle",.3); }
+function amVoTay(){ const a=am(); if(!a) return; for(let k=0;k<14;k++){ const t=a.currentTime+k*.07+Math.random()*.03;
+  const b=a.createBuffer(1,a.sampleRate*.05,a.sampleRate), d=b.getChannelData(0); for(let i=0;i<d.length;i++) d[i]=(Math.random()*2-1)*Math.pow(1-i/d.length,3);
+  const s=a.createBufferSource(), g=a.createGain(), f=a.createBiquadFilter(); f.type="bandpass"; f.frequency.value=1500+Math.random()*900;
+  g.gain.value=.5; s.buffer=b; s.connect(f).connect(g).connect(a.destination); s.start(t); } }
+function amThang(){ [523,659,784,1047].forEach((f,i)=>not(f,i*.13,.4,"square",.12)); setTimeout(amVoTay,550); }
+
+/* ---------- pháo giấy ---------- */
+const cv = $("#phao"), cx = cv.getContext("2d"); let hat = [], chay = false;
+function phao(n=120){ if (document.body.classList.contains("tat-hieu-ung")) return; cv.width=innerWidth; cv.height=innerHeight;
+  const mau=["#ef476f","#ffd166","#06d6a0","#118ab2","#ff9f1c","#8338ec"];
+  for(let i=0;i<n;i++) hat.push({x:innerWidth/2+(Math.random()-.5)*300,y:innerHeight*.55,vx:(Math.random()-.5)*16,vy:-Math.random()*17-6,
+    r:Math.random()*7+4,m:mau[i%mau.length],q:Math.random()*6,vq:(Math.random()-.5)*.3,s:1});
+  if(!chay){ chay=true; requestAnimationFrame(veHat); } }
+function veHat(){ cx.clearRect(0,0,cv.width,cv.height); hat.forEach(h=>{ h.vy+=.45; h.x+=h.vx; h.y+=h.vy; h.q+=h.vq; h.vx*=.99;
+  cx.save(); cx.translate(h.x,h.y); cx.rotate(h.q); cx.fillStyle=h.m; cx.fillRect(-h.r,-h.r/2,h.r*2,h.r); cx.restore(); });
+  hat = hat.filter(h=>h.y<cv.height+40); if(hat.length) requestAnimationFrame(veHat); else { chay=false; cx.clearRect(0,0,cv.width,cv.height); } }
+
+/* ---------- giọng đọc ---------- */
+function doc(s){ if (typeof docGiongViet === "function") { try { docGiongViet(s); } catch(e){} } }
+function dung(){ if (typeof dungGiong === "function") { try { dungGiong(); } catch(e){} } }
+
+/* ---------- điều hướng ---------- */
+function ve(id){ dung(); document.querySelectorAll(".man").forEach(m=>m.classList.toggle("bat", m.id===id)); if(id==="bando") veBanDo(); }
+document.addEventListener("click", e=>{ const b=e.target.closest("[data-ve]"); if(b) ve(b.dataset.ve); });
+
+/* ---------- BẢN ĐỒ ---------- */
+const VI_TRI = [[230,430],[620,250],[1000,450],[1370,260]]; // thuyền đặt cạnh đảo, không vượt mép trên
+function veBanDo(){
+  const s = $("#ban-do-svg"); let h = "";
+  // sóng
+  for (let r=0;r<5;r++){ let p=`M-200 ${120+r*140}`; for(let x=-200;x<1900;x+=100) p+=` q25 -14 50 0 t50 0`; h+=`<path class="song" d="${p}" stroke="rgba(255,255,255,.18)" stroke-width="4" fill="none" style="animation-duration:${5+r}s"/>`; }
+  // đường chấm nối các đảo
+  h += `<path d="M${VI_TRI.map(p=>p.join(" ")).join(" L")}" stroke="#fff" stroke-width="7" stroke-dasharray="4 22" stroke-linecap="round" fill="none" opacity=".85"/>`;
+  DAO.forEach((d,i)=>{ const [x,y]=VI_TRI[i]; const sao = (luu.sao||{})[d.ma]||0;
+    h += `<g class="dao-nut" data-dao="${i}" transform="translate(${x} ${y})">
+      <g class="dao-than"><g class="noi" style="animation-delay:${i*.6}s">
+        <ellipse cx="0" cy="96" rx="190" ry="36" fill="rgba(0,40,80,.25)"/>
+        <ellipse cx="0" cy="70" rx="185" ry="62" fill="url(#gCat)"/>
+        <ellipse cx="0" cy="48" rx="150" ry="52" fill="url(#gCo)"/>
+        <circle cx="-120" cy="30" r="26" fill="#3d9b3a"/><rect x="-124" y="30" width="8" height="34" fill="#8a5a2b"/>
+        <circle cx="122" cy="34" r="22" fill="#4caf50"/><rect x="118" y="34" width="8" height="30" fill="#8a5a2b"/>
+        <text x="0" y="40" text-anchor="middle" font-size="120">${d.bieu}</text>
+      </g></g>
+      <g transform="translate(0 150)">
+        <rect x="-150" y="-30" width="300" height="60" rx="30" fill="${d.mau}" stroke="#fff" stroke-width="4"/>
+        <text x="0" y="10" text-anchor="middle" font-size="30" font-weight="900" fill="#fff">${d.ten}</text>
+        <rect x="-112" y="34" width="224" height="38" rx="19" fill="rgba(255,255,255,.95)"/>
+        <text x="0" y="61" text-anchor="middle" font-size="22" font-weight="800" fill="#1d2a3a">${i+1}. ${d.phan}</text>
+        <text x="0" y="112" text-anchor="middle" font-size="40">${"⭐".repeat(sao)}<tspan opacity=".35">${"☆".repeat(3-sao)}</tspan></text>
+      </g></g>`; });
+  // thuyền
+  const den = DAO.findIndex(d=>!((luu.sao||{})[d.ma])); const [bx,by] = VI_TRI[den<0?3:den];
+  h += `<g transform="translate(${bx-200} ${Math.max(by-40,90)})" class="noi"><path d="M-40 0 h80 l-14 22 h-52 z" fill="#c0392b"/><rect x="-2" y="-62" width="4" height="62" fill="#5d4037"/><path d="M2 -60 L40 -10 L2 -10 Z" fill="#fff"/><path d="M-2 -52 L-30 -10 L-2 -10 Z" fill="#ffd166"/></g>`;
+  s.innerHTML = h;
+  s.querySelectorAll(".dao-nut").forEach(g=>g.addEventListener("click",()=>moDao(+g.dataset.dao)));
+  $("#nut-tudoc").textContent = "🔊 Tự đọc câu hỏi: " + (luu.tuDoc ? "BẬT" : "TẮT");
+  $("#nut-tudoc").classList.toggle("bat", luu.tuDoc);
+}
+$("#nut-tudoc").onclick = ()=>{ luu.tuDoc=!luu.tuDoc; ghi(); veBanDo(); };
+let henXoa = null;
+$("#nut-xoa").onclick = ()=>{ const b = $("#nut-xoa");
+  if (!henXoa) { b.textContent = "⚠️ Bấm lần nữa để xoá sao"; henXoa = setTimeout(()=>{ henXoa = null; b.textContent = "🧹 Xoá sao đã đạt"; }, 4000); return; }
+  clearTimeout(henXoa); henXoa = null; luu.sao = {}; ghi(); veBanDo(); b.textContent = "🧹 Xoá sao đã đạt"; };
+$("#nut-huongdan").onclick = ()=>ve("huongdan");
+
+/* ---------- GIỚI THIỆU ---------- */
+let daoNay = 0, ds = [], vt = 0, kq = [];
+function moDao(i){
+  daoNay = i; const d = DAO[i];
+  $("#gt-bieu").textContent = d.bieu; $("#gt-ten").textContent = d.ten;
+  $("#gt-phan").textContent = d.phan; $("#gt-phan").style.background = d.mau;
+  $("#gt-chude").textContent = d.chude;
+  const dem = {}; d.cau.forEach(q=>dem[q.loai]=(dem[q.loai]||0)+1);
+  $("#gt-dang").innerHTML = `<span>📝 ${d.cau.length} câu</span>` + Object.keys(dem).map(k=>`<span style="color:${TEN_LOAI[k][1]}">${TEN_LOAI[k][0]} × ${dem[k]}</span>`).join("");
+  ve("gioithieu"); if (luu.tuDoc) doc("Chào mừng các bạn đến với " + d.ten + "!");
+}
+$("#nut-batdau").onclick = ()=>batDau(DAO[daoNay].cau.map((_,i)=>i));
+
+/* ---------- CÂU HỎI ---------- */
+function batDau(chiSo){ ds = chiSo; vt = 0; kq = []; ve("cauhoi"); hienCau(); }
+let daTraLoi = false, loiCau = 0;
+function hienCau(){
+  const d = DAO[daoNay], q = d.cau[ds[vt]];
+  daTraLoi = false; loiCau = 0;
+  $("#phan-hoi").classList.remove("bat","dung","sai");
+  $("#ch-ten").textContent = d.bieu + " " + d.ten;
+  $("#ch-so").textContent = (vt+1) + "/" + ds.length;
+  $("#ch-cham").innerHTML = ds.map((_,i)=>`<i class="${i<kq.length?(kq[i].dung?"dung":"sai"):(i===vt?"nay":"")}"></i>`).join("");
+  $("#ch-bai").textContent = q.bai;
+  $("#ch-loai").textContent = TEN_LOAI[q.loai][0]; $("#ch-loai").style.background = TEN_LOAI[q.loai][1];
+  $("#ch-hoi").textContent = q.hoi;
+  const than = $("#ch-than"); than.innerHTML = "";
+  ({chon:veChon, doanhinh:veDoan, chonhinh:veChonHinh, dungsai:veDungSai, keotha:veKeoTha, noi:veNoi, sapxep:veSapXep})[q.loai](q, than);
+  if (luu.tuDoc) setTimeout(()=>doc(cauDoc(q)), 350);
+}
+$("#nut-doc").onclick = ()=>doc(cauDoc(DAO[daoNay].cau[ds[vt]]));
+function anh(k, cls){ const i = new Image(); i.src = HINH[k] || ""; i.alt = ""; i.draggable = false; if (cls) i.className = cls; return i; }
+function khungAnh(k){ const o = tao("div","anh-to"); o.appendChild(anh(k)); return o; }
+function tron(a){ a = a.slice(); for (let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+
+function ketThuc(dungKhong, q){
+  if (daTraLoi) return; daTraLoi = true;
+  kq.push({chiSo: ds[vt], dung: dungKhong});
+  const ph = $("#phan-hoi"); ph.classList.add("bat", dungKhong ? "dung" : "sai");
+  $("#ph-bieu").textContent = dungKhong ? "🎉" : "💡";
+  const nhieuBuoc = ["keotha","noi","sapxep"].includes(q.loai);
+  $("#ph-tieu").textContent = dungKhong ? "Đúng rồi! Giỏi quá!" : (nhieuBuoc ? `Làm xong rồi, nhưng có ${loiCau} lần đặt nhầm — cố lên nhé!` : "Chưa đúng rồi — mình cùng xem nhé!");
+  $("#ph-giai").textContent = q.giai;
+  $("#nut-tiep").textContent = vt+1 < ds.length ? "Câu tiếp ➜" : "Xem kết quả 🏁";
+  if (dungKhong) { amDung(); phao(110); } else amSai();
+  setTimeout(()=>doc(q.giai), 450);
+  $("#ch-cham").children[vt].className = dungKhong ? "dung" : "sai";
+}
+$("#nut-tiep").onclick = ()=>{ if (vt+1 < ds.length) { vt++; hienCau(); } else ketQua(); };
+
+/* chọn đáp án A/B/C */
+function cotChon(q, noiChon){
+  const cot = tao("div","cot-chon");
+  q.chon.forEach((c,i)=>{ const b = tao("button","chon",`<b style="background:${MAU[i]}">${CHU[i]}</b><span>${c}</span>`);
+    b.onclick = ()=>chotChon(i); cot.appendChild(b); });
+  return cot;
+}
+function chotChon(i){
+  const q = DAO[daoNay].cau[ds[vt]]; if (daTraLoi) return;
+  const nut = [...document.querySelectorAll("#ch-than .chon, #ch-than .tranh")];
+  if (!nut.length) return;
+  nut.forEach((b,k)=>{ if (k===q.dung) b.classList.add("dung"); else if (k===i) b.classList.add("sai"); else b.classList.add("mo"); });
+  document.querySelectorAll(".o-che button").forEach(b=>b.classList.add("mo"));
+  ketThuc(i===q.dung, q);
+}
+function veChon(q, than){ than.appendChild(khungAnh(q.hinh)); than.appendChild(cotChon(q)); }
+function veDoan(q, than){
+  const o = tao("div","anh-to"); const v = tao("div","doan"); const im = anh(q.hinh);
+  im.onload = ()=>{ const k = Math.min(o.clientWidth*0.92/im.naturalWidth, o.clientHeight*0.92/im.naturalHeight, 4.5); im.style.width = im.naturalWidth*k+"px"; };
+  v.appendChild(im); const che = tao("div","o-che");
+  for (let i=1;i<=9;i++){ const b = tao("button","",i); b.onclick = ()=>{ b.classList.add("mo"); not(600+i*40,0,.12,"sine",.15); }; che.appendChild(b); }
+  v.appendChild(che); o.appendChild(v); than.appendChild(o); than.appendChild(cotChon(q));
+}
+function veChonHinh(q, than){
+  const l = tao("div","luoi-tranh");
+  q.hinhs.forEach((k,i)=>{ const t = tao("button","tranh"); const oa = tao("div","o-anh"); oa.appendChild(anh(k)); t.appendChild(oa);
+    t.appendChild(tao("b","",CHU[i])); t.querySelector("b").style.background = MAU[i]; t.onclick = ()=>chotChon(i); l.appendChild(t); });
+  than.appendChild(l);
+}
+function veDungSai(q, than){
+  than.appendChild(khungAnh(q.hinh));
+  const cot = tao("div","cot-chon"); const h = tao("div","ds");
+  const d = tao("button","d","<span>😊</span>Đúng"), s = tao("button","s","<span>☹️</span>Sai");
+  d.onclick = ()=>chotDS(true); s.onclick = ()=>chotDS(false); h.append(d,s); cot.appendChild(h); than.appendChild(cot);
+}
+function chotDS(v){
+  const q = DAO[daoNay].cau[ds[vt]]; if (daTraLoi || q.loai!=="dungsai") return;
+  const d = $("#ch-than .d"), s = $("#ch-than .s");
+  (q.dung ? d : s).classList.add("chot"); (q.dung ? s : d).classList.add("mo");
+  ketThuc(v===q.dung, q);
+}
+
+/* kéo thả vào nhóm */
+let theChon = null;
+function veKeoTha(q, than){
+  const kt = tao("div","kt");
+  const khay = tao("div","khay");
+  const coChuCai = q.nhom.every(n=>n.length===1);
+  const nhom = tao("div","cac-nhom");
+  const mauNhom = ["#3a86ff","#ff9f1c","#22b35e","#8338ec","#ef476f"];
+  const mauHaiNhom = n=>/😊|☀️/.test(n) ? "#22b35e" : /☹️|🌙/.test(n) ? "#ef476f" : null;
+  q.nhom.forEach((n,i)=>{ const m = mauHaiNhom(n) || mauNhom[i%5];
+    const g = tao("div","nhom"+(coChuCai?" chu-cai":"")); g.style.borderColor = m; g.style.background = m+"14"; g.dataset.i = i;
+    const h = tao("h4","",n); h.style.background = m; g.appendChild(h); g.appendChild(tao("div","trong")); nhom.appendChild(g);
+    g.addEventListener("click", ()=>{ if (theChon) thaVao(theChon, g, q); }); });
+  tron(q.the.map((t,i)=>i)).forEach(i=>{ const t = q.the[i];
+    const c = tao("div","the"+(t.hinh?"":" chu-to")); c.dataset.i = i;
+    if (t.hinh) c.appendChild(anh(t.hinh)); if (t.ten) c.appendChild(tao("span","",t.ten));
+    ganKeo(c, q); khay.appendChild(c); });
+  kt.append(khay, nhom);
+  if (q.hinh) { const w = tao("div","kt-anh"); w.appendChild(khungAnh(q.hinh)); w.appendChild(kt); than.appendChild(w); }
+  else than.appendChild(kt);
+}
+function ganKeo(c, q){
+  let bd = null, keo = false, bong = null;
+  c.addEventListener("pointerdown", e=>{ if (c.classList.contains("xong") || daTraLoi) return; bd = {x:e.clientX, y:e.clientY}; keo = false; c.setPointerCapture(e.pointerId); });
+  c.addEventListener("pointermove", e=>{ if (!bd) return;
+    if (!keo && Math.hypot(e.clientX-bd.x, e.clientY-bd.y) > 10) { keo = true; bong = c.cloneNode(true); bong.classList.add("dang-keo"); bong.style.width = c.offsetWidth+"px"; document.body.appendChild(bong); c.style.opacity = .35; }
+    if (keo) { bong.style.left = (e.clientX - c.offsetWidth/2)+"px"; bong.style.top = (e.clientY - c.offsetHeight/2)+"px";
+      document.querySelectorAll(".nhom").forEach(g=>g.classList.toggle("sang", trong(g,e))); } });
+  c.addEventListener("pointerup", e=>{ if (!bd) return; bd = null;
+    if (keo) { keo = false; bong.remove(); c.style.opacity = ""; const g = [...document.querySelectorAll(".nhom")].find(g=>trong(g,e));
+      document.querySelectorAll(".nhom").forEach(x=>x.classList.remove("sang")); if (g) thaVao(c, g, q); }
+    else { document.querySelectorAll(".the").forEach(x=>x.classList.remove("chon-roi")); if (theChon===c) theChon=null; else { theChon=c; c.classList.add("chon-roi"); } } });
+}
+function trong(g,e){ const r = g.getBoundingClientRect(); return e.clientX>=r.left && e.clientX<=r.right && e.clientY>=r.top && e.clientY<=r.bottom; }
+function thaVao(c, g, q){
+  theChon = null; c.classList.remove("chon-roi");
+  const t = q.the[+c.dataset.i];
+  if (t.vao.includes(+g.dataset.i)) { c.classList.add("xong"); g.querySelector(".trong").appendChild(c); not(990,0,.15); }
+  else { loiCau++; c.classList.remove("rung"); void c.offsetWidth; c.classList.add("rung"); amSai(); }
+  if (document.querySelectorAll("#ch-than .the:not(.xong)").length === 0) setTimeout(()=>ketThuc(loiCau===0, q), 300);
+}
+
+/* nối cặp */
+function veNoi(q, than){
+  const v = tao("div","noi-vung"); const svg = document.createElementNS("http://www.w3.org/2000/svg","svg"); svg.setAttribute("class","noi-svg");
+  const trai = tao("div","noi-cot"), phai = tao("div","noi-cot");
+  let chonTrai = null; const mau = ["#ef476f","#3a86ff","#ff9f1c","#22b35e","#8338ec"]; let daNoi = 0;
+  q.trai.forEach((t,i)=>{ const o = tao("button","noi-o"); o.dataset.i = i; if (t.hinh) o.appendChild(anh(t.hinh)); if (t.ten) o.appendChild(tao("span","",t.ten));
+    o.onclick = ()=>{ if (o.classList.contains("xong")||daTraLoi) return; trai.querySelectorAll(".noi-o").forEach(x=>x.classList.remove("chon-roi")); chonTrai = o; o.classList.add("chon-roi"); };
+    trai.appendChild(o); });
+  tron(q.phai.map((_,i)=>i)).forEach(i=>{ const o = tao("button","noi-o",q.phai[i]); o.dataset.i = i;
+    o.onclick = ()=>{ if (!chonTrai || o.classList.contains("xong") || daTraLoi) return;
+      if (+chonTrai.dataset.i === i) { const m = mau[daNoi%5]; daNoi++; chonTrai.classList.remove("chon-roi"); chonTrai.classList.add("xong"); o.classList.add("xong");
+        chonTrai.style.borderColor = m; o.style.borderColor = m; noiDay(svg, v, chonTrai, o, m); not(990,0,.15); chonTrai = null;
+        if (daNoi === q.trai.length) setTimeout(()=>ketThuc(loiCau===0, q), 350); }
+      else { loiCau++; o.classList.remove("rung"); void o.offsetWidth; o.classList.add("rung"); amSai(); } };
+    phai.appendChild(o); });
+  v.append(svg, trai, phai); than.appendChild(v);
+}
+function noiDay(svg, v, a, b, m){
+  const r = v.getBoundingClientRect(), ra = a.getBoundingClientRect(), rb = b.getBoundingClientRect();
+  const x1 = ra.right - r.left, y1 = ra.top + ra.height/2 - r.top, x2 = rb.left - r.left, y2 = rb.top + rb.height/2 - r.top;
+  const p = document.createElementNS("http://www.w3.org/2000/svg","path");
+  p.setAttribute("d", `M${x1} ${y1} C${(x1+x2)/2} ${y1} ${(x1+x2)/2} ${y2} ${x2} ${y2}`);
+  p.setAttribute("stroke", m); p.setAttribute("stroke-width", 8); p.setAttribute("fill","none"); p.setAttribute("stroke-linecap","round");
+  svg.appendChild(p);
+}
+
+/* xếp thứ tự */
+function veSapXep(q, than){
+  const sx = tao("div","sx"); const oXep = tao("div","o-xep"); const khay = tao("div","khay");
+  const o = q.buoc.map((_,i)=>{ const t = tao("div","o-trong"); t.appendChild(tao("div","so",i+1)); return t; });
+  o.forEach((t,i)=>{ oXep.appendChild(t); if (i<o.length-1) oXep.appendChild(tao("div","mui-ten","➜")); });
+  let tiep = 0;
+  tron(q.buoc.map((_,i)=>i)).forEach(i=>{ const b = q.buoc[i]; const c = tao("div","the"+(b.hinh?"":" chu-to"));
+    if (b.hinh) c.appendChild(anh(b.hinh)); c.appendChild(tao("span","",b.ten));
+    c.onclick = ()=>{ if (daTraLoi) return;
+      if (i === tiep) { o[tiep].classList.add("co"); if (b.hinh) o[tiep].appendChild(anh(b.hinh)); o[tiep].appendChild(tao("span","",b.ten)); c.remove(); tiep++; not(990,0,.15);
+        if (tiep === q.buoc.length) setTimeout(()=>ketThuc(loiCau===0, q), 350); }
+      else { loiCau++; c.classList.remove("rung"); void c.offsetWidth; c.classList.add("rung"); amSai(); } };
+    khay.appendChild(c); });
+  sx.append(oXep, khay);
+  if (q.hinh) { const w = tao("div","kt-anh"); w.appendChild(khungAnh(q.hinh)); w.appendChild(sx); than.appendChild(w); } else than.appendChild(sx);
+}
+
+/* ---------- KẾT QUẢ ---------- */
+function soSao(dung, tong){ const p = dung/tong; return p>=.9?3:p>=.7?2:p>=.5?1:0; }
+function ketQua(){
+  const d = DAO[daoNay]; const dung = kq.filter(x=>x.dung).length; const sao = soSao(dung, kq.length);
+  const caDao = ds.length === d.cau.length;
+  if (caDao) { luu.sao = luu.sao || {}; luu.sao[d.ma] = Math.max(luu.sao[d.ma]||0, sao); ghi(); }
+  $("#kq-ten").textContent = d.bieu + " " + d.ten + " — " + d.phan + (caDao ? "" : " (ôn câu sai)");
+  $("#kq-sao").innerHTML = [0,1,2].map(i=>`<span class="${i<sao?"":"tat"}">⭐</span>`).join("");
+  $("#kq-so").textContent = `Cả lớp trả lời đúng ${dung}/${kq.length} câu`;
+  const sai = kq.filter(x=>!x.dung);
+  $("#kq-on").style.display = sai.length ? "" : "none";
+  $("#kq-on").innerHTML = `<h4>📌 Câu lớp cần ôn lại (${sai.length})</h4><ol>` + sai.map(x=>{ const q = d.cau[x.chiSo]; return `<li><b>${q.bai}</b> — ${q.hoi}</li>`; }).join("") + "</ol>";
+  $("#nut-onsai").style.display = sai.length ? "" : "none";
+  ve("ketqua");
+  if (sao>0) { amThang(); phao(220); setTimeout(()=>phao(160),700); }
+  setTimeout(()=>doc(sao===3?"Các bạn được ba sao! Giỏi quá!":sao===2?"Các bạn được hai sao! Cố lên nữa nhé!":sao===1?"Các bạn được một sao! Mình cùng ôn lại nhé!":"Mình cùng ôn lại bài nhé!"), 900);
+}
+$("#nut-onsai").onclick = ()=>batDau(kq.filter(x=>!x.dung).map(x=>x.chiSo));
+$("#nut-choilai").onclick = ()=>batDau(DAO[daoNay].cau.map((_,i)=>i));
+$("#nut-xuat").onclick = ()=>{
+  const d = DAO[daoNay]; const ngay = new Date().toLocaleDateString("vi-VN");
+  const dong = [["Ngày","Tên chặng","Chặng","Câu","Bài","Dạng","Kết quả"]].concat(kq.map((x,i)=>{ const q=d.cau[x.chiSo]; return [ngay,d.ten,d.phan,q.hoi,q.bai,TEN_LOAI[q.loai][0],x.dung?"Đúng":"Sai"]; }));
+  const csv = "﻿" + dong.map(r=>r.map(c=>`"${String(c).replace(/"/g,'""')}"`).join(",")).join("\r\n");
+  try { const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([csv],{type:"text/csv"})); a.download = `ket-qua-${d.ma}-${ngay.replace(/\//g,"-")}.csv`; a.click(); } catch(e){}
+  const bang = dong.map(r=>r.join("\t")).join("\n"); const b = $("#nut-xuat");
+  const bao = t=>{ b.textContent = t; setTimeout(()=>b.textContent = "💾 Lưu kết quả (CSV)", 3500); };
+  try { navigator.clipboard.writeText(bang).then(()=>bao("✓ Đã lưu / chép — dán vào Excel"), ()=>bao("✓ Đã lưu file CSV")); } catch(e) { bao("✓ Đã lưu file CSV"); }
+};
+
+/* ---------- phím tắt ---------- */
+document.addEventListener("keydown", e=>{
+  if (!$("#cauhoi").classList.contains("bat")) return;
+  const q = DAO[daoNay].cau[ds[vt]];
+  if (e.key==="Enter" && daTraLoi) $("#nut-tiep").click();
+  else if (/^[1-4]$/.test(e.key) && (q.loai==="chon"||q.loai==="chonhinh"||q.loai==="doanhinh")) chotChon(+e.key-1);
+  else if (/^[dđ]$/i.test(e.key)) chotDS(true);
+  else if (/^s$/i.test(e.key)) chotDS(false);
+  else if (/^r$/i.test(e.key)) $("#nut-doc").click();
+});
+
+/* ---------- chế độ chụp: #bando · #gioithieu&dao=1 · #cau&dao=0&so=3&tra=1 · #ketqua&dao=2 ---------- */
+function moTheoHash(){
+  const h = location.hash.slice(1); if (!h) { ve("bando"); return; }
+  const p = Object.fromEntries(h.split("&").slice(1).map(x=>x.split("=")));
+  const man = h.split("&")[0]; document.body.classList.add("tat-hieu-ung"); luu.tuDoc = false;
+  if (man==="gioithieu") moDao(+p.dao||0);
+  else if (man==="cau") { daoNay = +p.dao||0; batDau(DAO[daoNay].cau.map((_,i)=>i)); vt = +p.so||0; kq = Array.from({length:vt},(_,i)=>({chiSo:i,dung:i%4!==2})); hienCau();
+    if (p.tra) { const q = DAO[daoNay].cau[ds[vt]]; if (q.loai==="dungsai") chotDS(q.dung); else if (q.dung!=null) chotChon(q.dung); } }
+  else if (man==="ketqua") { daoNay = +p.dao||0; ds = DAO[daoNay].cau.map((_,i)=>i); kq = ds.map(i=>({chiSo:i,dung:i%5!==1})); ketQua(); }
+  else if (man==="huongdan") ve("huongdan");
+  else ve("bando");
+}
+moTheoHash();
+const dt = document.getElementById("dang-tai"); if (dt) dt.remove();
+</script>
+</body>
+</html>
